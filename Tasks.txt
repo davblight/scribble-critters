@@ -16,20 +16,77 @@ Rules:
 Tasks:
 
 1. Set up UI
+    -Require a login by barring the rest of the site behind a login screen
+        -POST to users -- have a sessionStore that automatically gets the logged-in user if applicable
+    -Hierarchy of menus: persistent sidebar > all else
+        -animate submenus sliding out
+    -Battle on a separate page
+        -this page displays only if an opponent is found -- have a waiting screen with a cancel option
+    -Mouse-over highlights look nice
 2. Get the server running with authentication (implemented with Andrew's mongodb)
-3. API/JSON containined all mon Data (learnsets, stats, etc.)
-4. Admin portal for posting new moves/mons  
+3. API/JSON containining all mon Data (name, learnsets, stats)
+    -use jsonbin? or a file in the server
+    -export and require
+    -see Schemas for required information
+4. Teambuilder
+    -Display existing teams
+        -GET method at the /teams/user_id endpoint so that the only ones displayed match user_id
+    -Create new team
+        -Check that user doesn't have too many teams already
+        -POST to /teams endpoint with the user_id as a required field
+        -Check that there are no repeat mons or illegal moves on said mons
+    -Edit existing teams
+        -PUT method to alter the existing data at /teams/team_id
+        -Check to see if the user's id matches the team's user_id
+        -Check that there are no repeat mons or illegal moves on said mons
+    -Delete existing team
+        -DELETE method at the /teams/team_id endpoint
+        -Check to see if the user's id matches the team's user_id
+    -Teambuilder UI
+        -Blank slate with "Add Mon" button
+            -When clicked, add mon displays all available mons
+                -When mon is clicked, show fields that can contain possible moves as well as a name, sprite, and stat table
+                -Maybe set up fields for lower priority attributes?
+                -"Add" button at the bottom that returns user to add mon page, though they can see their already-added mon
+                    -"Add" also adds the mon to a temporary array that stores the added mons until the POST method is run
+            -Procedurally display mons as they are added. Clicking on an added mon allows the user to edit the fields
+        -"Save Team" button that runs the POST method under Create new team and returns the user to the screen where they see all their teams
+5. Battle system
+    -Establish a battle session
+        -For now, only against an AI
+        -Select the team they want to use
+        -POST to a /battle endpoint, passing it the selected team_id as well as the AI team_id (which can be static for now), and return a battle_id
+            -Take the two teams and combine them into an object and use the battle_id
+    -Battle Logic (see Battle Flow)
+    -AI Logic and teams
+    -Battle UI
+        -
+
+
+High Priority Features:
+
+1. PvP battling
+2. Give the AI a team
+3. Predetermined movesets for random AI teams
+4. PvP Chat functionality
+5. Admin portal for posting new moves/mons  
+    -Display different page if logged-in user is an admin
     -Admin vs. user roles
     -add AI teams
-5. Teambuilder
-    -List all mons, select 3, select moves
-    -Submit and store to user
-    -Edit existing teams
-    -Check user doesn't have too many teams
-6. Battle system
-    -Establish a battle session
-    -AI Logic and teams
-    -Battle Logic
+
+
+Low Priority Features:
+
+1. Abilities
+2. Held Items
+3. EVs and Natures
+4. Friends
+5. More elaborate moves
+6. Compendium
+7. Spectators
+8. World Chat
+9. Multi-Battles
+10. Score / Ladder / personal stats
 
 
 Battle Flow:
