@@ -1,0 +1,45 @@
+Schemas:
+
+1. Move { name, power, staminaCost, type, effect? }
+2. Mon { name, type, stats{ hp, stamina, attack, defense, speed }, currentHP, status( alive or dead ), learnedMoves, learnableMoves }
+3. Team { name, mons[3], activeMon, User(-password & teams), AI }
+4. User { name, password, role }
+
+
+Rules:
+
+1. 3 Mons to a Team
+2. 3 Teams to a User
+3. 3 moves per mon
+
+
+Tasks:
+
+1. Set up UI
+2. Get the server running with authentication
+3. API/JSON containined all mon Data (learnsets, stats, etc.)
+4. Admin portal for posting new moves/mons  
+    -Admin vs. user roles
+    -add AI teams
+5. Teambuilder
+    -List all mons, select 3, select moves
+    -Submit and store to user
+    -Edit existing teams
+    -Check user doesn't have too many teams
+6. Battle system
+    -Establish a battle session
+    -AI Logic and teams
+    -Battle Logic
+
+
+Battle Flow:
+
+1. Select Team
+2. Select lead
+3. Give player control
+4. Select moves / switch
+5. End player control / Damage calculation
+6. Check if mon is dead
+7. Check if victory conditions are met
+8. Stamina recovery
+9. Return to step 3
