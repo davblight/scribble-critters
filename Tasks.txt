@@ -16,7 +16,7 @@ Rules:
 Tasks:
 
 1. Set up UI
-2. Get the server running with authentication
+2. Get the server running with authentication (implemented with Andrew's mongodb)
 3. API/JSON containined all mon Data (learnsets, stats, etc.)
 4. Admin portal for posting new moves/mons  
     -Admin vs. user roles
