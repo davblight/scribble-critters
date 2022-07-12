@@ -1,0 +1,11 @@
+* {
+    font-family: 'Nanum Pen Script', cursive;
+}
+
+#login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40vh;
+    width: 100%;
+}
