@@ -1,11 +1,21 @@
 * {
     font-family: 'Nanum Pen Script', cursive;
 }
-
+body {
+    background-image: url("images/paper-background.jpg");
+    background-size: 100%;
+}
 #login-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40vh;
+    margin-top: 30vh;
     width: 100%;
+    flex-direction: column;
+}
+#login-buttons {
+    text-align: center;
+}
+h1 {
+    font-size: 64px;
 }

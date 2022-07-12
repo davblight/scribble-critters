@@ -13,11 +13,14 @@
 <body>
     <div id="app">
         <div id="login-page">
-            <h1>LOG IN TO SCRIBBLEMON</h1>
-            <div>
+            <h1>WELCOME TO SCRIBBLEMON!</h1>
+            <div id="login-fields">
                 <input type="text" placeholder="USERNAME">
-                <input type="password" placeholder="PASSWORD"> <br>
-                <button v-on:click="loginFunction">LOG IN</button>
+                <input type="password" placeholder="PASSWORD">
+            </div><br>
+            <div id="login-buttons">
+                <button v-on:click="loginFunction" id="login-button">LOG IN</button>
+                <button v-on:click="signUpFunction" id="signup-button">SIGN UP</button>
             </div>
         </div>
 
