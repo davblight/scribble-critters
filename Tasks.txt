@@ -4,7 +4,7 @@ Schemas:
 2. Mon { name, type, stats{ hp, stamina, attack, defense, speed }, currentHP, status( alive or dead ), learnedMoves, learnableMoves }
 3. Team { name, mons[3], activeMon, User(-password & teams), AI }
 4. User { name, password, role }
-5. Battle { teams[2 teams], finished(boolean), timestamps(for terminating battle at interval) }
+5. Battle { teams[2 teams], finished(boolean), timestamps(for terminating battle at interval), user_id(for easier access) }
 
 
 Rules:
@@ -56,9 +56,11 @@ Tasks:
     -Establish a battle session
         -For now, only against an AI
         -Select the team they want to use
-        -POST to /battle, passing the user team and AI team as objects and getting the battle_id
+        -POST to /battle/id/action, passing the user team and AI team as objects and getting the battle_id
             -modify those team objects as the battle proceeds
             -once all mons on one side have died, set finished to true and start the timer to delete the battle
+            -this gives us easy access to all actions in case we want to display them
+        -Every second or so, GET byID the /battle/id so that we can update the UI with what actions have been made
     -Battle Logic (see Battle Flow)
     -AI Logic and teams
         -Calculate what move will do the most damage against the mon in front, then click it
