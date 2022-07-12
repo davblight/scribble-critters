@@ -1,0 +1,98 @@
+{
+    "spark": {
+        "name": "SPARK",
+        "power": "3",
+        "staminaCost": "2",
+        "type": "FIRE",
+        "effect": "",
+        "_id": "spark"
+    },
+    "fire_breath": {
+        "name": "FIRE BREATH",
+        "power": "5",
+        "staminaCost": "3",
+        "type": "FIRE",
+        "effect": "",
+        "_id": "fire_breath"
+    },
+    "claw": {
+        "name": "CLAW",
+        "power": "2",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "",
+        "_id": "claw"
+    },
+    "hibernate": {
+        "name": "HIBERNATE",
+        "power": "",
+        "staminaCost": "0",
+        "type": "NORMAL",
+        "effect": "self_hibernate",
+        "_id": "hibernate"
+    },
+    "bonk": {
+        "name": "BONK",
+        "power": "3",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "",
+        "_id": "bonk"
+    },
+    "hide": {
+        "name": "HIDE",
+        "power": "",
+        "staminaCost": "1",
+        "type": "STEEL",
+        "effect": "self_turtle",
+        "_id": "hibernate"
+    },
+    "belch": {
+        "name": "BELCH",
+        "power": "1",
+        "staminaCost": "1",
+        "type": "POISON",
+        "effect": "poison",
+        "_id": "belch"
+    },
+    "throw_scrap": {
+        "name": "THROW SCRAP",
+        "power": "4",
+        "staminaCost": "2",
+        "type": "STEEL",
+        "effect": "",
+        "_id": "throw_scrap"
+    },
+    "slap": {
+        "name": "SLAP",
+        "power": "1",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "",
+        "_id": "slap"
+    },
+    "punch": {
+        "name": "PUNCH",
+        "power": "3",
+        "staminaCost": "2",
+        "type": "NORMAL",
+        "effect": "",
+        "_id": "punch"
+    },
+    "wrestle": {
+        "name": "WRESTLE",
+        "power": "0",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "wrestle",
+        "_id": "wrestle"
+    },
+    "nap": {
+        "name": "NAP",
+        "power": "3",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "self_nap",
+        "_id": "nap"
+    }
+}

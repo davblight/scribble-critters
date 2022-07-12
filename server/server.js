@@ -64,5 +64,38 @@ app.get("/mon/:mon_name", async (req, res) => {
     res.status(200).json(mons[mon_name]);
 });
 
+app.get("/moves", async (req, res) => {
+    let moves;
+    try {
+        jsonString = fs.readFileSync(`${__dirname}/../data/movelist.json`);
+        moves = JSON.parse(jsonString);
+        if (!moves) {
+            console.log("Oopsies");
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+    res.status(200).json(moves);
+});
+
+app.get("/move/:move_name", async (req, res) => {
+    move_name = req.params.move_name;
+    let moves;
+    try {
+        jsonString = fs.readFileSync(`${__dirname}/../data/movelist.json`);
+        moves = JSON.parse(jsonString);
+        if (!moves) {
+            console.log("Oopsies");
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+    res.status(200).json(moves[move_name]);
+});
+
 
 module.exports = app;

@@ -1,13 +1,13 @@
 {
     "gregory": {
-        "name": "gregory",
+        "name": "GREGORY",
         "type": "NORMAL",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
         "currentDefense": "",
         "currentSpeed": "",
-        "status": "ALIVE",
+        "status": "alive",
         "stats": {
             "hp": "3",
             "stamina": "3",
@@ -17,10 +17,10 @@
         },
         "learnedMoves": "",
         "learnableMoves": [
-            "SLAP",
-            "PUNCH",
-            "WRESTLE",
-            "NAP"
+            "slap",
+            "punch",
+            "wrestle",
+            "nap"
         ],
         "_id": "gregory"
     },
@@ -32,7 +32,7 @@
         "currentAttack": "",
         "currentDefense": "",
         "currentSpeed": "",
-        "status": "ALIVE",
+        "status": "alive",
         "stats": {
             "hp": "1",
             "stamina": "3",
@@ -42,11 +42,36 @@
         },
         "learnedMoves": "",
         "learnableMoves": [
-            "SPARK",
-            "FIRE BREATH",
-            "CLAW",
-            "HIBERNATE"
+            "spark",
+            "fire_breath",
+            "claw",
+            "hibernate"
         ],
         "_id": "pyraptor"
+    },
+    "bin_dweller": {
+        "name": "BIN DWELLER",
+        "type": "STEEL",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "4",
+            "stamina": "4",
+            "attack": "2",
+            "defense": "4",
+            "speed": "1"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "bonk",
+            "hide",
+            "belch",
+            "throw"
+        ],
+        "_id": "bin_dweller"
     }
 }
