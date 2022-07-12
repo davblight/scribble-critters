@@ -18,6 +18,16 @@ body {
 #login-buttons {
     text-align: center;
 }
+#login-buttons > button {
+    height: 30px;
+    width: 100px;
+    font-size: 25px;
+}
+#login-fields > input {
+    height: 30px;
+    width: 200px;
+    font-size: 30px;
+}
 h1 {
     font-size: 64px;
 }
