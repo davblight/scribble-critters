@@ -2,6 +2,7 @@ const express = require('express');
 const { User } = require("../persist/model");
 const setUpAuth = require("./auth");
 const setUpSession = require("./session");
+const fs = require("fs");
 const app = express();
 
 app.use(express.json());
@@ -26,8 +27,41 @@ app.post("/users", async (req, res) => {
             message: `post request failed to create user`,
             error: err,
         });
-
+        return;
     }
+});
+
+app.get("/mons", async (req, res) => {
+    let mons;
+    try {
+        jsonString = fs.readFileSync(`${__dirname}/../data/scribblemon.json`);
+        mons = JSON.parse(jsonString);
+        if (!mons) {
+            console.log("Oopsies");
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+    res.status(200).json(mons);
+});
+
+app.get("/mon/:mon_name", async (req, res) => {
+    mon_name = req.params.mon_name;
+    let mons;
+    try {
+        jsonString = fs.readFileSync(`${__dirname}/../data/scribblemon.json`);
+        mons = JSON.parse(jsonString);
+        if (!mons) {
+            console.log("Oopsies");
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+    res.status(200).json(mons[mon_name]);
 });
 
 

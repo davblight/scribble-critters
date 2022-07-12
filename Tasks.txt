@@ -24,7 +24,7 @@ Tasks:
     -Battle on a separate page
         -this page displays only if an opponent is found -- have a waiting screen with a cancel option
     -Mouse-over highlights look nice
-2. Get the server running with authentication (implemented with Andrew's mongodb)
+--done 2. Get the server running with authentication
 3. API/JSON containining all mon Data (name, learnsets, stats)
     -use jsonbin? or a file in the server
     -export and require
