@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scribblemon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="login-page" v-if="page == 'login'">
+            <h1>WELCOME TO SCRIBBLEMON!</h1>
+            <div id="login-fields">
+                <input type="text" placeholder="USERNAME" v-model="usernameInput">
+                <input type="password" placeholder="PASSWORD" v-model="passwordInput">
+            </div><br>
+            <div id="login-buttons">
+                <button v-on:click="loginFunction" id="login-button">LOG IN</button>
+                <button id="signup-button">SIGN UP</button>
+            </div>
+        </div>
+        <div id="home-page" v-if="page == 'home'">
+            <div id="topbar">
+                <h2>SCRIBBLEMON SHOWDOWN</h2>
+                <p>username placeholder</p>
+            </div>
+            <div id="home-content">
+                <div id="sidebar">
+                    <button v-on:click="showPlay">PLAY</button><br>
+                    <button v-on:click="showTeambuilder">TEAMBUILDER</button><br>
+                    <button v-on:click="showChat">CHAT</button><br>
+                    <button v-on:click="showCompendium">COMPENDIUM</button><br>
+                    <button v-on:click="showSettings">SETTINGS</button><br>
+                    <button v-on:click="showLogin">LOG OUT</button>
+                </div>
+                <div class="subpage" id="subpage-play" v-if="subpage == 'play'">TEST PLAY</div>
+                <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">TEST TEAMBUILDER</div>
+                <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'">TEST CHAT</div>
+                <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">TEST COMPENDIUM</div>
+                <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'">TEST SETTINGS</div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
