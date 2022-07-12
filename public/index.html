@@ -45,7 +45,27 @@
             </div>
 
         </div>
-
+        <div id="battle-page" v-if="page == 'battle'">
+            <div id="battle-container">
+                <div id="sprite-box">
+                    <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
+                </div>
+                <div id="move-container"> <!-- Make this a v-for once we have an array containing all moves -->
+                    <div class="move"></div>
+                    <div class="move"></div>
+                    <div class="move"></div>
+                </div>
+                <div id="mon-container"> <!-- Make this a v-for once we have an array containing all possible switches -->
+                    <div class="mon"></div> 
+                    <div class="mon"></div>
+                    <div class="mon"></div>
+                </div>
+            </div>
+            
+            <div id="log-container">
+                <div class="log-entry"></div> <!-- Make this a v-for once we have an array containing all actions -->
+            </div>
+        </div>
 
     </div>
 

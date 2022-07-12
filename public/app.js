@@ -1,7 +1,7 @@
 var app = new Vue({
     el: "#app",
     data: {
-        page: "home",
+        page: "battle",
         subpage: "",
         usernameInput: "",
         passwordInput: "",
