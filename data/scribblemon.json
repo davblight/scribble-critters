@@ -1,0 +1,52 @@
+{
+    "gregory": {
+        "name": "gregory",
+        "type": "NORMAL",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "ALIVE",
+        "stats": {
+            "hp": "3",
+            "stamina": "3",
+            "attack": "3",
+            "defense": "3",
+            "speed": "3"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "SLAP",
+            "PUNCH",
+            "WRESTLE",
+            "NAP"
+        ],
+        "_id": "gregory"
+    },
+    "pyraptor": {
+        "name": "PYRAPTOR",
+        "type": "FIRE",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "ALIVE",
+        "stats": {
+            "hp": "1",
+            "stamina": "3",
+            "attack": "5",
+            "defense": "1",
+            "speed": "5"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "SPARK",
+            "FIRE BREATH",
+            "CLAW",
+            "HIBERNATE"
+        ],
+        "_id": "pyraptor"
+    }
+}
