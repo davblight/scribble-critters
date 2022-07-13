@@ -19,8 +19,8 @@
                 <input type="password" placeholder="PASSWORD" v-model="passwordInput">
             </div><br>
             <div id="login-buttons">
-                <button v-on:click="loginFunction" id="login-button">LOG IN</button>
-                <button id="signup-button">SIGN UP</button>
+                <button v-on:click="postSession" id="login-button">LOG IN</button>
+                <button v-on:click="postUser" id="signup-button">SIGN UP</button>
             </div>
         </div>
         <div id="home-page" v-if="page == 'home'">
