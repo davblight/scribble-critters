@@ -30,11 +30,11 @@ Tasks:
     -export and require
     -see Schemas for required information
 4. Teambuilder
-    -Display existing teams
-        -GET method at the /teams/user_id endpoint so that the only ones displayed match user_id
-    -Create new team
+    --DONE -Display existing teams
+        -GET method at the /user/teams endpoint so that the only ones displayed match user_id
+    --DONE -Create new team
         -Check that user doesn't have too many teams already
-        -POST to /teams endpoint with the user_id as a required field
+        -POST to /teams endpoint
         -Check that there are no repeat mons or illegal moves on said mons
     -Edit existing teams
         -PUT method to alter the existing data at /teams/team_id

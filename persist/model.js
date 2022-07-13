@@ -53,6 +53,11 @@ const teama = mongoose.Schema({
     isAI: { type: Boolean, default: false },
 });
 
+const battleSchema = mongoose.Schema({
+    player: { type: teama, required: true },
+    AI: { type: teama, required: true },
+})
+
 function arrayLimit(val) {
     return val.length <= 3;
 }
