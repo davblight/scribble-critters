@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, Team } = require("../persist/model");
+const { User, Team, Battle } = require("../persist/model");
 const setUpAuth = require("./auth");
 const setUpSession = require("./session");
 const fs = require("fs");
@@ -144,6 +144,7 @@ app.post("/teams", async (req, res) => {
         console.log(err);
         return;
     }
+    //Check if team limit reached
     let userTeams;
     try {
         userTeams = await Team.find({ "user._id": req.user.id });
@@ -213,6 +214,7 @@ app.post("/teams", async (req, res) => {
 
         mons.push(monObj);
     }
+    //create new team
     try {
         let team = await Team.create({
             name: req.body.name,
@@ -234,15 +236,16 @@ app.post("/teams", async (req, res) => {
     }
 });
 
+//Get a list of all teams bound to the user requesting
 app.get("/user/teams", async (req, res) => {
     let userTeams;
     try {
         userTeams = await Team.find({ "user._id": req.user.id });
         if (!userTeams) {
-            res.status(404).json({ message: `userTeams not found` });
+            res.status(404).json({ message: `User teams not found` });
             return;
         }
-    } catch {
+    } catch (err) {
         res.status(500).json({
             message: `get request failed to get user teams`,
             error: err,
@@ -251,6 +254,65 @@ app.get("/user/teams", async (req, res) => {
     }
     res.status(200).json(userTeams);
 });
+
+//Get a team by id
+app.get("/team/:id", async (req, res) => {
+    let userTeam;
+    try {
+        userTeam = await Team.findById(req.params.id);
+        if (!userTeams) {
+            res.status(404).json({ message: `Team not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to get user teams`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(userTeam);
+});
+
+//  *Create a new battle Session*
+// {
+//     playerTeamId: "",
+
+// }
+
+// app.post("/battles", async (req, res) => {
+//     //check auth
+//     if (!req.user) {
+//         res.status(401).json({
+//             message: "Unauthenticated"
+//         });
+//         return;
+//     }
+//     let playerTeam;
+//     try {
+//         playerTeam = await Team.findById(req.params.id);
+//         if (!userTeams) {
+//             res.status(404).json({ message: `${req.body.}Team not found` });
+//             return;
+//         }
+//     } catch (err) {
+//         res.status(500).json({
+//             message: `get request failed to get user teams`,
+//             error: err,
+//         });
+//         return;
+//     }
+//     try {
+//         let battle = await Battle.create({
+
+//         })
+//     } catch (err) {
+//         res.status(500).json({
+//             message: `post request failed to create battle session`,
+//             error: err,
+//         });
+//         return;
+// });
 
 
 module.exports = app;
