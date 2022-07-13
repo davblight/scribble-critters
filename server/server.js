@@ -234,7 +234,7 @@ app.post("/teams", async (req, res) => {
     }
 });
 
-app.get("/userTeams", async (req, res) => {
+app.get("/user/teams", async (req, res) => {
     let userTeams;
     try {
         userTeams = await Team.find({ "user._id": req.user.id });
