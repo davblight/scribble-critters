@@ -151,7 +151,6 @@ app.post("/team", async (req, res) => {
         });
         return;
     }
-
     //populate mons array with mons stats and move stats
     //loop through the mons sent in request
     let mons = [];
