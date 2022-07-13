@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scribblemon</title>
+    <title>Scribblemon Showdown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
@@ -19,14 +19,14 @@
                 <input type="password" placeholder="PASSWORD" v-model="passwordInput">
             </div><br>
             <div id="login-buttons">
-                <button v-on:click="loginFunction" id="login-button">LOG IN</button>
-                <button id="signup-button">SIGN UP</button>
+                <button v-on:click="postSession" id="login-button">LOG IN</button>
+                <button v-on:click="postUser" id="signup-button">SIGN UP</button>
             </div>
         </div>
         <div id="home-page" v-if="page == 'home'">
             <div id="topbar">
                 <h2>SCRIBBLEMON SHOWDOWN</h2>
-                <p>username placeholder</p>
+                <p>{{ loggedInUser}}</p>
             </div>
             <div id="home-content">
                 <div id="sidebar">
@@ -51,18 +51,19 @@
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
                 </div>
                 <div id="move-container"> <!-- Make this a v-for once we have an array containing all moves -->
-                    <div class="move"></div>
-                    <div class="move"></div>
-                    <div class="move"></div>
+                    <button class="move"></button>
+                    <button class="move"></button>
+                    <button class="move"></button>
                 </div>
                 <div id="mon-container"> <!-- Make this a v-for once we have an array containing all possible switches -->
-                    <div class="mon"></div> 
-                    <div class="mon"></div>
-                    <div class="mon"></div>
+                    <button class="mon"></button> 
+                    <button class="mon"></button>
+                    <button class="mon"></button>
                 </div>
             </div>
             
             <div id="log-container">
+                <div class="turn"></div> <!-- Make this a v-for once we have an array containing all turns -->
                 <div class="log-entry"></div> <!-- Make this a v-for once we have an array containing all actions -->
             </div>
         </div>
