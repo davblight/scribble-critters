@@ -69,6 +69,11 @@ Tasks:
             -endpoint runs battle logic, then findByIdAndUpdate the /battle
 
 
+MVP:
+
+1. Battle System with Premade Teams 
+
+
 High Priority Features:
 
 1. PvP battling
