@@ -7,6 +7,7 @@ var app = new Vue({
         subpage: "",
         usernameInput: "",
         passwordInput: "",
+        loggedInUser: "",
     },
     methods: {
         showHome: function () {
@@ -44,6 +45,7 @@ var app = new Vue({
             if (response.status == 200) {
                 console.log("logged in");
                 let data = await response.json();
+                this.loggedInUser = data.user.username;
                 console.log(data);
                 this.page = "home";
             } else if (response.status == 401) {
@@ -69,11 +71,12 @@ var app = new Vue({
                 credentials: "include"
             });
 
-            let body = response.json();
+            let body = await response.json();
             console.log(body);
 
             if (response.status == 201) {
                 console.log("successful login attempt");
+                this.loggedInUser = body.user.username;
                 this.page = "home"
             } else if (response.status = 401) {
                 console.log("unsuccessful login attempt");
@@ -84,7 +87,7 @@ var app = new Vue({
         //Create new user
         postUser: async function () {
             let newUser = { 
-                username: this.nameInput,
+                username: this.usernameInput,
                 password: this.passwordInput
             };
             let response = await fetch(`${URL}/users`, {
