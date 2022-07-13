@@ -22,7 +22,7 @@
             "wrestle",
             "nap"
         ],
-        "_id": "gregory"
+        "id": "gregory"
     },
     "pyraptor": {
         "name": "PYRAPTOR",
@@ -47,11 +47,11 @@
             "claw",
             "hibernate"
         ],
-        "_id": "pyraptor"
+        "id": "pyraptor"
     },
     "bin_dweller": {
         "name": "BIN DWELLER",
-        "type": "STEEL",
+        "type": "NORMAL",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -72,6 +72,6 @@
             "belch",
             "throw"
         ],
-        "_id": "bin_dweller"
+        "id": "bin_dweller"
     }
 }
