@@ -7,7 +7,7 @@
     <title>Scribblemon Showdown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,12 +15,12 @@
         <div id="login-page" v-if="page == 'login'">
             <h1>WELCOME TO SCRIBBLEMON!</h1><br><br>
             <div id="login-fields">
-                <input type="text" placeholder="USERNAME" v-model="usernameInput">
-                <input type="password" placeholder="PASSWORD" v-model="passwordInput">
+                <input type="text" placeholder="Username" v-model="usernameInput">
+                <input type="password" placeholder="Password" v-model="passwordInput">
             </div><br>
             <div id="login-buttons">
-                <button v-on:click="postSession" id="login-button">LOG IN</button>
-                <button v-on:click="postUser" id="signup-button">SIGN UP</button>
+                <button v-on:click="postSession" id="login-button">Log In</button>
+                <button v-on:click="postUser" id="signup-button">Sign Up</button>
             </div>
         </div>
         <div id="home-page" v-if="page == 'home'">
@@ -40,7 +40,13 @@
                 <div class="subpage" id="subpage-play" v-if="subpage == 'play'">TEST PLAY</div>
                 <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">TEST TEAMBUILDER</div>
                 <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'">TEST CHAT</div>
-                <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">TEST COMPENDIUM</div>
+                <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">
+                    <div id="compendium" v-for="mon in allMons">
+                        <button v-on:click="showMonInfo(mon)">{{ mon.name }}</button>
+                    </div>
+                    <mon v-bind:mon="selectedMon" v-if="showMon"></mon>
+
+                </div>
                 <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'">TEST SETTINGS</div>
             </div>
 
