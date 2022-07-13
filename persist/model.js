@@ -53,10 +53,30 @@ const teama = mongoose.Schema({
     isAI: { type: Boolean, default: false },
 });
 
-const battleSchema = mongoose.Schema({
-    player: { type: teama, required: true },
-    AI: { type: teama, required: true },
-})
+const turnSchema = mongoose.Schema({
+    turnNumber: { type: Number, required: true },
+    turnText: {
+        type: [{
+            action: { type: String, required: true },
+            effect: { type: String, default: "" },
+            result: { type: String, default: "" },
+        }],
+        required: true
+    },
+
+});
+
+const battleSchema = mongoose.Schema(
+    {
+        player: { type: teama, required: true },
+        AI: { type: teama, required: true },
+        turns: { type: [turnSchema], default: [] },
+        finished: { type: Boolean, required: true, default: false },
+    },
+    {
+        timestamps: true,
+    }
+);
 
 function arrayLimit(val) {
     return val.length <= 3;
@@ -64,8 +84,10 @@ function arrayLimit(val) {
 
 const User = mongoose.model("User", userSchema);
 const Team = mongoose.model("Team", teama);
+const Battle = mongoose.model("Battle", battleSchema)
 
 module.exports = {
     User,
     Team,
+    Battle,
 }
