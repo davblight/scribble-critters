@@ -110,7 +110,7 @@ app.get("/move/:move_name", async (req, res) => {
 //         learnedMoves: [""],
 //     }
 // ]
-app.post("/team", async (req, res) => {
+app.post("/teams", async (req, res) => {
     //check auth
     if (!req.user) {
         res.status(401).json({
@@ -144,6 +144,26 @@ app.post("/team", async (req, res) => {
         console.log(err);
         return;
     }
+    let userTeams;
+    try {
+        userTeams = await Team.find({ "user._id": req.user.id });
+        if (userTeams) {
+            if (userTeams.length == 3) {
+                res.status(403).json({ message: `Max number of created teams reached` });
+                return;
+            }
+            if (userTeams.length > 3) {
+                res.status(403).json({ message: `Max number of created teams already exceeded...wait how did you do that?` });
+                return;
+            }
+        }
+    } catch {
+        res.status(500).json({
+            message: `get request failed to get user teams`,
+            error: err,
+        });
+        return;
+    }
     //check if number of mons is correct
     if (req.body.mons.length > 3) {
         res.status(403).json({
@@ -171,7 +191,7 @@ app.post("/team", async (req, res) => {
                 return;
             }
             //check if mon can know this move
-            if (monList[monId].learnableMoves.includes(moveId)) {
+            if (!monList[monId].learnableMoves.includes(moveId)) {
                 //throw unauthorized if illegal move found
                 res.status(403).json({
                     message: `Your ${monId} contained move not in it's moveset`
@@ -212,6 +232,24 @@ app.post("/team", async (req, res) => {
         });
         return;
     }
+});
+
+app.get("/userTeams", async (req, res) => {
+    let userTeams;
+    try {
+        userTeams = await Team.find({ "user._id": req.user.id });
+        if (!userTeams) {
+            res.status(404).json({ message: `userTeams not found` });
+            return;
+        }
+    } catch {
+        res.status(500).json({
+            message: `get request failed to get user teams`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(userTeams);
 });
 
 
