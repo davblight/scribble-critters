@@ -224,7 +224,7 @@ app.post("/teams", async (req, res) => {
                 name: req.user.username,
                 _id: req.user.id
             },
-            isAI: false,
+            isAI: req.body.isAI,
         });
         res.status(201).json(team);
     } catch (err) {
@@ -274,45 +274,94 @@ app.get("/team/:id", async (req, res) => {
     res.status(200).json(userTeam);
 });
 
+//Get all teams
+app.get("/teams", async (req, res) => {
+    let teams;
+    try {
+        teams = await Team.find();
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to get teams`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(teams);
+});
+
 //  *Create a new battle Session*
 // {
 //     playerTeamId: "",
-
+//     AITeamId: ""
 // }
-
-// app.post("/battles", async (req, res) => {
-//     //check auth
-//     if (!req.user) {
-//         res.status(401).json({
-//             message: "Unauthenticated"
-//         });
-//         return;
-//     }
-//     let playerTeam;
-//     try {
-//         playerTeam = await Team.findById(req.params.id);
-//         if (!userTeams) {
-//             res.status(404).json({ message: `${req.body.}Team not found` });
-//             return;
-//         }
-//     } catch (err) {
-//         res.status(500).json({
-//             message: `get request failed to get user teams`,
-//             error: err,
-//         });
-//         return;
-//     }
-//     try {
-//         let battle = await Battle.create({
-
-//         })
-//     } catch (err) {
-//         res.status(500).json({
-//             message: `post request failed to create battle session`,
-//             error: err,
-//         });
-//         return;
-// });
+app.post("/battles/AI", async (req, res) => {
+    //check auth
+    if (!req.user) {
+        res.status(401).json({
+            message: "Unauthenticated"
+        });
+        return;
+    }
+    //get player team
+    let playerTeam;
+    try {
+        playerTeam = await Team.findById(req.body.playerTeamId);
+        if (!playerTeam) {
+            res.status(404).json({ message: `User team ${req.body.playerTeamId} not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to get user team`,
+            error: err,
+        });
+        return;
+    }
+    //check if player owns team
+    if (playerTeam.user._id != req.user.id) {
+        res.status(403).json({
+            message: `you are not authorized to use this team`
+        });
+        return;
+    }
+    //get AI team
+    let AITeam;
+    try {
+        AITeam = await Team.findById(req.body.AITeamId);
+        if (!AITeam) {
+            res.status(404).json({ message: `AI team ${req.body.AITeamId} not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to get AI team`,
+            error: err,
+        });
+        return;
+    }
+    //check if AI owns team
+    if (!AITeam.isAI) {
+        res.status(403).json({
+            message: `You must play against an AI Team`
+        });
+        return;
+    }
+    try {
+        let battle = await Battle.create({
+            player: playerTeam,
+            AI: AITeam,
+            turns: [],
+            finished: false,
+        });
+        res.status(201).json(battle);
+    } catch (err) {
+        res.status(500).json({
+            message: `post request failed to create battle session`,
+            error: err,
+        });
+        return;
+    }
+});
 
 
 module.exports = app;
