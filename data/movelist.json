@@ -5,7 +5,7 @@
         "staminaCost": "2",
         "type": "FIRE",
         "effect": "",
-        "_id": "spark"
+        "id": "spark"
     },
     "fire_breath": {
         "name": "FIRE BREATH",
@@ -13,7 +13,7 @@
         "staminaCost": "3",
         "type": "FIRE",
         "effect": "",
-        "_id": "fire_breath"
+        "id": "fire_breath"
     },
     "claw": {
         "name": "CLAW",
@@ -21,7 +21,7 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "",
-        "_id": "claw"
+        "id": "claw"
     },
     "hibernate": {
         "name": "HIBERNATE",
@@ -29,7 +29,7 @@
         "staminaCost": "0",
         "type": "NORMAL",
         "effect": "self_hibernate",
-        "_id": "hibernate"
+        "id": "hibernate"
     },
     "bonk": {
         "name": "BONK",
@@ -37,31 +37,31 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "",
-        "_id": "bonk"
+        "id": "bonk"
     },
     "hide": {
         "name": "HIDE",
         "power": "",
         "staminaCost": "1",
-        "type": "STEEL",
+        "type": "NORMAL",
         "effect": "self_turtle",
-        "_id": "hibernate"
+        "id": "hibernate"
     },
     "belch": {
         "name": "BELCH",
         "power": "1",
         "staminaCost": "1",
-        "type": "POISON",
+        "type": "NORMAL",
         "effect": "poison",
-        "_id": "belch"
+        "id": "belch"
     },
     "throw_scrap": {
         "name": "THROW SCRAP",
         "power": "4",
         "staminaCost": "2",
-        "type": "STEEL",
+        "type": "NORMAL",
         "effect": "",
-        "_id": "throw_scrap"
+        "id": "throw_scrap"
     },
     "slap": {
         "name": "SLAP",
@@ -69,7 +69,7 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "",
-        "_id": "slap"
+        "id": "slap"
     },
     "punch": {
         "name": "PUNCH",
@@ -77,7 +77,7 @@
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "",
-        "_id": "punch"
+        "id": "punch"
     },
     "wrestle": {
         "name": "WRESTLE",
@@ -85,7 +85,7 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "wrestle",
-        "_id": "wrestle"
+        "id": "wrestle"
     },
     "nap": {
         "name": "NAP",
@@ -93,6 +93,6 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "self_nap",
-        "_id": "nap"
+        "id": "nap"
     }
 }
