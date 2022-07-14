@@ -200,3 +200,7 @@ button:hover {
     font-family: 'Edu SA Beginner', cursive;
     font-size: 20px;
 }
+#sprite-box > img {
+    height: 180px;
+    width: 150px;
+}

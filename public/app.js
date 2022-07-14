@@ -52,7 +52,7 @@ var app = new Vue({
         showMon: false,
         battleMons: [],
         monMove: [],
-        activeMon: {},
+        activeMonID: "",
     },
     methods: {
         showHome: function () {
@@ -176,7 +176,7 @@ var app = new Vue({
             }
         },
         getBattle: async function () {
-            let response = await fetch(`${URL}/battles/AI/62d05572f0d3d51db735296b`, {
+            let response = await fetch(`${URL}/battles/AI/62d0634949cb0a2584549d42`, {
                 credentials: "include"
             });
             if (response.status == 200) {
@@ -184,7 +184,7 @@ var app = new Vue({
                 console.log(data);
                 this.battleMons = data.player.mons;
                 this.monMove = data.player.activeMon.learnedMoves
-                this.activeMon = data.player.activeMon
+                this.activeMon = data.player.activeMon.id
                 console.log("fetched battlemons")
             } else if (response.status == 404) {
                 console.log("battle not found");
