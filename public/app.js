@@ -1,5 +1,28 @@
 const URL = "http://localhost:8080"
 
+Vue.component('mon', {
+    template: `
+        <div class="monInfo">
+            <div class='monCard'>
+                <img src="/images/gregory.jpg">
+                Type: {{ mon.type }}
+            </div>
+        </div>`,
+    props: [
+        "mon"
+    ],
+    data: function () {
+        return {
+            showMon: false,
+        }
+    },
+    methods: {
+        showMonInfo: function () {
+            this.showMon = !this.showMon
+        }
+    }
+})
+
 var app = new Vue({
     el: "#app",
     data: {
@@ -8,6 +31,9 @@ var app = new Vue({
         usernameInput: "",
         passwordInput: "",
         loggedInUser: "",
+        allMons: "",
+        selectedMon: {},
+        showMon: false,
     },
     methods: {
         showHome: function () {
@@ -31,9 +57,14 @@ var app = new Vue({
         },
         showCompendium: function () {
             this.subpage = "compendium";
+            this.getMons();
         },
         showSettings: function () {
             this.subpage = "settings";
+        },
+        showMonInfo: function (mon) {
+            this.showMon = true;
+            this.selectedMon = mon;
         },
 
         //USER LOGIN AND AUTHENTICATION LOGIC
@@ -110,6 +141,20 @@ var app = new Vue({
                 console.log("unknown error posting /users", response.status, response);
             }
         },
+        getMons: async function () {
+            let response = await fetch(`${URL}/mons`, {
+                credentials: "include"
+            });
+            if (response.status == 200) {
+                let data = await response.json();
+                this.allMons = data;
+                console.log("fetched all mons");
+            } else if (response.status == 404) {
+                console.log("mons not found");
+            } else {
+                console.log("something went wrong while getting mons", response.status, response)
+            }
+        }
     },
     created: function () {
         this.getSession();
