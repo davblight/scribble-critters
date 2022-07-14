@@ -24,6 +24,56 @@
         ],
         "id": "gregory"
     },
+    "bin_dweller": {
+        "name": "BIN DWELLER",
+        "type": "Normal",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "4",
+            "stamina": "4",
+            "attack": "2",
+            "defense": "4",
+            "speed": "1"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "bonk",
+            "hide",
+            "belch",
+            "throw"
+        ],
+        "id": "bin_dweller"
+    },
+    "germy": {
+        "name": "GERMY",
+        "type": "Normal",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "2",
+            "stamina": "2",
+            "attack": "4",
+            "defense": "3",
+            "speed": "4"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "flop",
+            "mitosis",
+            "splash",
+            "bonk"
+        ],
+        "id": "germy"
+    },
     "pyraptor": {
         "name": "PYRAPTOR",
         "type": "Fire",
@@ -49,9 +99,59 @@
         ],
         "id": "pyraptor"
     },
-    "bin_dweller": {
-        "name": "BIN DWELLER",
-        "type": "Normal",
+    "hippyro": {
+        "name": "HIPPYRO",
+        "type": "Fire",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "4",
+            "stamina": "3",
+            "attack": "3",
+            "defense": "4",
+            "speed": "2"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "chomp",
+            "fire_breath",
+            "stomp",
+            "hibernate"
+        ],
+        "id": "hippyro"
+    },
+    "pyrooster": {
+        "name": "PYROOSTER",
+        "type": "Fire",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "3",
+            "stamina": "3",
+            "attack": "3",
+            "defense": "3",
+            "speed": "3"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "spark",
+            "caw",
+            "claw",
+            "peck"
+        ],
+        "id": "pyrooster"
+    },
+    "narwhalrus": {
+        "name": "NARWHALRUS",
+        "type": "Water",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -61,17 +161,142 @@
         "stats": {
             "hp": "4",
             "stamina": "4",
-            "attack": "2",
+            "attack": "3",
+            "defense": "3",
+            "speed": "2"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "stab",
+            "slap",
+            "belch",
+            "nap"
+        ],
+        "id": "narwhalrus"
+    },
+    "narshark": {
+        "name": "NARSHARK",
+        "type": "Water",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "3",
+            "stamina": "3",
+            "attack": "3",
+            "defense": "3",
+            "speed": "3"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "stab",
+            "slap",
+            "peck",
+            "hibernate"
+        ],
+        "id": "narshark"
+    },
+    "narsparce": {
+        "name": "NARSPARCE",
+        "type": "Water",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "4",
+            "stamina": "3",
+            "attack": "4",
+            "defense": "2",
+            "speed": "2"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "clap",
+            "slap",
+            "flap",
+            "nap"
+        ],
+        "id": "narsparce"
+    },
+    "walter": {
+        "name": "WALTER",
+        "type": "Grass",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "3",
+            "stamina": "3",
+            "attack": "3",
             "defense": "4",
+            "speed": "2"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "spore",
+            "bonk",
+            "wallop",
+            "grow"
+        ],
+        "id": "walter"
+    },
+    "gerald": {
+        "name": "GERALD",
+        "type": "Grass",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "2",
+            "stamina": "3",
+            "attack": "4",
+            "defense": "1",
+            "speed": "5"
+        },
+        "learnedMoves": "",
+        "learnableMoves": [
+            "chomp",
+            "slap",
+            "whip",
+            "grow"
+        ],
+        "id": "gerald"
+    },
+    "Martha": {
+        "name": "MARTHA",
+        "type": "Grass",
+        "currentHP": "",
+        "currentStamina": "",
+        "currentAttack": "",
+        "currentDefense": "",
+        "currentSpeed": "",
+        "status": "alive",
+        "stats": {
+            "hp": "4",
+            "stamina": "3",
+            "attack": "2",
+            "defense": "5",
             "speed": "1"
         },
         "learnedMoves": "",
         "learnableMoves": [
-            "bonk",
-            "hide",
-            "belch",
-            "throw"
+            "needle",
+            "stab",
+            "prickle",
+            "grow"
         ],
-        "id": "bin_dweller"
+        "id": "martha"
     }
 }
