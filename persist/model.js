@@ -38,6 +38,7 @@ const monSchema = mongoose.Schema({
     },
     learnedMoves: { type: [moveSchema], required: true, validate: [arrayLimit, 'Number of moves learned exceeds the limit of 3'] },
     learnableMoves: { type: [String], required: true },
+    id: { type: String, default: "", required: true },
 });
 
 const teama = mongoose.Schema({

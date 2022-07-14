@@ -91,7 +91,7 @@ button:hover {
     text-shadow: 2px 2px 2px rgb(150, 150, 150);
     font-size: 45px;
     width: 70vw;
-    padding-top: 15vh;
+    padding-top: 8vh;
     padding-right: 2vw;
     padding-left: 30px;
 }
@@ -123,11 +123,12 @@ button:hover {
     padding-top: 5px;
     height: 100px;
     width: 200px;
-    background-color:rgb(150, 150, 150)
+    background-color:rgb(150, 150, 150);
+    font-size: 30px;
+    font-family: 'Edu SA Beginner', cursive;
 }
 #mon-container {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
     padding-top: 15px;
 }
@@ -135,6 +136,8 @@ button:hover {
     background-color:rgb(101, 101, 101);
     height: 100px;
     width: 200px;
+    font-size: 30px;
+    font-family: 'Edu SA Beginner', cursive;
 }
 #log-container {
     background-color:rgb(185, 185, 185);

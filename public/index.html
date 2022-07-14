@@ -30,7 +30,7 @@
             </div>
             <div id="home-content">
                 <div id="sidebar">
-                    <button v-on:click="showPlay">PLAY</button><br>
+                    <button v-on:click="showBattle">PLAY</button><br>
                     <button v-on:click="showTeambuilder">TEAMBUILDER</button><br>
                     <button v-on:click="showChat">CHAT</button><br>
                     <button v-on:click="showCompendium">COMPENDIUM</button><br>
@@ -57,16 +57,13 @@
             <div id="battle-container">
                 <div id="sprite-box">
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
+                    <img :src="'/images/' + activeMon.id + '.jpg'">
                 </div>
                 <div id="move-container"> <!-- Make this a v-for once we have an array containing all moves -->
-                    <button class="move"></button>
-                    <button class="move"></button>
-                    <button class="move"></button>
+                    <button class="move" v-for="move in monMove">{{ move.name }}</button>
                 </div>
-                <div id="mon-container"> <!-- Make this a v-for once we have an array containing all possible switches -->
-                    <button class="mon"></button> 
-                    <button class="mon"></button>
-                    <button class="mon"></button>
+                <div id="mon-container" > <!-- Make this a v-for once we have an array containing all possible switches -->
+                    <button v-for="mon in battleMons" class="mon">{{ mon.name }}</button> 
                 </div>
             </div>
             

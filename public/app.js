@@ -9,7 +9,7 @@ Vue.component('mon', {
                     Type: {{ mon.type }} <br>
                 </div>
                 <div class='img-stats-container'>
-                    <img src="/images/gregory.jpg">
+                    <img :src="'/images/' + mon.id + '.jpg'">
                     <div class='monStats'>
                         HP: {{ mon.stats.hp }} <br>
                         STA: {{ mon.stats.stamina }} <br>
@@ -50,6 +50,9 @@ var app = new Vue({
         allMons: "",
         selectedMon: {},
         showMon: false,
+        battleMons: [],
+        monMove: [],
+        activeMon: {},
     },
     methods: {
         showHome: function () {
@@ -61,6 +64,7 @@ var app = new Vue({
         },
         showBattle: function () {
             this.page = "battle";
+            this.getBattle();
         },
         showPlay: function () {
             this.subpage = "play";
@@ -169,6 +173,23 @@ var app = new Vue({
                 console.log("mons not found");
             } else {
                 console.log("something went wrong while getting mons", response.status, response)
+            }
+        },
+        getBattle: async function () {
+            let response = await fetch(`${URL}/battles/AI/62d05572f0d3d51db735296b`, {
+                credentials: "include"
+            });
+            if (response.status == 200) {
+                let data = await response.json();
+                console.log(data);
+                this.battleMons = data.player.mons;
+                this.monMove = data.player.activeMon.learnedMoves
+                this.activeMon = data.player.activeMon
+                console.log("fetched battlemons")
+            } else if (response.status == 404) {
+                console.log("battle not found");
+            } else {
+                console.log("something went wrong while getting the battle", response.status, response)
             }
         }
     },
