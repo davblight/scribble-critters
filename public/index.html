@@ -41,8 +41,10 @@
                 <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">TEST TEAMBUILDER</div>
                 <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'">TEST CHAT</div>
                 <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">
-                    <div id="compendium" v-for="mon in allMons">
-                        <button v-on:click="showMonInfo(mon)">{{ mon.name }}</button>
+                    <div>
+                        <div id="compendium" v-for="mon in allMons">
+                            <button v-on:click="showMonInfo(mon)">{{ mon.name }}</button>
+                        </div>
                     </div>
                     <mon v-bind:mon="selectedMon" v-if="showMon"></mon>
 

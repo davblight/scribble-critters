@@ -62,9 +62,10 @@ h2 {
 #sidebar {
     display: flex;
     flex-direction: column;
-    width: 25vw;
+    width: 20vw;
     height: 76vh;
-    background-color: rgb(234, 234, 234);
+    background-image: url("images/paper-background.jpg");
+    background-size: 500%;
     padding-top: 15vh;
     align-items: baseline;
     box-shadow: 5px -5px 5px rgb(150, 150, 150);
@@ -84,14 +85,18 @@ button:hover {
     cursor: pointer;
 }
 .subpage {
-    background-color: rgb(234, 234, 234);
+    background-image: url("images/paper-background.jpg");
+    background-size: 200%;
     box-shadow: -5px -5px 5px rgb(150, 150, 150);
     text-shadow: 2px 2px 2px rgb(150, 150, 150);
     font-size: 45px;
-    width: 65vw;
+    width: 70vw;
     padding-top: 15vh;
     padding-right: 2vw;
     padding-left: 30px;
+}
+#subpage-compendium {
+    display: flex;
 }
 #battle-page {
     display: flex;
@@ -145,7 +150,7 @@ button:hover {
 .monInfo {
     display: flex;
 }
-.monInfo > button {
+#compendium > button {
     color: black;
     font-size: 45px;
     border: none;
@@ -153,21 +158,42 @@ button:hover {
     padding-left: 2vw;
     text-shadow: 2px 2px 2px rgb(150, 150, 150);
 }
+#compendium > button:hover {
+    color:rgb(94, 94, 94);
+}
 .monCard {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 500px;
-    width: 350px;
+    height: 490px;
+    width: 400px;
     border: 2px solid;
+    background-color:rgb(248, 248, 248);
     border-color:rgb(150, 150, 150);
     box-shadow: -1px -1px 3px rgb(150, 150, 150);
     padding: 15px;
     text-shadow: none;
+    font-size: 40px;
+    margin-left: 50px;
+}
+.monCard > div > img {
+    width: 150px;
+    height: 180px;
+}
+.img-stats-container {
+    display: flex;
+    justify-content: space-around;
+    width: 400px;
+    padding-top: 25px;
+}
+.monType {
     font-family: 'Edu SA Beginner', cursive;
     font-size: 20px;
 }
-.monCard > img {
-    width: 150px;
-    height: 180px;
+.monStats {
+    font-size: 30px;
+}
+.monMoves {
+    font-family: 'Edu SA Beginner', cursive;
+    font-size: 20px;
 }

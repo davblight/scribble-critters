@@ -4,8 +4,24 @@ Vue.component('mon', {
     template: `
         <div class="monInfo">
             <div class='monCard'>
-                <img src="/images/gregory.jpg">
-                Type: {{ mon.type }}
+                {{ mon.name }} <br>
+                <div class='monType'>
+                    Type: {{ mon.type }} <br>
+                </div>
+                <div class='img-stats-container'>
+                    <img src="/images/gregory.jpg">
+                    <div class='monStats'>
+                        HP: {{ mon.stats.hp }} <br>
+                        STA: {{ mon.stats.stamina }} <br>
+                        ATK: {{ mon.stats.attack }} <br>
+                        DEF: {{ mon.stats.defense }} <br>
+                        SPD: {{ mon.stats.speed }}
+                    </div>
+                </div> <br>
+                MOVES:
+                <div class='monMoves' v-for='move in mon.learnableMoves'>
+                    {{ move }}
+                </div>
             </div>
         </div>`,
     props: [

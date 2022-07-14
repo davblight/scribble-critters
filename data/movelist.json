@@ -106,5 +106,149 @@
         "effect": "self_nap",
         "id": "nap",
         "monHasStamina": "true"
+    },
+    "flop": {
+        "name": "FLOP",
+        "power": "1",
+        "staminaCost": "0",
+        "type": "NORMAL",
+        "effect": "self_flop",
+        "id": "flop",
+        "monHasStamina": "true"
+    },
+    "mitosis": {
+        "name": "MITOSIS",
+        "power": "0",
+        "staminaCost": "2",
+        "type": "NORMAL",
+        "effect": "self_mitosis",
+        "id": "mitosis",
+        "monHasStamina": "true"
+    },
+    "splash": {
+        "name": "SPLASH",
+        "power": "2",
+        "staminaCost": "2",
+        "type": "WATER",
+        "effect": "",
+        "id": "splash",
+        "monHasStamina": "true"
+    },
+    "chomp": {
+        "name": "CHOMP",
+        "power": "3",
+        "staminaCost": "2",
+        "type": "NORMAL",
+        "effect": "",
+        "id": "chomp",
+        "monHasStamina": "true"
+    },
+    "stomp": {
+        "name": "STOMP",
+        "power": "2",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "",
+        "id": "stomp",
+        "monHasStamina": "true"
+    },
+    "caw": {
+        "name": "CAW",
+        "power": "0",
+        "staminaCost": "2",
+        "type": "NORMAL",
+        "effect": "self.caw",
+        "id": "caw",
+        "monHasStamina": "true"
+    },
+    "peck": {
+        "name": "PECK",
+        "power": "2",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "",
+        "id": "peck",
+        "monHasStamina": "true"
+    },
+    "stab": {
+        "name": "STAB",
+        "power": "3",
+        "staminaCost": "2",
+        "type": "NORMAL",
+        "effect": "",
+        "id": "stab",
+        "monHasStamina": "true"
+    },
+    "clap": {
+        "name": "CLAP",
+        "power": "0",
+        "staminaCost": "2",
+        "type": "NORMAL",
+        "effect": "self_clap",
+        "id": "clap",
+        "monHasStamina": "true"
+    },
+    "flap": {
+        "name": "FLAP",
+        "power": "0",
+        "staminaCost": "2",
+        "type": "NORMAL",
+        "effect": "self_flap",
+        "id": "flap",
+        "monHasStamina": "true"
+    },
+    "spore": {
+        "name": "SPORE",
+        "power": "2",
+        "staminaCost": "1",
+        "type": "GRASS",
+        "effect": "",
+        "id": "spore",
+        "monHasStamina": "true"
+    },
+    "wallop": {
+        "name": "WALLOP",
+        "power": "4",
+        "staminaCost": "3",
+        "type": "NORMAL",
+        "effect": "",
+        "id": "wallop",
+        "monHasStamina": "true"
+    },
+    "grow": {
+        "name": "GROW",
+        "power": "0",
+        "staminaCost": "2",
+        "type": "GRASS",
+        "effect": "self_grow",
+        "id": "grow",
+        "monHasStamina": "true"
+    },
+    "whip": {
+        "name": "WHIP",
+        "power": "2",
+        "staminaCost": "1",
+        "type": "NORMAL",
+        "effect": "",
+        "id": "whip",
+        "monHasStamina": "true"
+    },
+    "needle": {
+        "name": "NEEDLE",
+        "power": "3",
+        "staminaCost": "2",
+        "type": "GRASS",
+        "effect": "",
+        "id": "needle",
+        "monHasStamina": "true"
+    },
+    "prickle": {
+        "name": "PRICKLE",
+        "power": "1",
+        "staminaCost": "0",
+        "type": "GRASS",
+        "effect": "",
+        "id": "PRICKLE",
+        "monHasStamina": "true"
     }
 }
