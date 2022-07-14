@@ -113,7 +113,8 @@
         "staminaCost": "0",
         "type": "NORMAL",
         "effect": "self_flop",
-        "id": "flop"
+        "id": "flop",
+        "monHasStamina": "true"
     },
     "mitosis": {
         "name": "MITOSIS",
@@ -121,7 +122,8 @@
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "self_mitosis",
-        "id": "mitosis"
+        "id": "mitosis",
+        "monHasStamina": "true"
     },
     "splash": {
         "name": "SPLASH",
@@ -129,7 +131,8 @@
         "staminaCost": "2",
         "type": "WATER",
         "effect": "",
-        "id": "splash"
+        "id": "splash",
+        "monHasStamina": "true"
     },
     "chomp": {
         "name": "CHOMP",
@@ -137,7 +140,8 @@
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "",
-        "id": "chomp"
+        "id": "chomp",
+        "monHasStamina": "true"
     },
     "stomp": {
         "name": "STOMP",
@@ -145,7 +149,8 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "",
-        "id": "stomp"
+        "id": "stomp",
+        "monHasStamina": "true"
     },
     "caw": {
         "name": "CAW",
@@ -153,7 +158,8 @@
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "self.caw",
-        "id": "caw"
+        "id": "caw",
+        "monHasStamina": "true"
     },
     "peck": {
         "name": "PECK",
@@ -161,7 +167,8 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "",
-        "id": "peck"
+        "id": "peck",
+        "monHasStamina": "true"
     },
     "stab": {
         "name": "STAB",
@@ -169,7 +176,8 @@
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "",
-        "id": "stab"
+        "id": "stab",
+        "monHasStamina": "true"
     },
     "clap": {
         "name": "CLAP",
@@ -177,7 +185,8 @@
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "self_clap",
-        "id": "clap"
+        "id": "clap",
+        "monHasStamina": "true"
     },
     "flap": {
         "name": "FLAP",
@@ -185,7 +194,8 @@
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "self_flap",
-        "id": "flap"
+        "id": "flap",
+        "monHasStamina": "true"
     },
     "spore": {
         "name": "SPORE",
@@ -193,7 +203,8 @@
         "staminaCost": "1",
         "type": "GRASS",
         "effect": "",
-        "id": "spore"
+        "id": "spore",
+        "monHasStamina": "true"
     },
     "wallop": {
         "name": "WALLOP",
@@ -201,7 +212,8 @@
         "staminaCost": "3",
         "type": "NORMAL",
         "effect": "",
-        "id": "wallop"
+        "id": "wallop",
+        "monHasStamina": "true"
     },
     "grow": {
         "name": "GROW",
@@ -209,7 +221,8 @@
         "staminaCost": "2",
         "type": "GRASS",
         "effect": "self_grow",
-        "id": "grow"
+        "id": "grow",
+        "monHasStamina": "true"
     },
     "whip": {
         "name": "WHIP",
@@ -217,7 +230,8 @@
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "",
-        "id": "whip"
+        "id": "whip",
+        "monHasStamina": "true"
     },
     "needle": {
         "name": "NEEDLE",
@@ -225,7 +239,8 @@
         "staminaCost": "2",
         "type": "GRASS",
         "effect": "",
-        "id": "needle"
+        "id": "needle",
+        "monHasStamina": "true"
     },
     "prickle": {
         "name": "PRICKLE",
@@ -233,6 +248,7 @@
         "staminaCost": "0",
         "type": "GRASS",
         "effect": "",
-        "id": "PRICKLE"
+        "id": "PRICKLE",
+        "monHasStamina": "true"
     }
 }
