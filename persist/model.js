@@ -11,6 +11,7 @@ const moveSchema = mongoose.Schema({
     name: { type: String, required: true },
     power: { type: String, default: "" },
     staminaCost: { type: String, default: "" },
+    monHasStamina: { type: Boolean, required: true },
     type: { type: String, default: "" },
     effect: { type: String, default: "" },
     id: { type: String, required: true },

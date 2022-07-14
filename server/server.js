@@ -2,6 +2,7 @@ const express = require('express');
 const { User, Team, Battle } = require("../persist/model");
 const setUpAuth = require("./auth");
 const setUpSession = require("./session");
+const takeTurn = require("./turn");
 const fs = require("fs");
 const app = express();
 
@@ -361,6 +362,92 @@ app.post("/battles/AI", async (req, res) => {
         });
         return;
     }
+});
+
+//Perform an action in the battle and return updated state
+// {
+//     action: "", (fight / switch)
+//     subject: "", (moveId / switchMonId)
+
+// }
+app.put("/battles/AI/:id", async (req, res) => {
+    //check auth
+    if (!req.user) {
+        res.status(401).json({
+            message: "Unauthenticated"
+        });
+        return;
+    }
+    //get battle
+    let battle;
+    try {
+        battle = await Battle.findById(req.params.id);
+        if (!battle) {
+            res.status(404).json({ message: `Battle not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `put request failed to retrieve battle session`,
+            error: err,
+        });
+        return;
+    }
+    //check if battle is finished
+    if (battle.finished) {
+        res.status(403).json({
+            message: `The battle is over! Why are you still here? Go home!`
+        });
+        return;
+    }
+    //check if player owns team
+    if (battle.player.user._id != req.user.id) {
+        res.status(403).json({
+            message: `you are not authorized to spectate this battle`
+        });
+        return;
+    }
+    //check if forfeit
+    if (req.body.action == "forfeit") {
+        battle.finished = true;
+        try {
+            newBattle = await Battle.findByIdAndUpdate(req.params.id, battle, { new: true });
+            if (!newBattle) {
+                res.status(404).json({ message: `Battle not found when trying to forfeit` });
+                return;
+            }
+        } catch (err) {
+            res.status(500).json({
+                message: `put request failed to forfeit battle session`,
+                error: err,
+            });
+            return;
+        }
+        res.status(200).json(newBattle);
+        return;
+    }
+    //attempt to take a turn and return updated battle state
+    try {
+        updatedBattle = takeTurn(app, battle, req.body.action, req.body.subject);
+    } catch (err) {
+        res.status(403).json({ message: err });
+        return;
+    }
+    //put updated battle state
+    try {
+        newBattle = await Battle.findByIdAndUpdate(req.params.id, updatedBattle, { new: true });
+        if (!newBattle) {
+            res.status(404).json({ message: `Battle not found when trying to update` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `put request failed to update battle session`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(newBattle);
 });
 
 

@@ -26,9 +26,7 @@ Tasks:
     -Mouse-over highlights look nice
 --DONE 2. Get the server running with authentication
 --DONE 3. API/JSON containining all mon Data (name, learnsets, stats)
-    -use jsonbin? or a file in the server
-    -export and require
-    -see Schemas for required information
+            -see Schemas for required information
 4. Teambuilder
     --DONE -Display existing teams
         -GET method at the /user/teams endpoint so that the only ones displayed match user_id
@@ -53,14 +51,14 @@ Tasks:
             -Procedurally display mons as they are added. Clicking on an added mon allows the user to edit the fields
         -"Save Team" button that runs the POST method under Create new team and returns the user to the screen where they see all their teams
 5. Battle system
-    -Establish a battle session
+    --DONE -Establish a battle session
         -For now, only against an AI
         -Select the team they want to use
-        -POST to /battle/id/action, passing the user team and AI team as objects and getting the battle_id
-            -modify those team objects as the battle proceeds
-            -once all mons on one side have died, set finished to true and start the timer to delete the battle
-            -this gives us easy access to all actions in case we want to display them
-        -Every second or so, GET byID the /battle/id so that we can update the UI with what actions have been made
+    -POST to /battle/id/action, passing the user team and AI team as objects and getting the battle_id
+        -modify those team objects as the battle proceeds
+        -once all mons on one side have died, set finished to true and start the timer to delete the battle
+        -this gives us easy access to all actions in case we want to display them
+    -Every second or so, GET byID the /battle/id so that we can update the UI with what actions have been made
     -Battle Logic (see Battle Flow)
     -AI Logic and teams
         -Calculate what move will do the most damage against the mon in front, then click it
