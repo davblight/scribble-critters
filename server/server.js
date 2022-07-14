@@ -173,6 +173,12 @@ app.post("/teams", async (req, res) => {
         });
         return;
     }
+    if (req.body.mons.length == 0 || !req.body.mons) {
+        res.status(403).json({
+            message: "Your team is empty?"
+        });
+        return;
+    }
     //populate mons array with mons stats and move stats
     //loop through the mons sent in request
     let mons = [];
@@ -220,7 +226,7 @@ app.post("/teams", async (req, res) => {
         let team = await Team.create({
             name: req.body.name,
             mons: mons,
-            activeMon: "",
+            activeMon: {},
             user: {
                 name: req.user.username,
                 _id: req.user.id
@@ -347,6 +353,9 @@ app.post("/battles/AI", async (req, res) => {
         });
         return;
     }
+    //create team
+    playerTeam.activeMon = playerTeam.mons[0];
+    AITeam.activeMon = AITeam.mons[0];
     try {
         let battle = await Battle.create({
             player: playerTeam,
@@ -362,6 +371,56 @@ app.post("/battles/AI", async (req, res) => {
         });
         return;
     }
+});
+
+app.get("/battles/AI/:id", async (req, res) => {
+    //check auth
+    if (!req.user) {
+        res.status(401).json({
+            message: "Unauthenticated"
+        });
+        return;
+    }
+    let battle;
+    try {
+        battle = await Battle.findById(req.params.id);
+        if (!battle) {
+            res.status(404).json({ message: `Battle not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to retrieve battle session`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(battle);
+});
+
+app.get("/battles", async (req, res) => {
+    //check auth
+    if (!req.user) {
+        res.status(401).json({
+            message: "Unauthenticated"
+        });
+        return;
+    }
+    let battles;
+    try {
+        battles = await Battle.find();
+        if (!battles) {
+            res.status(404).json({ message: `Battles not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to retrieve battle sessions`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(battles);
 });
 
 //Perform an action in the battle and return updated state
@@ -403,7 +462,7 @@ app.put("/battles/AI/:id", async (req, res) => {
     //check if player owns team
     if (battle.player.user._id != req.user.id) {
         res.status(403).json({
-            message: `you are not authorized to spectate this battle`
+            message: `you are not authorized to participate in this battle`
         });
         return;
     }
@@ -428,7 +487,7 @@ app.put("/battles/AI/:id", async (req, res) => {
     }
     //attempt to take a turn and return updated battle state
     try {
-        updatedBattle = takeTurn(app, battle, req.body.action, req.body.subject);
+        updatedBattle = takeTurn(battle, req.body.action, req.body.subject);
     } catch (err) {
         res.status(403).json({ message: err });
         return;

@@ -11,7 +11,7 @@ const moveSchema = mongoose.Schema({
     name: { type: String, required: true },
     power: { type: String, default: "" },
     staminaCost: { type: String, default: "" },
-    monHasStamina: { type: Boolean, required: true },
+    monHasStamina: { type: Boolean, default: true },
     type: { type: String, default: "" },
     effect: { type: String, default: "" },
     id: { type: String, required: true },
@@ -43,7 +43,7 @@ const monSchema = mongoose.Schema({
 const teama = mongoose.Schema({
     name: { type: String, required: true },
     mons: { type: [monSchema], required: true, validate: [arrayLimit, 'Number of mons exceeds the limit of 3'] },
-    activeMon: { type: String, default: "" },
+    activeMon: { type: monSchema, default: {} },
     user: {
         type: {
             name: { type: String, required: true },
