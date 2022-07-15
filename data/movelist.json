@@ -28,7 +28,7 @@
     },
     "hibernate": {
         "name": "HIBERNATE",
-        "power": "",
+        "power": "0",
         "staminaCost": "0",
         "type": "NORMAL",
         "effect": "self_hibernate",
@@ -46,7 +46,7 @@
     },
     "hide": {
         "name": "HIDE",
-        "power": "",
+        "power": "0",
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "self_turtle",
@@ -100,7 +100,7 @@
     },
     "nap": {
         "name": "NAP",
-        "power": "3",
+        "power": "0",
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "self_nap",

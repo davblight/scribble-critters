@@ -149,16 +149,16 @@ app.post("/teams", async (req, res) => {
     let userTeams;
     try {
         userTeams = await Team.find({ "user._id": req.user.id });
-        if (userTeams) {
-            if (userTeams.length == 3) {
-                res.status(403).json({ message: `Max number of created teams reached` });
-                return;
-            }
-            if (userTeams.length > 3) {
-                res.status(403).json({ message: `Max number of created teams already exceeded...wait how did you do that?` });
-                return;
-            }
-        }
+        // if (userTeams) {
+        //     if (userTeams.length == 3) {
+        //         res.status(403).json({ message: `Max number of created teams reached` });
+        //         return;
+        //     }
+        //     if (userTeams.length > 3) {
+        //         res.status(403).json({ message: `Max number of created teams already exceeded...wait how did you do that?` });
+        //         return;
+        //     }
+        // }
     } catch {
         res.status(500).json({
             message: `get request failed to get user teams`,
@@ -226,7 +226,7 @@ app.post("/teams", async (req, res) => {
         let team = await Team.create({
             name: req.body.name,
             mons: mons,
-            activeMon: {},
+            activeMon: mons[0],
             user: {
                 name: req.user.username,
                 _id: req.user.id
@@ -423,10 +423,45 @@ app.get("/battles", async (req, res) => {
     res.status(200).json(battles);
 });
 
+//returns a list of battles that involve the user
+app.get("/user/battles", async (req, res) => {
+    //check auth
+    if (!req.user) {
+        res.status(401).json({
+            message: "Unauthenticated"
+        });
+        return;
+    }
+    //get list of battles
+    let battles;
+    try {
+        battles = await Battle.find();
+        if (!battles) {
+            res.status(404).json({ message: `Battles not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to retrieve battle sessions`,
+            error: err,
+        });
+        return;
+    }
+    //create array of battles that involve the user
+    let userBattles = [];
+    battles.forEach(battle => {
+        if (battle.player.user._id == req.user.id) {
+            userBattles.push(battle);
+        }
+    });
+    //return user battles
+    res.status(200).json(userBattles);
+});
+
 //Perform an action in the battle and return updated state
 // {
-//     action: "", (fight / switch)
-//     subject: "", (moveId / switchMonId)
+//     action: "", (fight / switch / rest)
+//     subject: "", (moveId / switchMonId / "")
 
 // }
 app.put("/battles/AI/:id", async (req, res) => {
