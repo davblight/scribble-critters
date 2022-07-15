@@ -38,7 +38,38 @@
                     <button v-on:click="showLogin">LOG OUT</button>
                 </div>
                 <div class="subpage" id="subpage-play" v-if="subpage == 'play'">TEST PLAY</div>
-                <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">TEST TEAMBUILDER</div>
+                <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">
+                    <div id="tb-topbar">
+                        <div>
+                            <input type="text" placeholder="Nickname">
+                            <img id="tb-sprite" :src="'/images/'+tbMon.id+'.png'">
+                            <input type="text" placeholder="Scribblemon" v-on:click="tbShowMons" v-model="tbMon.id">
+                        </div>
+                        <div id="tb-inputs-container">
+                            <input class="tb-input" type="text" placeholder="Move" v-for="move in tbLearnedMoves" v-model="move.name">
+                        </div>
+                        <button id="tbSaveMon">Save Mon</button>
+                    </div>
+                    <div id="tb-botbar">
+                        <div v-if="tbView == 'mons'">
+                            <button class="tbMon" v-for="mon in allMons" v-on:click="tbSetMon(mon)">
+                                {{ mon.name }} : {{ mon.type }}
+                                <span class="tbStats">
+                                    HP: {{ mon.stats.hp }}     STA: {{ mon.stats.stamina }}     ATK: {{ mon.stats.attack }}     DEF: {{ mon.stats.defense }}     SPD: {{ mon.stats.speed }}
+                                </span>     
+                            </button>
+                        </div>
+                        <div v-if="tbView == 'moves'">
+                            <button class="tbMove" v-for="move in tbLearnableMoves" v-on:click="tbPushMove(move)">
+                                {{ move.name }} : {{ move.type }}
+                                <span class="tbMoveStats">
+                                    Power: {{ move.power }}     Stamina Cost: {{ move.staminaCost }}
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'">TEST CHAT</div>
                 <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">
                     <div>
@@ -57,7 +88,8 @@
             <div id="battle-container">
                 <div id="sprite-box">
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
-                    <img :src="'/images/'+activeMon+'.png'">
+                    <img id="player1-mon" :src="'/images/'+activeMon+'.png'">
+                    <img id="AI-mon" :src="'/images/'+AIMon+'.png'">
                 </div>
                 <div id="move-container"> <!-- Make this a v-for once we have an array containing all moves -->
                     <button class="move" v-for="move in monMove">{{ move.name }}</button>

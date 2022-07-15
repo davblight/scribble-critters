@@ -48,11 +48,18 @@ var app = new Vue({
         passwordInput: "",
         loggedInUser: "",
         allMons: "",
+        allMoves: {},
         selectedMon: {},
         showMon: false,
         battleMons: [],
         monMove: [],
-        activeMonID: "",
+        activeMon: "",
+        AIMon: "",
+        tbMon: "bin_dweller",
+        tbMoves: [],
+        tbView: "",
+        tbLearnableMoves: [],
+        tbLearnedMoves: [],
     },
     methods: {
         showHome: function () {
@@ -85,6 +92,21 @@ var app = new Vue({
         showMonInfo: function (mon) {
             this.showMon = true;
             this.selectedMon = mon;
+        },
+        tbShowMons: function () {
+            this.tbView = "mons";
+            this.getMons();
+        },
+        tbSetMon: async function (mon) {
+            this.tbMon = mon;
+            await this.getMoves();
+            mon.learnableMoves.forEach((move) => {
+                this.tbLearnableMoves.push(this.allMoves[move])
+            })
+            this.tbView = "moves";
+        },
+        tbPushMove: function (move) {
+            this.tbLearnedMoves.push(move);
         },
 
         //USER LOGIN AND AUTHENTICATION LOGIC
@@ -175,6 +197,18 @@ var app = new Vue({
                 console.log("something went wrong while getting mons", response.status, response)
             }
         },
+        getMoves: async function () {
+            let response = await fetch(`${URL}/moves`, {
+                credentials: "include"
+            });
+            if (response.status == 200) {
+                let data = await response.json();
+                this.allMoves = data;
+                console.log("fetched all moves");
+            } else {
+                console.log("something went wrong while getting moves", response.status, response)
+            }
+        },
         getBattle: async function () {
             let response = await fetch(`${URL}/battles/AI/62d0634949cb0a2584549d42`, {
                 credentials: "include"
@@ -185,6 +219,7 @@ var app = new Vue({
                 this.battleMons = data.player.mons;
                 this.monMove = data.player.activeMon.learnedMoves
                 this.activeMon = data.player.activeMon.id
+                this.AIMon = data.AI.activeMon.id
                 console.log("fetched battlemons")
             } else if (response.status == 404) {
                 console.log("battle not found");
