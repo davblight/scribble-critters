@@ -9,7 +9,7 @@ Vue.component('mon', {
                     Type: {{ mon.type }} <br>
                 </div>
                 <div class='img-stats-container'>
-                    <img :src="'/images/' + mon.id + '.jpg'">
+                    <img :src="'/images/' + mon.id + '.png'">
                     <div class='monStats'>
                         HP: {{ mon.stats.hp }} <br>
                         STA: {{ mon.stats.stamina }} <br>

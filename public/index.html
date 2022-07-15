@@ -57,7 +57,7 @@
             <div id="battle-container">
                 <div id="sprite-box">
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
-                    <img :src="'/images/'+activeMon+'.jpg'">
+                    <img :src="'/images/'+activeMon+'.png'">
                 </div>
                 <div id="move-container"> <!-- Make this a v-for once we have an array containing all moves -->
                     <button class="move" v-for="move in monMove">{{ move.name }}</button>

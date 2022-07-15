@@ -180,8 +180,8 @@ button:hover {
     margin-left: 50px;
 }
 .monCard > div > img {
-    width: 150px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
 }
 .img-stats-container {
     display: flex;
