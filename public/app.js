@@ -1,5 +1,7 @@
 const URL = "http://localhost:8080"
 
+
+//Mon component for the display of mons in the Compendium
 Vue.component('mon', {
     template: `
         <div class="monInfo">
@@ -55,11 +57,17 @@ var app = new Vue({
         monMove: [],
         activeMon: "",
         AIMon: "",
-        tbMon: "bin_dweller",
+        //All tb variables should only be used in the scope of the teambuilder
+        tbMon: "",
         tbMoves: [],
         tbView: "",
         tbLearnableMoves: [],
-        tbLearnedMoves: [],
+        tbLearnedMoves: ["", "", ""],
+        tbMoveCounter: 0,
+        tbWorkingTeam: [],
+        tbNameInput: "",
+        tbErrorMessage: "",
+        tbTeamNameInput: "",
     },
     methods: {
         showHome: function () {
@@ -97,6 +105,9 @@ var app = new Vue({
             this.tbView = "mons";
             this.getMons();
         },
+        tbShowSubmit: function () {
+            this.tbView = "tbPost"
+        },
         tbSetMon: async function (mon) {
             this.tbMon = mon;
             await this.getMoves();
@@ -106,7 +117,64 @@ var app = new Vue({
             this.tbView = "moves";
         },
         tbPushMove: function (move) {
-            this.tbLearnedMoves.push(move);
+            if (this.tbMoveCounter < 3 && !this.tbLearnedMoves.includes(move)) {
+                this.tbLearnedMoves.splice(this.tbMoveCounter, 1, move);
+                this.tbMoveCounter += 1;
+            }
+        },
+        tbSaveMon : function () {
+            let moves = [];
+            this.tbLearnedMoves.forEach(move => {
+                moves.push(move.id)
+            })
+            let newMon = {
+                name: this.tbNameInput,
+                id: this.tbMon.id,
+                learnedMoves: moves
+            }
+            if (this.tbWorkingTeam.length < 3) {
+                if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
+                    this.tbWorkingTeam.push(newMon)
+                    //Clean up the teambuilder for the next mon to be input
+                    this.tbNameInput = "";
+                    this.tbMon = "";
+                    this.tbLearnedMoves = ["", "", ""];
+                    this.tbLearnableMoves = [];
+                    this.tbMoveCounter = 0;
+                    this.tbView = "mons";
+                } else {
+                    this.tbErrorMessage = "Please fill out all fields.";
+                }
+            } else {
+                this.tbErrorMessage = "Only 3 Mons allowed.";
+            }
+        },
+        tbPostTeam: async function () {
+            if (!this.tbWorkingTeam.includes("") && this.tbTeamNameInput != "") {
+                let newTeam = {
+                    name: this.tbTeamNameInput,
+                    mons: this.tbWorkingTeam
+                }
+                let response = await fetch(`${URL}/teams`, {
+                    method: "POST",
+                    body: JSON.stringify(newTeam),
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include"
+                });
+
+                let body = response.json();
+                console.log(body);
+
+                if (response.status == 201) {
+                    console.log("team successfully posted");
+                } else {
+                    console.log("error posting team", response.status, response)
+                }
+            } else {
+                this.tbErrorMessage = "Please draw a full team of 3."
+            }
         },
 
         //USER LOGIN AND AUTHENTICATION LOGIC
@@ -177,7 +245,7 @@ var app = new Vue({
 
             if (response.status == 201) {
                 console.log("user successfully created");
-            } else if (response.status = 404) {
+            } else if (response.status == 404) {
                 console.log("error creating user");
             } else {
                 console.log("unknown error posting /users", response.status, response);
@@ -226,7 +294,26 @@ var app = new Vue({
             } else {
                 console.log("something went wrong while getting the battle", response.status, response)
             }
-        }
+        },
+        postTeam: async function () {
+            let response = await fetch(`${URL}/teams`, {
+                method: "POST",
+                body: JSON.stringify(this.tbWorkingTeam),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+            let body = response.json();
+            console.log(body);
+
+            if (response.status == 201) {
+                console.log("team posted successfully");
+                this.tbWorkingTeam = [];
+            } else {
+                console.log("error posting team", response.status, response)
+            }
+        },
     },
     created: function () {
         this.getSession();

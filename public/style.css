@@ -69,6 +69,7 @@ h2 {
     padding-top: 15vh;
     align-items: baseline;
     box-shadow: 0px 0px 20px rgb(150, 150, 150);
+    border-radius: 10px;
 }
 #sidebar > button {
     color: black;
@@ -94,6 +95,7 @@ button:hover {
     padding-top: 8vh;
     padding-right: 2vw;
     padding-left: 30px;
+    border-radius: 10px;
 }
 #subpage-compendium {
     display: flex;
@@ -170,7 +172,7 @@ button:hover {
     align-items: center;
     height: 490px;
     width: 400px;
-    border: 2px solid;
+    border-radius: 10px;
     background-color:rgb(248, 248, 248);
     box-shadow: 0px 0px 20px rgb(150, 150, 150);
     padding: 15px;
@@ -202,7 +204,7 @@ button:hover {
 #sprite-box {
     background-image: url("images/paper-background.jpg");
     background-size: 100%;
-    border: 2px solid;
+    border-radius: 10px;
     box-shadow: 0px 0px 20px rgb(150, 150, 150);
 }
 #sprite-box > img {
@@ -220,6 +222,7 @@ button:hover {
     padding-top: 15px;
     padding-bottom: 15px;
     box-shadow: 0px 0px 20px rgb(150, 150, 150);
+    border-radius: 10px;
 }
 #tb-topbar > div {
     display: flex;
@@ -261,4 +264,25 @@ button:hover {
     font-family: 'Edu SA Beginner', cursive;
     font-size: 15px;
     padding-left: 30px;
+}
+.tbMove {
+    padding-top: 10px;
+}
+#tbRightmost {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#tbErrorMessage {
+    font-family: 'Edu SA Beginner', cursive;
+    color: rgb(154, 36, 36);
+    font-size: 15px;
+    text-shadow: none;
+}
+#tbPost {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 50px;
 }

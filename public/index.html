@@ -41,14 +41,18 @@
                 <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">
                     <div id="tb-topbar">
                         <div>
-                            <input type="text" placeholder="Nickname">
+                            <input type="text" placeholder="Nickname" v-model="tbNameInput">
                             <img id="tb-sprite" :src="'/images/'+tbMon.id+'.png'">
                             <input type="text" placeholder="Scribblemon" v-on:click="tbShowMons" v-model="tbMon.id">
                         </div>
                         <div id="tb-inputs-container">
                             <input class="tb-input" type="text" placeholder="Move" v-for="move in tbLearnedMoves" v-model="move.name">
                         </div>
-                        <button id="tbSaveMon">Save Mon</button>
+                        <div id="tbRightmost">
+                            <button id="tbSaveMon" v-on:click="tbSaveMon">Save Mon</button>
+                            <p id="tbErrorMessage">{{ tbErrorMessage }}</p>
+                            <button id="tbSubmitTeam" v-on:click="tbShowSubmit">Submit Team</button>
+                        </div>
                     </div>
                     <div id="tb-botbar">
                         <div v-if="tbView == 'mons'">
@@ -66,6 +70,10 @@
                                     Power: {{ move.power }}     Stamina Cost: {{ move.staminaCost }}
                                 </span>
                             </button>
+                        </div>
+                        <div id="tbPost" v-if="tbView == 'tbPost'">
+                            <input type="text" v-model="tbTeamNameInput" placeholder="Team Name">
+                            <button v-on:click="tbPostTeam">Save Team</button>
                         </div>
                     </div>
 
