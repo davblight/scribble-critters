@@ -212,7 +212,7 @@ app.post("/teams", async (req, res) => {
         //create temp mon object to push to mon list
         let monObj = monList[monId];
         monObj.name = req.body.mons[i].name;
-        monObj.currentHP = monObj.stats.hp;
+        monObj.currentHP = monObj.stats.hp * 12;
         monObj.currentStamina = monObj.stats.stamina;
         monObj.currentAttack = monObj.stats.attack;
         monObj.currentDefense = monObj.stats.defense;
@@ -524,7 +524,7 @@ app.put("/battles/AI/:id", async (req, res) => {
     try {
         updatedBattle = takeTurn(battle, req.body.action, req.body.subject);
     } catch (err) {
-        res.status(403).json({ message: err });
+        res.status(403).json({ message: "something went wrong", error: err });
         return;
     }
     //put updated battle state
