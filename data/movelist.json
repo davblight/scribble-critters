@@ -62,13 +62,13 @@
         "id": "belch",
         "monHasStamina": "true"
     },
-    "throw_scrap": {
-        "name": "THROW SCRAP",
+    "throw": {
+        "name": "THROW",
         "power": "4",
         "staminaCost": "2",
         "type": "NORMAL",
         "effect": "",
-        "id": "throw_scrap",
+        "id": "throw",
         "monHasStamina": "true"
     },
     "slap": {
