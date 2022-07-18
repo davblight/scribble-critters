@@ -57,10 +57,11 @@ var app = new Vue({
         monMove: [],
         activeMon: "",
         AIMon: "",
+        userTeams: [],
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
-        tbView: "",
+        tbView: "existingTeams",
         tbLearnableMoves: [],
         tbLearnedMoves: ["", "", ""],
         tbMoveCounter: 0,
@@ -86,6 +87,7 @@ var app = new Vue({
         },
         showTeambuilder: function () {
             this.subpage = "teambuilder";
+            this.getTeams();
         },
         showChat: function () {
             this.subpage = "chat";
@@ -136,6 +138,7 @@ var app = new Vue({
                 if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
                     this.tbWorkingTeam.push(newMon)
                     //Clean up the teambuilder for the next mon to be input
+                    this.tbErrorMessage = "";
                     this.tbNameInput = "";
                     this.tbMon = "";
                     this.tbLearnedMoves = ["", "", ""];
@@ -314,6 +317,15 @@ var app = new Vue({
                 console.log("error posting team", response.status, response)
             }
         },
+        getTeams: async function () {
+            let response = await fetch(`${URL}/user/teams`, {
+                credentials: "include"
+            });
+            if (response.status == 200) {
+                this.userTeams = await response.json();
+                console.log(this.userTeams);
+            }
+        }
     },
     created: function () {
         this.getSession();

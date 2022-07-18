@@ -38,8 +38,15 @@
                     <button v-on:click="showLogin">LOG OUT</button>
                 </div>
                 <div class="subpage" id="subpage-play" v-if="subpage == 'play'">TEST PLAY</div>
+                <!-- START TEAMBUILDER HTML -->
                 <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">
-                    <div id="tb-topbar">
+                    <div id="existingTeams" v-if="tbView == 'existingTeams'">
+                        <div v-for="team in userTeams">
+                            <button class="existingTeamsButton">{{ team.name }}</button>
+                        </div>
+                        <button class="existingTeamsButton" id="newTeam" v-on:click="tbShowMons">New Team</button>
+                    </div>
+                    <div id="tb-topbar" v-if="tbView != 'existingTeams'">
                         <div>
                             <input type="text" placeholder="Nickname" v-model="tbNameInput">
                             <img id="tb-sprite" :src="'/images/'+tbMon.id+'.png'">
@@ -78,6 +85,7 @@
                     </div>
 
                 </div>
+                <!-- END TEAMBUILDER HTML -->
                 <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'">TEST CHAT</div>
                 <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">
                     <div>
