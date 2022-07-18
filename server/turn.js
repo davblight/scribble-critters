@@ -65,6 +65,11 @@ function fight(battle, attacker, defender, move) {
     }
     battle[defender].activeMon.currentHP = remainingHP;
     battle[attacker].activeMon.currentStamina = (parseInt(stamina) - parseInt(move.staminaCost));
+    if (parseInt(move.staminaCost) > parseInt(battle[attacker].activeMon.currentStamina)) {
+        battle[attacker].activeMon.learnedMoves[move].monHasStamina = false;
+    } else {
+        battle[attacker].activeMon.learnedMoves[move].monHasStamina = false;
+    }
 
     let actionText = `${attackMon.name} used ${move.name}!`
     let effectText = "";
