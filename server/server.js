@@ -396,6 +396,52 @@ app.put("/team/:id", async (req, res) => {
     }
 });
 
+//Delete existing team
+app.delete("/team/:id", async (req, res) => {
+    //check auth
+    if (!req.user) {
+        res.status(401).json({
+            message: "Unauthenticated"
+        });
+        return;
+    }
+    //get team to edit
+    let team;
+    try {
+        team = await Team.findById(req.params.id);
+        if (!team) {
+            res.status(404).json({ message: `team not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `delete request failed when finding team`,
+            error: err,
+        });
+        return;
+    }
+    //check if user is authed to edit this team
+    if (req.user.id != team.user._id) {
+        res.status(403).json({ message: `you are not authorized to delete this team` });
+        return;
+    }
+    let deletedTeam;
+    try {
+        deletedTeam = await Team.findByIdAndDelete(req.params.id);
+        if (!deletedTeam) {
+            res.status(404).json({ message: `team not found to delete` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `delete request failed when deleting team`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(deletedTeam);
+});
+
 //Get a list of all teams bound to the user requesting
 app.get("/user/teams", async (req, res) => {
     let userTeams;
