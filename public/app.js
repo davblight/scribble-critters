@@ -61,7 +61,7 @@ var app = new Vue({
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
-        tbView: "existingTeams",
+        tbView: "",
         tbLearnableMoves: [],
         tbLearnedMoves: ["", "", ""],
         tbMoveCounter: 0,
@@ -87,6 +87,9 @@ var app = new Vue({
         },
         showTeambuilder: function () {
             this.subpage = "teambuilder";
+            this.tbView = 'existingTeams'
+            this.tbResetFields();
+            this.tbWorkingTeam = [];
             this.getTeams();
         },
         showChat: function () {
@@ -185,6 +188,10 @@ var app = new Vue({
             this.tbMon = mon;
             this.tbLearnedMoves = mon.learnedMoves;
             this.tbNameInput = mon.name;
+        },
+        tbViewTeam: function (team) {
+            this.tbWorkingTeam = team.mons;
+            this.tbView = "mons";
         },
 
         //USER LOGIN AND AUTHENTICATION LOGIC
@@ -351,6 +358,19 @@ var app = new Vue({
             if (response.status == 200) {
                 this.userTeams = await response.json();
                 console.log(this.userTeams);
+            }
+        },
+        deleteTeam: async function (team_id) {
+            let response = await fetch(`${URL}/team/${team_id}`, {
+                method: "DELETE",
+                credentials: "include"
+            });
+            if (response.status == 200) {
+                let data = await response.json();
+                console.log(data);
+                this.getTeams();
+            } else {
+                console.log("error while deleting team", response.status, response)
             }
         }
     },

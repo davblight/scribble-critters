@@ -45,7 +45,8 @@
                 <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">
                     <div id="existingTeams" v-if="tbView == 'existingTeams'">
                         <div v-for="team in userTeams">
-                            <button class="existingTeamsButton">{{ team.name }}</button>
+                            <button class="existingTeamsButton" v-on:click="tbViewTeam(team)">{{ team.name }}</button>
+                            <button class="deleteTeamButton" v-on:click="deleteTeam(team._id)">Delete Team</button>
                         </div>
                         <button class="existingTeamsButton" id="newTeam" v-on:click="tbShowMons">New Team</button>
                     </div>
