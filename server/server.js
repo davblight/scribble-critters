@@ -20,7 +20,7 @@ app.post("/users", async (req, res) => {
         let user = await User.create({
             username: req.body.username,
             password: req.body.password,
-            role: "admin",
+            role: "user",
         });
         res.status(201).json(user);
     } catch (err) {
@@ -149,16 +149,16 @@ app.post("/teams", async (req, res) => {
     let userTeams;
     try {
         userTeams = await Team.find({ "user._id": req.user.id });
-        // if (userTeams) {
-        //     if (userTeams.length == 3) {
-        //         res.status(403).json({ message: `Max number of created teams reached` });
-        //         return;
-        //     }
-        //     if (userTeams.length > 3) {
-        //         res.status(403).json({ message: `Max number of created teams already exceeded...wait how did you do that?` });
-        //         return;
-        //     }
-        // }
+        if (userTeams) {
+            if (userTeams.length == 3) {
+                res.status(403).json({ message: `Max number of created teams reached` });
+                return;
+            }
+            if (userTeams.length > 3) {
+                res.status(403).json({ message: `Max number of created teams already exceeded...wait how did you do that?` });
+                return;
+            }
+        }
     } catch {
         res.status(500).json({
             message: `get request failed to get user teams`,
@@ -221,6 +221,10 @@ app.post("/teams", async (req, res) => {
 
         mons.push(monObj);
     }
+    let isAI = false;
+    if (req.user.role == "admin" && req.body.isAI) {
+        isAI = req.body.isAI;
+    }
     //create new team
     try {
         let team = await Team.create({
@@ -231,12 +235,161 @@ app.post("/teams", async (req, res) => {
                 name: req.user.username,
                 _id: req.user.id
             },
-            isAI: req.body.isAI,
+            isAI: isAI,
         });
         res.status(201).json(team);
     } catch (err) {
         res.status(500).json({
             message: `post request failed to create team`,
+            error: err,
+        });
+        return;
+    }
+});
+
+//Edits an existing team
+// name:
+// mons: [
+//     {
+//         name:,
+//         id:,
+//         learnedMoves: [""],
+//     }
+// ]
+app.put("/team/:id", async (req, res) => {
+    //check auth
+    if (!req.user) {
+        res.status(401).json({
+            message: "Unauthenticated"
+        });
+        return;
+    }
+    //get team to edit
+    let oldTeam;
+    try {
+        oldTeam = await Team.findById(req.params.id);
+        if (!oldTeam) {
+            res.status(404).json({ message: `team not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `put request failed when finding team`,
+            error: err,
+        });
+        return;
+    }
+    //check if user is authed to edit this team
+    if (req.user.id != oldTeam.user._id) {
+        res.status(403).json({ message: `you are not authorized to edit this team` });
+        return;
+    }
+    //retrieve list of moves
+    let moveList;
+    try {
+        jsonString = fs.readFileSync(`${__dirname}/../data/movelist.json`);
+        moveList = JSON.parse(jsonString);
+        if (!moveList) {
+            console.log("Oopsies finding movelist");
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+    //retrieve list of mons
+    let monList;
+    try {
+        jsonString = fs.readFileSync(`${__dirname}/../data/scribblemon.json`);
+        monList = JSON.parse(jsonString);
+        if (!monList) {
+            console.log("Oopsies finding monList");
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+    //check if number of mons is correct
+    if (req.body.mons.length > 3) {
+        res.status(403).json({
+            message: "Too many mons"
+        });
+        return;
+    }
+    if (req.body.mons.length == 0 || !req.body.mons) {
+        res.status(403).json({
+            message: "Your team is empty?"
+        });
+        return;
+    }
+    //populate mons array with mons stats and move stats
+    //loop through the mons sent in request
+    let mons = [];
+    for (let i in req.body.mons) {
+        let mon = req.body.mons[i];
+        let monId = req.body.mons[i].id;
+        let moves = [];
+        //loop through moves in mon, and push move data
+        //from moveList to an array
+        for (let j in mon.learnedMoves) {
+            moveId = mon.learnedMoves[j];
+
+            //check if number of moves is correct
+            if (req.body.mons.length > 3) {
+                res.status(403).json({
+                    message: `Your ${monId} has more than 3 moves`
+                });
+                return;
+            }
+            //check if mon can know this move
+            if (!monList[monId].learnableMoves.includes(moveId)) {
+                //throw unauthorized if illegal move found
+                res.status(403).json({
+                    message: `Your ${monId} contained move not in it's moveset`
+                });
+                return;
+            }
+            //if legal push to learned moves
+            moves.push(moveList[moveId]);
+        }
+        //create temp mon object to push to mon list
+        let monObj = monList[monId];
+        monObj.name = req.body.mons[i].name;
+        monObj.currentHP = monObj.stats.hp * 12;
+        monObj.currentStamina = monObj.stats.stamina;
+        monObj.currentAttack = monObj.stats.attack;
+        monObj.currentDefense = monObj.stats.defense;
+        monObj.currentSpeed = monObj.stats.speed;
+        monObj.learnedMoves = moves;
+
+        mons.push(monObj);
+    }
+    let isAI = false;
+    if (req.user.role == "admin" && req.body.isAI) {
+        isAI = req.body.isAI;
+    }
+
+    //edit team
+    try {
+        let team = await Team.findByIdAndUpdate(
+            req.params.id,
+            {
+                name: req.body.name,
+                mons: mons,
+                activeMon: mons[0],
+                user: {
+                    name: req.user.username,
+                    _id: req.user.id
+                },
+                isAI: isAI,
+            },
+            { new: true, }
+        );
+        res.status(200).json(team);
+    } catch (err) {
+        res.status(500).json({
+            message: `put request failed to edit team`,
             error: err,
         });
         return;
