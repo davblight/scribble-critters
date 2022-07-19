@@ -113,8 +113,18 @@
             <div id="battle-container">
                 <div id="sprite-box">
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
-                    <img id="player1-mon" :src="'/images/'+activeMon+'.png'">
-                    <img id="AI-mon" :src="'/images/'+AIMon+'.png'">
+                    <div id="battle-stats">
+                        <div>
+                            HP: {{ activeMon.currentHP }}<br>
+                            Stamina: {{ activeMon.currentStamina }}<br>
+                        </div>
+                        <div>
+                            HP: {{ AIMon.currentHP }}<br>
+                            Stamina: {{ AIMon.currentStamina }}<br>
+                        </div>
+                    </div>
+                    <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'">
+                    <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'">
                 </div>
                 <div id="move-container">
                     <!-- Make this a v-for once we have an array containing all moves -->
@@ -123,13 +133,20 @@
                 </div>
                 <div id="mon-container">
                     <!-- Make this a v-for once we have an array containing all possible switches -->
-                    <button v-for="mon in battleMons" class="mon">{{ mon.name }}</button>
+                    <button v-for="mon in battleMons" class="mon" @click="putBattle('switch', mon._id)">{{ mon.name
+                        }}</button>
                 </div>
             </div>
 
             <div id="log-container">
-                <div class="turn"></div> <!-- Make this a v-for once we have an array containing all turns -->
-                <div class="log-entry"></div> <!-- Make this a v-for once we have an array containing all actions -->
+                <div class="turn" v-for="turn in battleTurns">
+                    Turn: {{ turn.turnNumber }}<br>
+                    <div class="log-entry" v-for="action in turn.turnText">
+                        {{ action.action }} <br>
+                        {{ action.effect }} <br>
+                        {{ action.result }} <br>
+                    </div> <!-- Make this a v-for once we have an array containing all actions -->
+                </div>
             </div>
         </div>
 
