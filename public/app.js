@@ -103,15 +103,26 @@ var app = new Vue({
             this.showMon = true;
             this.selectedMon = mon;
         },
+        tbResetFields: function () {
+            this.tbErrorMessage = "";
+            this.tbNameInput = "";
+            this.tbMon = "";
+            this.tbLearnedMoves = ["", "", ""];
+            this.tbLearnableMoves = [];
+            this.tbMoveCounter = 0;
+        },
         tbShowMons: function () {
             this.tbView = "mons";
+            this.tbResetFields();
             this.getMons();
         },
         tbShowSubmit: function () {
             this.tbView = "tbPost"
         },
         tbSetMon: async function (mon) {
+            this.tbLearnedMoves = ["","",""];
             this.tbMon = mon;
+            this.tbNameInput = mon.name
             await this.getMoves();
             mon.learnableMoves.forEach((move) => {
                 this.tbLearnableMoves.push(this.allMoves[move])
@@ -119,31 +130,22 @@ var app = new Vue({
             this.tbView = "moves";
         },
         tbPushMove: function (move) {
-            if (this.tbMoveCounter < 3 && !this.tbLearnedMoves.includes(move)) {
-                this.tbLearnedMoves.splice(this.tbMoveCounter, 1, move);
+            if (this.tbMoveCounter < 3 && !this.tbLearnedMoves.includes(move.id)) {
+                this.tbLearnedMoves.splice(this.tbMoveCounter, 1, move.id);
                 this.tbMoveCounter += 1;
             }
         },
         tbSaveMon : function () {
-            let moves = [];
-            this.tbLearnedMoves.forEach(move => {
-                moves.push(move.id)
-            })
             let newMon = {
                 name: this.tbNameInput,
                 id: this.tbMon.id,
-                learnedMoves: moves
+                learnedMoves: [...this.tbLearnedMoves]
             }
             if (this.tbWorkingTeam.length < 3) {
                 if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
                     this.tbWorkingTeam.push(newMon)
                     //Clean up the teambuilder for the next mon to be input
-                    this.tbErrorMessage = "";
-                    this.tbNameInput = "";
-                    this.tbMon = "";
-                    this.tbLearnedMoves = ["", "", ""];
-                    this.tbLearnableMoves = [];
-                    this.tbMoveCounter = 0;
+                    this.tbResetFields();
                     this.tbView = "mons";
                 } else {
                     this.tbErrorMessage = "Please fill out all fields.";
@@ -178,6 +180,11 @@ var app = new Vue({
             } else {
                 this.tbErrorMessage = "Please draw a full team of 3."
             }
+        },
+        tbDisplaySavedMon: function (mon) {
+            this.tbMon = mon;
+            this.tbLearnedMoves = mon.learnedMoves;
+            this.tbNameInput = mon.name;
         },
 
         //USER LOGIN AND AUTHENTICATION LOGIC
