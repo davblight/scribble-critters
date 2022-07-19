@@ -55,6 +55,11 @@ Tasks:
         -For now, only against an AI
         -Select the team they want to use
     -POST to /battle/id/action, passing the user team and AI team as objects and getting the battle_id
+        // {
+        //     action: "", (fight / switch / rest)
+        //     subject: "", (moveId / switchMonId / "")
+
+        // }
         -modify those team objects as the battle proceeds
         -once all mons on one side have died, set finished to true and start the timer to delete the battle
         -this gives us easy access to all actions in case we want to display them
