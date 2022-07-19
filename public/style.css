@@ -3,10 +3,12 @@
     margin: 0;
     padding: 0;
 }
+
 body {
     background-image: url("images/paper-background.jpg");
     background-size: 100%;
 }
+
 #login-page {
     display: flex;
     justify-content: center;
@@ -15,17 +17,20 @@ body {
     width: 100%;
     flex-direction: column;
 }
+
 #login-buttons {
     text-align: center;
 }
-#login-buttons > button {
+
+#login-buttons>button {
     height: 30px;
     width: 100px;
     font-size: 20px;
     box-shadow: 3px 3px 3px rgb(78, 78, 78);
     font-family: 'Edu SA Beginner', cursive;
 }
-#login-fields > input {
+
+#login-fields>input {
     height: 30px;
     width: 200px;
     font-size: 20px;
@@ -35,36 +40,44 @@ body {
     font-family: 'Edu SA Beginner', cursive;
     padding-left: 5px;
 }
+
 #login-error {
     font-family: 'Edu SA Beginner', cursive;
     color: rgb(154, 36, 36);
     font-size: 15px;
     text-shadow: none;
 }
+
 h1 {
     font-size: 64px;
     text-shadow: 1px 1px 1px rgb(78, 78, 78);
 }
+
 h2 {
     font-size: 64px;
     text-shadow: 1px 1px 1px rgb(78, 78, 78);
 }
+
 #home-content {
     display: flex;
     justify-content: space-between;
 }
+
 #topbar {
     display: flex;
     justify-content: space-between;
     padding: 2vh 2vw 2vh 2vw;
 }
+
 #topbar {
     align-items: center;
 }
-#topbar > p {
+
+#topbar>p {
     font-size: 25px;
     text-shadow: 1px 1px 1px rgb(78, 78, 78);
 }
+
 #sidebar {
     display: flex;
     flex-direction: column;
@@ -77,7 +90,8 @@ h2 {
     box-shadow: 0px 0px 20px rgb(78, 78, 78);
     border-radius: 10px;
 }
-#sidebar > button {
+
+#sidebar>button {
     color: black;
     font-size: 45px;
     border: none;
@@ -85,12 +99,15 @@ h2 {
     padding-left: 2vw;
     text-shadow: 1px 1px 1px rgb(78, 78, 78);
 }
-#sidebar > button:hover {
+
+#sidebar>button:hover {
     color: rgb(94, 94, 94);
 }
+
 button:hover {
     cursor: pointer;
 }
+
 .subpage {
     background-image: url("images/paper-background.jpg");
     background-size: 200%;
@@ -103,65 +120,77 @@ button:hover {
     padding-left: 30px;
     border-radius: 10px;
 }
+
 #subpage-compendium {
     display: flex;
 }
+
 #battle-page {
     display: flex;
     justify-content: space-around;
     margin-top: 100px;
 }
+
 #battle-container {
     display: flex;
     flex-direction: column;
 }
+
 #sprite-box {
     height: 500px;
     width: 750px;
     background-color: white;
 }
+
 #move-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding-top: 15px;
 }
+
 .move {
     display: block;
     padding-top: 5px;
     height: 100px;
     width: 200px;
-    background-color:rgb(151, 150, 150);
+    background-color: rgb(151, 150, 150);
     font-size: 30px;
     font-family: 'Edu SA Beginner', cursive;
 }
+
 #mon-container {
     display: flex;
     justify-content: space-between;
     padding-top: 15px;
 }
+
 .mon {
-    background-color:rgb(101, 101, 101);
+    background-color: rgb(101, 101, 101);
     height: 100px;
     width: 200px;
     font-size: 30px;
     font-family: 'Edu SA Beginner', cursive;
 }
+
 #log-container {
-    background-color:rgb(185, 185, 185);
+    background-color: rgb(185, 185, 185);
     height: 750px;
     width: 500px;
 }
+
 #compendium {
     display: flex;
     flex-direction: column;
     align-items: baseline;
     padding-top: 10px;
 }
+
 .monInfo {
     display: flex;
 }
-#compendium > button {
+
+#compendium>button {
     color: black;
     font-size: 35px;
     border: none;
@@ -169,9 +198,11 @@ button:hover {
     padding-left: 2vw;
     text-shadow: 1px 1px 1px rgb(78, 78, 78);
 }
-#compendium > button:hover {
-    color:rgb(94, 94, 94);
+
+#compendium>button:hover {
+    color: rgb(94, 94, 94);
 }
+
 .monCard {
     display: flex;
     flex-direction: column;
@@ -179,49 +210,70 @@ button:hover {
     height: 490px;
     width: 400px;
     border-radius: 10px;
-    background-color:rgb(248, 248, 248);
+    background-color: rgb(248, 248, 248);
     box-shadow: 0px 0px 20px rgb(78, 78, 78);
     padding: 15px;
     text-shadow: none;
     font-size: 40px;
     margin-left: 50px;
 }
-.monCard > div > img {
+
+.monCard>div>img {
     width: 200px;
     height: 200px;
 }
+
 .img-stats-container {
     display: flex;
     justify-content: space-around;
     width: 400px;
     padding-top: 25px;
 }
+
 .monType {
     font-family: 'Edu SA Beginner', cursive;
     font-size: 20px;
 }
+
 .monStats {
     font-size: 30px;
 }
+
 .monMoves {
     font-family: 'Edu SA Beginner', cursive;
     font-size: 20px;
 }
+
 #sprite-box {
     background-image: url("images/paper-background.jpg");
     background-size: 100%;
     border-radius: 10px;
     box-shadow: 0px 0px 20px rgb(78, 78, 78);
 }
-#sprite-box > img {
+
+#sprite-box>img {
     padding-left: 50px;
-    padding-top: 50px;
     height: 300px;
     width: 300px;
 }
+
+#sprite-box #battle-stats {
+    display: flex;
+    padding-left: 100px;
+    justify-content: space-between;
+}
+
+#sprite-box #battle-stats>div {
+    padding-left: 50px;
+    padding-top: 50px;
+    height: 50px;
+    width: 300px;
+}
+
 #player1-mon {
     transform: scaleX(-1);
 }
+
 #tb-topbar {
     display: flex;
     justify-content: space-around;
@@ -229,30 +281,35 @@ button:hover {
     padding-bottom: 15px;
     box-shadow: 0px 0px 20px rgb(78, 78, 78);
     border-radius: 10px;
-    background-color:rgb(248, 248, 248)
+    background-color: rgb(248, 248, 248)
 }
-#tb-topbar > div {
+
+#tb-topbar>div {
     display: flex;
     flex-direction: column;
 }
-#tb-topbar > div > img {
+
+#tb-topbar>div>img {
     height: 100px;
     width: 100px;
 }
+
 #tb-inputs-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-top: 15px;
 }
-#tb-botbar > .list {
+
+#tb-botbar>.list {
     display: flex;
     flex-direction: column;
     align-items: baseline;
     padding-top: 25px;
-    
+
 }
-#tb-botbar > .list > button {
+
+#tb-botbar>.list>button {
     color: black;
     font-size: 30px;
     border: none;
@@ -260,40 +317,48 @@ button:hover {
     padding-left: 2vw;
     text-shadow: none;
 }
-#tb-botbar > div > button:hover {
+
+#tb-botbar>div>button:hover {
     color: rgb(94, 94, 94);
 }
+
 .tbStats {
     font-family: 'Edu SA Beginner', cursive;
     font-size: 15px;
     padding-left: 30px;
 }
+
 .tbMoveStats {
     font-family: 'Edu SA Beginner', cursive;
     font-size: 15px;
     padding-left: 30px;
 }
+
 .tbMove {
     padding-top: 10px;
 }
+
 #tbRightmost {
     width: 100px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
 #tbErrorMessage {
     font-family: 'Edu SA Beginner', cursive;
     color: rgb(154, 36, 36);
     font-size: 15px;
     text-shadow: none;
 }
+
 #tbPost {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     padding-top: 50px;
 }
+
 .existingTeamsButton {
     color: black;
     font-size: 30px;
@@ -302,17 +367,20 @@ button:hover {
     padding-left: 2vw;
     text-shadow: none;
 }
+
 .existingTeamsButton:hover {
     color: rgb(94, 94, 94);
 }
+
 #newTeam {
     font-size: 45px;
     font-family: 'Edu SA Beginner', cursive;
     padding-top: 30px;
 }
+
 .tbSavedMon {
     border-radius: 5px;
-    background:rgb(248, 248, 248);
+    background: rgb(248, 248, 248);
     box-shadow: 0px 0px 10px rgb(78, 78, 78);
     color: black;
     font-size: 30px;
@@ -322,10 +390,12 @@ button:hover {
     width: 200px;
     height: 75px;
 }
-#tb-botbar > div > .tbSavedMon:hover {
-    background-color:rgb(234, 234, 234);
+
+#tb-botbar>div>.tbSavedMon:hover {
+    background-color: rgb(234, 234, 234);
     color: black;
 }
+
 #tbSavedMonButtons {
     display: flex;
     flex-direction: row;
