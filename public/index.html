@@ -17,6 +17,7 @@
     <div id="app">
         <div id="login-page" v-if="page == 'login'">
             <h1>WELCOME TO SCRIBBLEMON!</h1><br><br>
+            <!-- Login and signup utilize the same fields since they require the same inputs -->
             <div id="login-fields">
                 <input type="text" placeholder="Username" v-model="usernameInput">
                 <input type="password" placeholder="Password" v-model="passwordInput">
@@ -24,14 +25,17 @@
             <div id="login-buttons">
                 <button v-on:click="postSession" id="login-button">Log In</button>
                 <button v-on:click="postUser" id="signup-button">Sign Up</button>
-            </div>
+            </div> <br>
+            <div id="login-error">{{ loginErrorMessage }}</div>
         </div>
         <div id="home-page" v-if="page == 'home'">
+            <!-- Static topbar that will not change as long as this page is loaded -->
             <div id="topbar">
                 <h2>SCRIBBLEMON SHOWDOWN</h2>
                 <p>{{ loggedInUser}}</p>
             </div>
             <div id="home-content">
+                <!-- Sidebar where menu options are stored -->
                 <div id="sidebar">
                     <button v-on:click="showBattle">PLAY</button><br>
                     <button v-on:click="showTeambuilder">TEAMBUILDER</button><br>
@@ -42,7 +46,9 @@
                 </div>
                 <div class="subpage" id="subpage-play" v-if="subpage == 'play'">TEST PLAY</div>
                 <!-- START TEAMBUILDER HTML -->
+                <!-- Subpages refer to the selected tab on the sidebar. tbView refers to subpages within the Teambuilder subpage -->
                 <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">
+                    <!-- All existingTeams subpage and all other tb subpages are mutually exclusive -->
                     <div id="existingTeams" v-if="tbView == 'existingTeams'">
                         <div v-for="team in userTeams">
                             <button class="existingTeamsButton" v-on:click="tbViewTeam(team)">{{ team.name }}</button>
@@ -50,6 +56,8 @@
                         </div>
                         <button class="existingTeamsButton" id="newTeam" v-on:click="tbShowMons">New Team</button>
                     </div>
+
+                    <!-- This topbar contains information pertaining to the working mon, displaying it in what I hope is a nice format -->
                     <div id="tb-topbar" v-if="tbView != 'existingTeams'">
                         <div>
                             <input type="text" placeholder="Nickname" v-model="tbNameInput">
@@ -61,42 +69,47 @@
                                 v-model="move">
                         </div>
                         <div id="tbRightmost">
-                            <button id="tbSaveMon" v-on:click="tbSaveMon">Save Mon</button>
+                            <button id="tbSaveMon" v-on:click="tbSaveMon()">Save Mon</button>
                             <p id="tbErrorMessage">{{ tbErrorMessage }}</p>
                             <button id="tbSubmitTeam" v-on:click="tbShowSubmit">Submit Team</button>
                         </div>
                     </div>
+
+                    <!-- This botbar contains all other information, used to populate the topbar fields -->
                     <div id="tb-botbar">
+                        <!-- These buttons will appear as mons are saved, allowing the user to go back and edit existing mons before saving team -->
                         <div id="tbSavedMonButtons">
-                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)"
-                                v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
+                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)" v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
                         </div>
+                        <!-- Display all possible mons to add to team -->
                         <div v-if="tbView == 'mons'" class="list">
                             <button class="tbMon" v-for="mon in allMons" v-on:click="tbSetMon(mon)">
                                 {{ mon.name }} : {{ mon.type }}
                                 <span class="tbStats">
-                                    HP: {{ mon.stats.hp }} STA: {{ mon.stats.stamina }} ATK: {{ mon.stats.attack }} DEF:
-                                    {{ mon.stats.defense }} SPD: {{ mon.stats.speed }}
+                                    HP: {{ mon.stats.hp }}   STA: {{ mon.stats.stamina }}   ATK: {{ mon.stats.attack }}   DEF:
+                                    {{ mon.stats.defense }}   SPD: {{ mon.stats.speed }}
                                 </span>
                             </button>
                         </div>
+                        <!-- Display all possible moves for the selected mon -->
                         <div v-if="tbView == 'moves'" class="list">
                             <button class="tbMove" v-for="move in tbLearnableMoves" v-on:click="tbPushMove(move)">
                                 {{ move.name }} : {{ move.type }}
                                 <span class="tbMoveStats">
-                                    Power: {{ move.power }} Stamina Cost: {{ move.staminaCost }}
+                                    Power: {{ move.power }}   Stamina Cost: {{ move.staminaCost }}
                                 </span>
                             </button>
                         </div>
+                        <!-- Allows user to post their team after giving it a name -->
                         <div id="tbPost" v-if="tbView == 'tbPost'" class="list">
                             <input type="text" v-model="tbTeamNameInput" placeholder="Team Name">
-                            <button v-on:click="tbPostTeam">Save Team</button>
+                            <button v-on:click="tbSubmit">Save Team</button>
                         </div>
                     </div>
-
                 </div>
                 <!-- END TEAMBUILDER HTML -->
                 <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'">TEST CHAT</div>
+                <!-- START COMPENDIUM HTML -->
                 <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">
                     <div>
                         <div id="compendium" v-for="mon in allMons">
@@ -110,6 +123,8 @@
             </div>
 
         </div>
+        <!-- END COMPENDIUM HTML -->
+        <!-- START BATTLEPAGE HTML -->
         <div id="battle-page" v-if="page == 'battle'">
             <div id="battle-container">
                 <div id="sprite-box">
@@ -118,12 +133,10 @@
                     <img id="AI-mon" :src="'/images/'+AIMon+'.png'">
                 </div>
                 <div id="move-container">
-                    <!-- Make this a v-for once we have an array containing all moves -->
                     <button class="move" v-for="move in monMove" @click="putBattle('fight', move.id)">{{ move.name
                         }}</button>
                 </div>
                 <div id="mon-container">
-                    <!-- Make this a v-for once we have an array containing all possible switches -->
                     <button v-for="mon in battleMons" class="mon">{{ mon.name }}</button>
                 </div>
             </div>
@@ -133,6 +146,7 @@
                 <div class="log-entry"></div> <!-- Make this a v-for once we have an array containing all actions -->
             </div>
         </div>
+        <!-- END BATTLEPAGE HTML -->
 
     </div>
 

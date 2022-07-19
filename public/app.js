@@ -49,6 +49,7 @@ var app = new Vue({
         usernameInput: "",
         passwordInput: "",
         loggedInUser: "",
+        loginErrorMessage: "",
         allMons: "",
         allMoves: {},
         selectedMon: {},
@@ -69,6 +70,8 @@ var app = new Vue({
         tbNameInput: "",
         tbErrorMessage: "",
         tbTeamNameInput: "",
+        tbIsNewTeam: true,
+        tbWorkingTeamID: "",
     },
     methods: {
         showHome: function () {
@@ -85,6 +88,7 @@ var app = new Vue({
         showPlay: function () {
             this.subpage = "play";
         },
+        // Shows Teambuilder and cleans it up in case you're clicking on Teambuilder from Teambuilder itself
         showTeambuilder: function () {
             this.subpage = "teambuilder";
             this.tbView = 'existingTeams'
@@ -95,6 +99,7 @@ var app = new Vue({
         showChat: function () {
             this.subpage = "chat";
         },
+        // Shows compendium and gets mons to populate said compendium
         showCompendium: function () {
             this.subpage = "compendium";
             this.getMons();
@@ -106,6 +111,8 @@ var app = new Vue({
             this.showMon = true;
             this.selectedMon = mon;
         },
+        // All tb functions should only be used in the scope of the teambuilder
+        // Resets fields to clean up teambuilder
         tbResetFields: function () {
             this.tbErrorMessage = "";
             this.tbNameInput = "";
@@ -114,6 +121,7 @@ var app = new Vue({
             this.tbLearnableMoves = [];
             this.tbMoveCounter = 0;
         },
+        // Shows all mons available to be added to team
         tbShowMons: function () {
             this.tbView = "mons";
             this.tbResetFields();
@@ -122,6 +130,7 @@ var app = new Vue({
         tbShowSubmit: function () {
             this.tbView = "tbPost"
         },
+        // Sets the active mon and populates the move fields with the moves already assigned to said mon.
         tbSetMon: async function (mon) {
             this.tbLearnedMoves = ["", "", ""];
             this.tbMon = mon;
@@ -132,31 +141,46 @@ var app = new Vue({
             })
             this.tbView = "moves";
         },
+        // Adds the selected moves to the mon's learnedMoves field
         tbPushMove: function (move) {
             if (this.tbMoveCounter < 3 && !this.tbLearnedMoves.includes(move.id)) {
                 this.tbLearnedMoves.splice(this.tbMoveCounter, 1, move.id);
                 this.tbMoveCounter += 1;
             }
         },
+        // Saves the mon when the button is clicked so that they can eventually be present when a team is posted
         tbSaveMon: function () {
             let newMon = {
                 name: this.tbNameInput,
                 id: this.tbMon.id,
                 learnedMoves: [...this.tbLearnedMoves]
             }
-            if (this.tbWorkingTeam.length < 3) {
-                if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
-                    this.tbWorkingTeam.push(newMon)
-                    //Clean up the teambuilder for the next mon to be input
-                    this.tbResetFields();
-                    this.tbView = "mons";
+            if (this.tbIsNewTeam == true) {
+                if (this.tbWorkingTeam.length < 3) {
+                    if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
+                        this.tbWorkingTeam.push(newMon)
+                        //Clean up the teambuilder for the next mon to be input
+                        this.tbResetFields();
+                        this.tbView = "mons";
+                    } else {
+                        this.tbErrorMessage = "Please fill out all fields.";
+                    }
                 } else {
-                    this.tbErrorMessage = "Please fill out all fields.";
+                    this.tbErrorMessage = "Only 3 Mons allowed.";
                 }
             } else {
-                this.tbErrorMessage = "Only 3 Mons allowed.";
+                this.tbWorkingTeam[0] = newMon
             }
         },
+        // Checks if this is a new team or existing team, then performs the appropriate PUT or POST method
+        tbSubmit: function () {
+            if (this.tbIsNewTeam == false) {
+                this.tbPutTeam();
+            } else {
+                this.tbPostTeam();
+            }
+        },
+        // Posts a new team -- called by tbSubmit
         tbPostTeam: async function () {
             if (!this.tbWorkingTeam.includes("") && this.tbTeamNameInput != "") {
                 let newTeam = {
@@ -184,14 +208,48 @@ var app = new Vue({
                 this.tbErrorMessage = "Please draw a full team of 3."
             }
         },
+        // Edits existing team -- called by tbSubmit
+        tbPutTeam: async function () {
+            if (!this.tbWorkingTeam.includes("") && this.tbTeamNameInput != "") {
+                let newTeam = {
+                    name: this.tbTeamNameInput,
+                    mons: this.tbWorkingTeam
+                }
+                let response = await fetch(`${URL}/team/${this.tbWorkingTeamID}`, {
+                    method: "PUT",
+                    body: JSON.stringify(newTeam),
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    credentials: "include"
+                });
+
+                let body = response.json();
+                console.log(body);
+
+                if (response.status == 201) {
+                    console.log("team successfully posted");
+                } else {
+                    console.log("error posting team", response.status, response)
+                }
+            } else {
+                this.tbErrorMessage = "Please draw a full team of 3."
+            }
+        },
+        // Displays a saved mon. Intended for use on existing mons from existing teams
         tbDisplaySavedMon: function (mon) {
             this.tbMon = mon;
             this.tbLearnedMoves = mon.learnedMoves;
             this.tbNameInput = mon.name;
         },
+        //Allows user to view an existing team by loading that team's data into the tbWorkingTeam variable
         tbViewTeam: function (team) {
             this.tbWorkingTeam = team.mons;
             this.tbView = "mons";
+            // If this function is called, you're editing an existing team, thus PUT should be called rather than POST
+            this.tbIsNewTeam = false;
+            // Sets the tbWorkingTeamID variable for use in the PUT function
+            this.tbWorkingTeamID = team._id;
         },
 
         //USER LOGIN AND AUTHENTICATION LOGIC
@@ -238,8 +296,10 @@ var app = new Vue({
                 this.page = "home"
             } else if (response.status = 401) {
                 console.log("unsuccessful login attempt");
+                this.loginErrorMessage = "Wrong Username/Password. Are you trying to sign up?"
             } else {
                 console.log("something went wrong while posting /session", response.status, response)
+                this.loginErrorMessage = "Something went wrong while logging in."
             }
         },
         //Create new user
@@ -262,10 +322,13 @@ var app = new Vue({
 
             if (response.status == 201) {
                 console.log("user successfully created");
+                this.loginErrorMessage = "User created!"
             } else if (response.status == 404) {
                 console.log("error creating user");
+                this.loginErrorMessage = "Error creating user (user not found)"
             } else {
                 console.log("unknown error posting /users", response.status, response);
+                this.loginErrorMessage = "Something went wrong, creating a user."
             }
         },
         getMons: async function () {
@@ -331,7 +394,7 @@ var app = new Vue({
             } else {
                 console.log("something went wrong while putting the battle", response.status, response)
             }
-        }
+        },
         postTeam: async function () {
             let response = await fetch(`${URL}/teams`, {
                 method: "POST",
@@ -351,6 +414,7 @@ var app = new Vue({
                 console.log("error posting team", response.status, response)
             }
         },
+        // This function is only utilized by the teambuilder
         getTeams: async function () {
             let response = await fetch(`${URL}/user/teams`, {
                 credentials: "include"
