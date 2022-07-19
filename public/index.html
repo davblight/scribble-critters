@@ -79,15 +79,16 @@
                     <div id="tb-botbar">
                         <!-- These buttons will appear as mons are saved, allowing the user to go back and edit existing mons before saving team -->
                         <div id="tbSavedMonButtons">
-                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)" v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
+                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)"
+                                v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
                         </div>
                         <!-- Display all possible mons to add to team -->
                         <div v-if="tbView == 'mons'" class="list">
                             <button class="tbMon" v-for="mon in allMons" v-on:click="tbSetMon(mon)">
                                 {{ mon.name }} : {{ mon.type }}
                                 <span class="tbStats">
-                                    HP: {{ mon.stats.hp }}   STA: {{ mon.stats.stamina }}   ATK: {{ mon.stats.attack }}   DEF:
-                                    {{ mon.stats.defense }}   SPD: {{ mon.stats.speed }}
+                                    HP: {{ mon.stats.hp }} STA: {{ mon.stats.stamina }} ATK: {{ mon.stats.attack }} DEF:
+                                    {{ mon.stats.defense }} SPD: {{ mon.stats.speed }}
                                 </span>
                             </button>
                         </div>
@@ -96,7 +97,7 @@
                             <button class="tbMove" v-for="move in tbLearnableMoves" v-on:click="tbPushMove(move)">
                                 {{ move.name }} : {{ move.type }}
                                 <span class="tbMoveStats">
-                                    Power: {{ move.power }}   Stamina Cost: {{ move.staminaCost }}
+                                    Power: {{ move.power }} Stamina Cost: {{ move.staminaCost }}
                                 </span>
                             </button>
                         </div>
@@ -129,21 +130,39 @@
             <div id="battle-container">
                 <div id="sprite-box">
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
-                    <img id="player1-mon" :src="'/images/'+activeMon+'.png'">
-                    <img id="AI-mon" :src="'/images/'+AIMon+'.png'">
+                    <div id="battle-stats">
+                        <div>
+                            HP: {{ activeMon.currentHP }}<br>
+                            Stamina: {{ activeMon.currentStamina }}<br>
+                        </div>
+                        <div>
+                            HP: {{ AIMon.currentHP }}<br>
+                            Stamina: {{ AIMon.currentStamina }}<br>
+                        </div>
+                    </div>
+                    <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'">
+                    <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'">
                 </div>
                 <div id="move-container">
                     <button class="move" v-for="move in monMove" @click="putBattle('fight', move.id)">{{ move.name
                         }}</button>
                 </div>
                 <div id="mon-container">
-                    <button v-for="mon in battleMons" class="mon">{{ mon.name }}</button>
+                    <!-- Make this a v-for once we have an array containing all possible switches -->
+                    <button v-for="mon in battleMons" class="mon" @click="putBattle('switch', mon._id)">{{ mon.name
+                        }}</button>
                 </div>
             </div>
 
             <div id="log-container">
-                <div class="turn"></div> <!-- Make this a v-for once we have an array containing all turns -->
-                <div class="log-entry"></div> <!-- Make this a v-for once we have an array containing all actions -->
+                <div class="turn" v-for="turn in battleTurns">
+                    Turn: {{ turn.turnNumber }}<br>
+                    <div class="log-entry" v-for="action in turn.turnText">
+                        {{ action.action }} <br>
+                        {{ action.effect }} <br>
+                        {{ action.result }} <br>
+                    </div> <!-- Make this a v-for once we have an array containing all actions -->
+                </div>
             </div>
         </div>
         <!-- END BATTLEPAGE HTML -->

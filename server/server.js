@@ -478,6 +478,7 @@ app.get("/user/teams", async (req, res) => {
         formattedTeam = {
             name: team.name,
             mons: mons,
+            _id: team._id,
         };
         teams.push(formattedTeam);
     })
@@ -746,7 +747,7 @@ app.put("/battles/AI/:id", async (req, res) => {
     try {
         updatedBattle = takeTurn(battle, req.body.action, req.body.subject);
     } catch (err) {
-        res.status(403).json({ message: "something went wrong", error: err });
+        res.status(403).json({ message: "something went wrong", error: err, body: req.body });
         return;
     }
     //put updated battle state

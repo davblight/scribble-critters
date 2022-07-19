@@ -59,6 +59,7 @@ var app = new Vue({
         activeMon: "",
         AIMon: "",
         userTeams: [],
+        battleTurns: [],
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -358,7 +359,7 @@ var app = new Vue({
             }
         },
         getBattle: async function () {
-            let response = await fetch(`${URL}/battles/AI/62d6e0937fa9e2566be4bff9`, {
+            let response = await fetch(`${URL}/battles/AI/62d6f99d41ebb3fa4e6b7fc2`, {
                 credentials: "include"
             });
             if (response.status == 200) {
@@ -366,8 +367,9 @@ var app = new Vue({
                 console.log(data);
                 this.battleMons = data.player.mons;
                 this.monMove = data.player.activeMon.learnedMoves
-                this.activeMon = data.player.activeMon.id
-                this.AIMon = data.AI.activeMon.id
+                this.activeMon = data.player.activeMon
+                this.AIMon = data.AI.activeMon
+                this.battleTurns = data.turns
                 console.log("fetched battlemons")
             } else if (response.status == 404) {
                 console.log("battle not found");
@@ -375,20 +377,25 @@ var app = new Vue({
                 console.log("something went wrong while getting the battle", response.status, response)
             }
         },
-        putBattle: async function (action, subject) {
-            let response = await fetch(`${URL}/battles/AI/62d6e0937fa9e2566be4bff9`, {
+        putBattle: async function (putAction, putSubject) {
+            let response = await fetch(`${URL}/battles/AI/62d6f99d41ebb3fa4e6b7fc2`, {
+                method: "PUT",
                 credentials: "include",
-                body: {
-                    action: action,
-                    subject: subject,
-                }
+                body: JSON.stringify({
+                    action: putAction,
+                    subject: putSubject,
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                },
             });
             if (response.status == 200) {
                 let data = await response.json();
                 this.battleMons = data.player.mons;
                 this.monMove = data.player.activeMon.learnedMoves
-                this.activeMon = data.player.activeMon.id
-                this.AIMon = data.AI.activeMon.id
+                this.activeMon = data.player.activeMon
+                this.AIMon = data.AI.activeMon
+                this.battleTurns = data.turns
             } else if (response.status == 404) {
                 console.log("battle not found");
             } else {

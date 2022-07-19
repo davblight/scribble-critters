@@ -65,11 +65,17 @@ function fight(battle, attacker, defender, move) {
     }
     battle[defender].activeMon.currentHP = remainingHP;
     battle[attacker].activeMon.currentStamina = (parseInt(stamina) - parseInt(move.staminaCost));
+    let hasStam;
     if (parseInt(move.staminaCost) > parseInt(battle[attacker].activeMon.currentStamina)) {
-        battle[attacker].activeMon.learnedMoves[move].monHasStamina = false;
+        hasStam = false;
     } else {
-        battle[attacker].activeMon.learnedMoves[move].monHasStamina = false;
+        hasStam = true;
     }
+    battle[attacker].activeMon.learnedMoves.forEach(learnedMove => {
+        if (move.id == learnedMove.id) {
+            learnedMove.monHasStamina = hasStam;
+        }
+    })
 
     let actionText = `${attackMon.name} used ${move.name}!`
     let effectText = "";
@@ -142,7 +148,7 @@ function resolveTurn(battle, playerAction, playerMove) {
     //if AI is fighting
     if (AIAction == "fight") {
         //if player and AI are fighting
-        if (playerAction == "fight") {
+        if (playerAction == 'fight') {
             //check which mon is faster and resolve in speed order
             let playerMon = battle.player.activeMon;
             let AIMon = battle.AI.activeMon;
@@ -179,11 +185,11 @@ function resolveTurn(battle, playerAction, playerMove) {
             battle = fight(battle, "AI", "player", AIMove);
         }
         //only player is fighting
-    } else if (playerAction == "fight") {
+    } else if (playerAction == 'fight') {
         //player mon uses move
         battle = fight(battle, "player", "AI", playerMove);
     }
-    if (playerAction == "rest") {
+    if (playerAction == 'rest') {
         if (battle.player.activeMon.status != "dead") {
             battle = rest(battle, "player");
         }
@@ -240,7 +246,7 @@ const takeTurn = function (battle, action, subject) {
     //check if player mon is dead and needs to switch
     if (battle.player.activeMon.status == "dead") {
         //make sure player is switching mon
-        if (action == "switch") {
+        if (action == 'switch') {
             //loop through team mons and check if player has mon in team to switch to
             let monFound = false;
             battle.player.mons.forEach(mon => {
@@ -285,7 +291,7 @@ const takeTurn = function (battle, action, subject) {
         battle.turns[battle.turns.length - 1].turnNumber = battle.turns.length;
 
 
-        if (action == "fight") {
+        if (action == 'fight') {
             //check if move is in learned moves
             let moveFound = false;
             battle.player.activeMon.learnedMoves.forEach(move => {
@@ -304,7 +310,7 @@ const takeTurn = function (battle, action, subject) {
             if (!moveFound) {
                 throw `${battle.player.activeMon.name} does not know how to ${subject}`;
             }
-        } else if (action == "switch") {
+        } else if (action == 'switch') {
             //loop through team mons and check if player has mon in team to switch to
             let monFound = false;
             battle.player.mons.forEach(mon => {
@@ -334,7 +340,7 @@ const takeTurn = function (battle, action, subject) {
             if (!monFound) {
                 throw "cannot switch into imaginary mon"
             }
-        } else if (action == "rest") {
+        } else if (action == 'rest') {
             battle = resolveTurn(battle, action, "");
         } else {
             throw "action type is invalid"
