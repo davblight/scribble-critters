@@ -53,7 +53,7 @@
                             <input type="text" placeholder="Scribblemon" v-on:click="tbShowMons" v-model="tbMon.id">
                         </div>
                         <div id="tb-inputs-container">
-                            <input class="tb-input" type="text" placeholder="Move" v-for="move in tbLearnedMoves" v-model="move.name">
+                            <input class="tb-input" type="text" placeholder="Move" v-for="move in tbLearnedMoves" v-model="move">
                         </div>
                         <div id="tbRightmost">
                             <button id="tbSaveMon" v-on:click="tbSaveMon">Save Mon</button>
@@ -62,7 +62,10 @@
                         </div>
                     </div>
                     <div id="tb-botbar">
-                        <div v-if="tbView == 'mons'">
+                        <div id="tbSavedMonButtons">
+                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)" v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
+                        </div>
+                        <div v-if="tbView == 'mons'" class="list">
                             <button class="tbMon" v-for="mon in allMons" v-on:click="tbSetMon(mon)">
                                 {{ mon.name }} : {{ mon.type }}
                                 <span class="tbStats">
@@ -70,7 +73,7 @@
                                 </span>     
                             </button>
                         </div>
-                        <div v-if="tbView == 'moves'">
+                        <div v-if="tbView == 'moves'" class="list">
                             <button class="tbMove" v-for="move in tbLearnableMoves" v-on:click="tbPushMove(move)">
                                 {{ move.name }} : {{ move.type }}
                                 <span class="tbMoveStats">
@@ -78,7 +81,7 @@
                                 </span>
                             </button>
                         </div>
-                        <div id="tbPost" v-if="tbView == 'tbPost'">
+                        <div id="tbPost" v-if="tbView == 'tbPost'" class="list">
                             <input type="text" v-model="tbTeamNameInput" placeholder="Team Name">
                             <button v-on:click="tbPostTeam">Save Team</button>
                         </div>
