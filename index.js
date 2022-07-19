@@ -1,5 +1,6 @@
 const app = require("./server/server");
 const { connect, onConnect } = require("./persist/connect");
+const { autoDelete } = require("./server/autoDelete");
 
 // put in env vars
 require('dotenv').config();
@@ -20,3 +21,5 @@ try {
     console.log(err);
     throw "couldnt start"
 }
+
+autoDelete(60000);
