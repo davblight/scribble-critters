@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,11 @@
     <title>Scribblemon Showdown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Nanum+Pen+Script&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="app">
         <div id="login-page" v-if="page == 'login'">
@@ -53,7 +56,8 @@
                             <input type="text" placeholder="Scribblemon" v-on:click="tbShowMons" v-model="tbMon.id">
                         </div>
                         <div id="tb-inputs-container">
-                            <input class="tb-input" type="text" placeholder="Move" v-for="move in tbLearnedMoves" v-model="move">
+                            <input class="tb-input" type="text" placeholder="Move" v-for="move in tbLearnedMoves"
+                                v-model="move">
                         </div>
                         <div id="tbRightmost">
                             <button id="tbSaveMon" v-on:click="tbSaveMon">Save Mon</button>
@@ -63,21 +67,23 @@
                     </div>
                     <div id="tb-botbar">
                         <div id="tbSavedMonButtons">
-                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)" v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
+                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)"
+                                v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
                         </div>
                         <div v-if="tbView == 'mons'" class="list">
                             <button class="tbMon" v-for="mon in allMons" v-on:click="tbSetMon(mon)">
                                 {{ mon.name }} : {{ mon.type }}
                                 <span class="tbStats">
-                                    HP: {{ mon.stats.hp }}     STA: {{ mon.stats.stamina }}     ATK: {{ mon.stats.attack }}     DEF: {{ mon.stats.defense }}     SPD: {{ mon.stats.speed }}
-                                </span>     
+                                    HP: {{ mon.stats.hp }} STA: {{ mon.stats.stamina }} ATK: {{ mon.stats.attack }} DEF:
+                                    {{ mon.stats.defense }} SPD: {{ mon.stats.speed }}
+                                </span>
                             </button>
                         </div>
                         <div v-if="tbView == 'moves'" class="list">
                             <button class="tbMove" v-for="move in tbLearnableMoves" v-on:click="tbPushMove(move)">
                                 {{ move.name }} : {{ move.type }}
                                 <span class="tbMoveStats">
-                                    Power: {{ move.power }}     Stamina Cost: {{ move.staminaCost }}
+                                    Power: {{ move.power }} Stamina Cost: {{ move.staminaCost }}
                                 </span>
                             </button>
                         </div>
@@ -110,14 +116,17 @@
                     <img id="player1-mon" :src="'/images/'+activeMon+'.png'">
                     <img id="AI-mon" :src="'/images/'+AIMon+'.png'">
                 </div>
-                <div id="move-container"> <!-- Make this a v-for once we have an array containing all moves -->
-                    <button class="move" v-for="move in monMove">{{ move.name }}</button>
+                <div id="move-container">
+                    <!-- Make this a v-for once we have an array containing all moves -->
+                    <button class="move" v-for="move in monMove" @click="putBattle('fight', move.id)">{{ move.name
+                        }}</button>
                 </div>
-                <div id="mon-container" > <!-- Make this a v-for once we have an array containing all possible switches -->
-                    <button v-for="mon in battleMons" class="mon">{{ mon.name }}</button> 
+                <div id="mon-container">
+                    <!-- Make this a v-for once we have an array containing all possible switches -->
+                    <button v-for="mon in battleMons" class="mon">{{ mon.name }}</button>
                 </div>
             </div>
-            
+
             <div id="log-container">
                 <div class="turn"></div> <!-- Make this a v-for once we have an array containing all turns -->
                 <div class="log-entry"></div> <!-- Make this a v-for once we have an array containing all actions -->
@@ -130,4 +139,5 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>

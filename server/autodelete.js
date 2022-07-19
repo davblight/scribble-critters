@@ -1,13 +1,11 @@
 const { Battle } = require("../persist/model");
 
 async function compareTime() {
-    console.log("Checking battles for deletion")
     let currentTime = new Date().getTime();
     let battles;
     try {
         battles = await Battle.find();
         if (!battles) {
-            console.log("No current active battles");
             return;
         }
     } catch (err) {
@@ -26,7 +24,6 @@ async function compareTime() {
                     console.log("could not find battle when trying to close");
                 }
                 else {
-                    console.log(`Closed battle. Id: ${deletedBattle._id}`);
                 }
             } catch (err) {
                 console.log(err);
@@ -34,7 +31,6 @@ async function compareTime() {
         }
     };
     if (!found) {
-        console.log("No battles ready to close");
     }
 }
 

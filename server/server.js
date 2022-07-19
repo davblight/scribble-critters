@@ -446,7 +446,7 @@ app.delete("/team/:id", async (req, res) => {
 app.get("/user/teams", async (req, res) => {
     let userTeams;
     try {
-        userTeams = await Team.find({ "user._id": req.user.id });
+        userTeams = await Team.find({ "user._id": req.user.id }, ["-activeMon", "-isAI", "-user"]);
         if (!userTeams) {
             res.status(404).json({ message: `User teams not found` });
             return;
@@ -458,7 +458,30 @@ app.get("/user/teams", async (req, res) => {
         });
         return;
     }
-    res.status(200).json(userTeams);
+    let teams = [];
+    userTeams.forEach(team => {
+        let formattedTeam = {};
+        mons = [];
+        team.mons.forEach(mon => {
+            let newMon = {}
+            let moves = [];
+            mon.learnedMoves.forEach(move => {
+                moves.push(move.id);
+            });
+            newMon = {
+                name: mon.name,
+                id: mon.id,
+                learnedMoves: moves,
+            }
+            mons.push(newMon);
+        });
+        formattedTeam = {
+            name: team.name,
+            mons: mons,
+        };
+        teams.push(formattedTeam);
+    })
+    res.status(200).json(teams);
 });
 
 //Get a team by id

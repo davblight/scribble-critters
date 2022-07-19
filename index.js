@@ -22,4 +22,4 @@ try {
     throw "couldnt start"
 }
 
-autoDelete(60000);
+// autoDelete(60000);

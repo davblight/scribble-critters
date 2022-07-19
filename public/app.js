@@ -74,7 +74,7 @@ var app = new Vue({
         showHome: function () {
             this.page = "home";
         },
-        showLogin: function (){
+        showLogin: function () {
             this.page = "login";
             this.subpage = "";
         },
@@ -120,7 +120,7 @@ var app = new Vue({
             this.tbView = "tbPost"
         },
         tbSetMon: async function (mon) {
-            this.tbLearnedMoves = ["","",""];
+            this.tbLearnedMoves = ["", "", ""];
             this.tbMon = mon;
             this.tbNameInput = mon.name
             await this.getMoves();
@@ -135,7 +135,7 @@ var app = new Vue({
                 this.tbMoveCounter += 1;
             }
         },
-        tbSaveMon : function () {
+        tbSaveMon: function () {
             let newMon = {
                 name: this.tbNameInput,
                 id: this.tbMon.id,
@@ -237,7 +237,7 @@ var app = new Vue({
         },
         //Create new user
         postUser: async function () {
-            let newUser = { 
+            let newUser = {
                 username: this.usernameInput,
                 password: this.passwordInput
             };
@@ -249,7 +249,7 @@ var app = new Vue({
                 },
                 credentials: "include"
             });
-            
+
             let body = response.json();
             console.log(body);
 
@@ -288,7 +288,7 @@ var app = new Vue({
             }
         },
         getBattle: async function () {
-            let response = await fetch(`${URL}/battles/AI/62d0634949cb0a2584549d42`, {
+            let response = await fetch(`${URL}/battles/AI/62d6e0937fa9e2566be4bff9`, {
                 credentials: "include"
             });
             if (response.status == 200) {
@@ -305,6 +305,26 @@ var app = new Vue({
                 console.log("something went wrong while getting the battle", response.status, response)
             }
         },
+        putBattle: async function (action, subject) {
+            let response = await fetch(`${URL}/battles/AI/62d6e0937fa9e2566be4bff9`, {
+                credentials: "include",
+                body: {
+                    action: action,
+                    subject: subject,
+                }
+            });
+            if (response.status == 200) {
+                let data = await response.json();
+                this.battleMons = data.player.mons;
+                this.monMove = data.player.activeMon.learnedMoves
+                this.activeMon = data.player.activeMon.id
+                this.AIMon = data.AI.activeMon.id
+            } else if (response.status == 404) {
+                console.log("battle not found");
+            } else {
+                console.log("something went wrong while putting the battle", response.status, response)
+            }
+        }
         postTeam: async function () {
             let response = await fetch(`${URL}/teams`, {
                 method: "POST",
