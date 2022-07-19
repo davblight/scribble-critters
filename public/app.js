@@ -72,6 +72,7 @@ var app = new Vue({
         tbTeamNameInput: "",
         tbIsNewTeam: true,
         tbWorkingTeamID: "",
+        tbIndex: 0,
     },
     methods: {
         showHome: function () {
@@ -169,7 +170,7 @@ var app = new Vue({
                     this.tbErrorMessage = "Only 3 Mons allowed.";
                 }
             } else {
-                this.tbWorkingTeam[0] = newMon
+                this.tbWorkingTeam[this.tbIndex] = newMon
             }
         },
         // Checks if this is a new team or existing team, then performs the appropriate PUT or POST method
@@ -237,10 +238,11 @@ var app = new Vue({
             }
         },
         // Displays a saved mon. Intended for use on existing mons from existing teams
-        tbDisplaySavedMon: function (mon) {
+        tbDisplaySavedMon: function (mon, index) {
             this.tbMon = mon;
             this.tbLearnedMoves = mon.learnedMoves;
             this.tbNameInput = mon.name;
+            this.tbIndex = index;
         },
         //Allows user to view an existing team by loading that team's data into the tbWorkingTeam variable
         tbViewTeam: function (team) {

@@ -79,7 +79,7 @@
                     <div id="tb-botbar">
                         <!-- These buttons will appear as mons are saved, allowing the user to go back and edit existing mons before saving team -->
                         <div id="tbSavedMonButtons">
-                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon)" v-for="mon in tbWorkingTeam">{{ mon.name }}</button>
+                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon, index)" v-for="(mon, index) in tbWorkingTeam">{{ mon.name }}</button>
                         </div>
                         <!-- Display all possible mons to add to team -->
                         <div v-if="tbView == 'mons'" class="list">
