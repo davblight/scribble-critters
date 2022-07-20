@@ -20,7 +20,7 @@ function rest(battle, teamName) {
     let effectText = ""
     if (battle[teamName].activeMon.currentStamina < battle[teamName].activeMon.stats.stamina) {
         staminaGain = 1
-        battle[teamName].activeMon.currentStamina += staminaGain;
+        battle[teamName].activeMon.currentStamina = parseInt(battle[teamName].activeMon.currentStamina) + staminaGain;
         effectText = `${battle[teamName].activeMon.name} restored ${staminaGain} stamina!`
     } else {
         effectText = `${battle[teamName].activeMon.name} already has full stamina! (bug? or feature?)`
@@ -65,17 +65,6 @@ function fight(battle, attacker, defender, move) {
     }
     battle[defender].activeMon.currentHP = remainingHP;
     battle[attacker].activeMon.currentStamina = (parseInt(stamina) - parseInt(move.staminaCost));
-    let hasStam;
-    if (parseInt(move.staminaCost) > parseInt(battle[attacker].activeMon.currentStamina)) {
-        hasStam = false;
-    } else {
-        hasStam = true;
-    }
-    battle[attacker].activeMon.learnedMoves.forEach(learnedMove => {
-        if (move.id == learnedMove.id) {
-            learnedMove.monHasStamina = hasStam;
-        }
-    })
 
     let actionText = `${attackMon.name} used ${move.name}!`
     let effectText = "";
@@ -230,13 +219,30 @@ function resolveTurn(battle, playerAction, playerMove) {
         if (parseInt(battle.AI.activeMon.currentStamina) < parseInt(battle.AI.activeMon.stats.stamina)) {
             staminaGain = 1
             battle.AI.activeMon.currentStamina = parseInt(battle.AI.activeMon.currentStamina) + staminaGain;
+
         }
+        //set moves to see if mon has stamina to use them
+        battle.AI.activeMon.learnedMoves.forEach(move => {
+            if (move.staminaCost > battle.AI.activeMon.currentStamina) {
+                move.monHasStamina = false;
+            } else {
+                move.monHasStamina = true;
+            }
+        });
     }
     if (battle.player.activeMon.status != "dead") {
         if (parseInt(battle.player.activeMon.currentStamina) < parseInt(battle.player.activeMon.stats.stamina)) {
             staminaGain = 1
             battle.player.activeMon.currentStamina = parseInt(battle.player.activeMon.currentStamina) + staminaGain;
         }
+        //set moves to see if mon has stamina to use them
+        battle.player.activeMon.learnedMoves.forEach(move => {
+            if (move.staminaCost > battle.player.activeMon.currentStamina) {
+                move.monHasStamina = false;
+            } else {
+                move.monHasStamina = true;
+            }
+        });
     }
 
     return battle;
