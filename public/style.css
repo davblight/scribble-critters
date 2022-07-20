@@ -154,13 +154,16 @@ button:hover {
 }
 
 .move {
-    display: block;
+    display: flex;
     padding-top: 5px;
     height: 100px;
     width: 200px;
     background-color: rgb(151, 150, 150);
     font-size: 30px;
     font-family: 'Edu SA Beginner', cursive;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 #mon-container {
@@ -426,4 +429,48 @@ button:hover {
 
 #subpage-play {
     display: flex;
+}
+
+.unavailableMon {
+    background-color:rgb(154, 36, 36);
+    height: 100px;
+    width: 200px;
+    font-size: 30px;
+    font-family: 'Edu SA Beginner', cursive;
+}
+
+.unavailableMove {
+    background-color:rgb(154, 36, 36);
+    display: block;
+    padding-top: 5px;
+    height: 100px;
+    width: 200px;
+    font-size: 30px;
+    font-family: 'Edu SA Beginner', cursive;
+}
+
+.activeMon {
+    background-color: green;
+    height: 100px;
+    width: 200px;
+    font-size: 30px;
+    font-family: 'Edu SA Beginner', cursive;
+}
+
+.other-button {
+    background-color: rgb(251, 251, 251);
+    height: 50px;
+    width: 100px;
+    font-size: 15px;
+    font-family: 'Edu SA Beginner', cursive;
+}
+
+#other-buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 15px;
+}
+
+.moveDetails {
+    font-size: 15px;
 }

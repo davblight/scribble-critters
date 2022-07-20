@@ -160,10 +160,12 @@
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
                     <div id="battle-stats">
                         <div>
+                            {{ activeMon.name }} <br>
                             HP: {{ activeMon.currentHP }}<br>
                             Stamina: {{ activeMon.currentStamina }}<br>
                         </div>
                         <div>
+                            {{ AIMon.name }} <br>
                             HP: {{ AIMon.currentHP }}<br>
                             Stamina: {{ AIMon.currentStamina }}<br>
                         </div>
@@ -172,13 +174,21 @@
                     <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'">
                 </div>
                 <div id="move-container">
-                    <button class="move" v-for="move in monMove" @click="putBattle('fight', move.id)">{{ move.name
-                        }}</button>
+                    <button :class="move.class" v-for="move in monMove" @click="takeAction('fight', move.id)">
+                        {{ move.name }} : <div class="moveDetails"> {{ move.type }} <br>
+                                                POW: {{ move.power }} <br>
+                                                STA: {{ move.staminaCost }}
+                                            </div>
+                    </button>
                 </div>
                 <div id="mon-container">
                     <!-- Make this a v-for once we have an array containing all possible switches -->
-                    <button v-for="mon in battleMons" class="mon" @click="putBattle('switch', mon._id)">{{ mon.name
+                    <button v-for="mon in battleMons" :class="mon.class" @click="takeAction('switch', mon._id)">{{ mon.name
                         }}</button>
+                </div>
+                <div id="other-buttons">
+                    <button class="other-button" @click="takeAction('rest', '')">Rest</button>
+                    <button class="other-button" @click="takeAction('forfeit', '')">Forfeit</button>
                 </div>
             </div>
 
