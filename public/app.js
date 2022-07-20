@@ -305,7 +305,7 @@ var app = new Vue({
 
             if (response.status == 201) {
                 console.log("successful login attempt");
-                let body = response.json();
+                let body = await response.json();
                 this.loggedInUser = body.user.username;
                 this.page = "home"
             } else if (response.status == 401) {

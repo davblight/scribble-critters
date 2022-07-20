@@ -248,7 +248,7 @@
         "staminaCost": "0",
         "type": "GRASS",
         "effect": "",
-        "id": "PRICKLE",
+        "id": "prickle",
         "monHasStamina": "true"
     }
 }
