@@ -465,7 +465,7 @@ app.get("/AI/teams", async (req, res) => {
         });
         return;
     }
-    res.status(200).json(AIteams);
+    res.status(200).json(AITeams);
 });
 
 //Get a list of all teams bound to the user requesting
