@@ -60,6 +60,8 @@ var app = new Vue({
         AIMon: "",
         userTeams: [],
         battleTurns: [],
+        AITeams: [],
+        playView: "",
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -89,6 +91,7 @@ var app = new Vue({
         },
         showPlay: function () {
             this.subpage = "play";
+            this.getTeams();
         },
         // Shows Teambuilder and cleans it up in case you're clicking on Teambuilder from Teambuilder itself
         showTeambuilder: function () {
@@ -112,6 +115,12 @@ var app = new Vue({
         showMonInfo: function (mon) {
             this.showMon = true;
             this.selectedMon = mon;
+        },
+        playViewAI: function () {
+            this.playView = "AI";
+        },
+        playViewHuman: function () {
+            this.playView = "human";
         },
         // All tb functions should only be used in the scope of the teambuilder
         // Resets fields to clean up teambuilder
@@ -172,6 +181,7 @@ var app = new Vue({
                 }
             } else {
                 this.tbWorkingTeam[this.tbIndex] = newMon
+                this.tbResetFields();
             }
         },
         // Checks if this is a new team or existing team, then performs the appropriate PUT or POST method
