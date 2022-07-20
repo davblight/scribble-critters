@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <div id="login-page" v-if="page == 'login'">
             <h1>WELCOME TO SCRIBBLEMON!</h1><br><br>
             <!-- Login and signup utilize the same fields since they require the same inputs -->
@@ -37,14 +37,40 @@
             <div id="home-content">
                 <!-- Sidebar where menu options are stored -->
                 <div id="sidebar">
-                    <button v-on:click="showBattle">PLAY</button><br>
+                    <button v-on:click="showPlay">PLAY</button><br>
                     <button v-on:click="showTeambuilder">TEAMBUILDER</button><br>
                     <button v-on:click="showChat">CHAT</button><br>
                     <button v-on:click="showCompendium">COMPENDIUM</button><br>
                     <button v-on:click="showSettings">SETTINGS</button><br>
                     <button v-on:click="showLogin">LOG OUT</button>
                 </div>
-                <div class="subpage" id="subpage-play" v-if="subpage == 'play'">TEST PLAY</div>
+                <!-- START PLAY HTML -->
+                <div class="subpage" id="subpage-play" v-if="subpage == 'play'">
+                    <div id="play">
+                           <button v-on:click="playViewAI">VS AI</button> <br>
+                           <button v-on:click="playViewHuman">VS HUMAN</button> <br>
+                    </div>
+                    <div class="playView" v-if="playView == 'AI'">
+                        <h1>VS AI</h1> <br>
+                        YOUR TEAM: <select name="Player Team" class="playerTeam">
+                            <option v-for="team in userTeams">{{ team.name }}</option>
+                        </select><br>
+                        AI TEAM: <select name="AI Team" id="AITeam">
+                            <option v-for="team in AITeams">{{ team.name }}</option>
+                        </select> <br>
+                        <button>PLAY</button>
+                    </div>
+                    <div class="playView" v-if="playView == 'human'">
+                        <h1>VS HUMAN</h1>  <br>
+                        YOUR TEAM: <select name="Player Team" class="playerTeam">
+                            <option v-for="team in userTeams">{{ team.name }}</option>
+                        </select>
+                        <button>PLAY</button>
+                    </div>
+                    
+
+                </div>
+                <!-- END PLAY HTML -->
                 <!-- START TEAMBUILDER HTML -->
                 <!-- Subpages refer to the selected tab on the sidebar. tbView refers to subpages within the Teambuilder subpage -->
                 <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">
