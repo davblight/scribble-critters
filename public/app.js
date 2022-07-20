@@ -381,7 +381,7 @@ var app = new Vue({
                     mon.class = "mon";
                 }
             });
-            battle.player.activMon.moves.forEach(move => {
+            battle.player.activeMon.learnedMoves.forEach(move => {
                 if (!move.monHasStamina) {
                     move.class = "unavailableMove";
                 } else {
