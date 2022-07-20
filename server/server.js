@@ -186,6 +186,13 @@ app.post("/teams", async (req, res) => {
         let mon = req.body.mons[i];
         let monId = req.body.mons[i].id;
         let moves = [];
+        //check if legal mon
+        if (!monList[monId]) {
+            res.status(403).json({
+                message: `${monId} is not a mon id`
+            });
+            return;
+        }
         //loop through moves in mon, and push move data
         //from moveList to an array
         for (let j in mon.learnedMoves) {
@@ -440,6 +447,25 @@ app.delete("/team/:id", async (req, res) => {
         return;
     }
     res.status(200).json(deletedTeam);
+});
+
+//Get a list of all AI teams
+app.get("/AI/teams", async (req, res) => {
+    let AITeams;
+    try {
+        AITeams = await Team.find({ "isAI": true }, ["-user"]);
+        if (!AITeams) {
+            res.status(404).json({ message: `AI teams not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to get AI teams`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(AIteams);
 });
 
 //Get a list of all teams bound to the user requesting
