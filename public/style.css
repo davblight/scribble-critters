@@ -181,6 +181,7 @@ button:hover {
     background-color: rgb(185, 185, 185);
     height: 750px;
     width: 500px;
+    overflow: scroll;
 }
 
 #compendium {
