@@ -62,6 +62,9 @@ var app = new Vue({
         battleTurns: [],
         AITeams: [],
         playView: "",
+        playerTeam: "",
+        AITeam: "",
+        battleId: "",
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -87,11 +90,11 @@ var app = new Vue({
         },
         showBattle: function () {
             this.page = "battle";
-            this.getBattle();
         },
         showPlay: function () {
             this.subpage = "play";
             this.getTeams();
+            this.getAITeams();
         },
         // Shows Teambuilder and cleans it up in case you're clicking on Teambuilder from Teambuilder itself
         showTeambuilder: function () {
@@ -300,14 +303,12 @@ var app = new Vue({
                 credentials: "include"
             });
 
-            let body = await response.json();
-            console.log(body);
-
             if (response.status == 201) {
                 console.log("successful login attempt");
+                let body = response.json();
                 this.loggedInUser = body.user.username;
                 this.page = "home"
-            } else if (response.status = 401) {
+            } else if (response.status == 401) {
                 console.log("unsuccessful login attempt");
                 this.loginErrorMessage = "Wrong Username/Password. Are you trying to sign up?"
             } else {
@@ -370,8 +371,8 @@ var app = new Vue({
                 console.log("something went wrong while getting moves", response.status, response)
             }
         },
-        getBattle: async function () {
-            let response = await fetch(`${URL}/battles/AI/62d6f99d41ebb3fa4e6b7fc2`, {
+        getBattle: async function (battle_id) {
+            let response = await fetch(`${URL}/battles/AI/${battle_id}`, {
                 credentials: "include"
             });
             if (response.status == 200) {
@@ -382,6 +383,7 @@ var app = new Vue({
                 this.activeMon = data.player.activeMon
                 this.AIMon = data.AI.activeMon
                 this.battleTurns = data.turns
+                this.battleId = battle_id
                 console.log("fetched battlemons")
             } else if (response.status == 404) {
                 console.log("battle not found");
@@ -390,7 +392,7 @@ var app = new Vue({
             }
         },
         putBattle: async function (putAction, putSubject) {
-            let response = await fetch(`${URL}/battles/AI/62d6f99d41ebb3fa4e6b7fc2`, {
+            let response = await fetch(`${URL}/battles/AI/${this.battleId}`, {
                 method: "PUT",
                 credentials: "include",
                 body: JSON.stringify({
@@ -443,6 +445,15 @@ var app = new Vue({
                 console.log(this.userTeams);
             }
         },
+        getAITeams: async function () {
+            let response = await fetch(`${URL}/AI/teams`, {
+                credentials: "include"
+            });
+            if (response.status == 200) {
+                this.AITeams = await response.json();
+                console.log(this.AITeams);
+            }
+        },
         deleteTeam: async function (team_id) {
             let response = await fetch(`${URL}/team/${team_id}`, {
                 method: "DELETE",
@@ -454,6 +465,31 @@ var app = new Vue({
                 this.getTeams();
             } else {
                 console.log("error while deleting team", response.status, response)
+            }
+        },
+        postAIBattle: async function () {
+            let newBattle = {
+                playerTeamId: this.playerTeam,
+                AITeamId: this.AITeam,
+            };
+            let response = await fetch(`${URL}/battles/AI`, {
+                method: "POST",
+                body: JSON.stringify(newBattle),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+
+            let body = await response.json();
+            console.log(body);
+
+            if (response.status == 201) {
+                console.log("Battle successfully created");
+                this.getBattle(body._id)
+                this.showBattle();
+            } else {
+                console.log("error posting battle", response.status, response)
             }
         }
     },
