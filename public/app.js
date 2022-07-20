@@ -371,6 +371,30 @@ var app = new Vue({
                 console.log("something went wrong while getting moves", response.status, response)
             }
         },
+        setBattleData: function (battle) {
+            battle.player.mons.forEach(mon => {
+                if (battle.player.activeMon._id.toString() == mon._id.toString()) {
+                    mon.class = "activeMon";
+                } else if (mon.status == "dead") {
+                    mon.class = "unavailableMon";
+                } else {
+                    mon.class = "mon";
+                }
+            });
+            battle.player.activMon.moves.forEach(move => {
+                if (!move.monHasStamina) {
+                    move.class = "unavailableMove";
+                } else {
+                    move.class = "move";
+                }
+            });
+            this.battleMons = battle.player.mons;
+            this.monMove = battle.player.activeMon.learnedMoves
+            this.activeMon = battle.player.activeMon
+            this.AIMon = battle.AI.activeMon
+            this.battleTurns = battle.turns
+            this.battleId = battle._id
+        },
         getBattle: async function (battle_id) {
             let response = await fetch(`${URL}/battles/AI/${battle_id}`, {
                 credentials: "include"
@@ -378,17 +402,33 @@ var app = new Vue({
             if (response.status == 200) {
                 let data = await response.json();
                 console.log(data);
-                this.battleMons = data.player.mons;
-                this.monMove = data.player.activeMon.learnedMoves
-                this.activeMon = data.player.activeMon
-                this.AIMon = data.AI.activeMon
-                this.battleTurns = data.turns
-                this.battleId = battle_id
+                this.setBattleData(data);
                 console.log("fetched battlemons")
             } else if (response.status == 404) {
                 console.log("battle not found");
             } else {
                 console.log("something went wrong while getting the battle", response.status, response)
+            }
+        },
+        takeAction: function (action, subject) {
+            if (action == "fight") {
+                this.monMove.forEach(move => {
+                    if (move.id == subject) {
+                        if (move.monHasStamina) {
+                            this.putBattle(action, subject);
+                        }
+                    }
+                })
+            } else if (action == "switch") {
+                this.battleMons.forEach(mon => {
+                    if (mon._id == subject) {
+                        if (mon.status != "dead" && mon._id != this.activeMon._id) {
+                            this.putBattle(action, subject);
+                        }
+                    }
+                })
+            } else {
+                this.putBattle(action, subject);
             }
         },
         putBattle: async function (putAction, putSubject) {
@@ -405,11 +445,7 @@ var app = new Vue({
             });
             if (response.status == 200) {
                 let data = await response.json();
-                this.battleMons = data.player.mons;
-                this.monMove = data.player.activeMon.learnedMoves
-                this.activeMon = data.player.activeMon
-                this.AIMon = data.AI.activeMon
-                this.battleTurns = data.turns
+                this.setBattleData(data);
             } else if (response.status == 404) {
                 console.log("battle not found");
             } else {
