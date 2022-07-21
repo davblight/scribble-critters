@@ -489,6 +489,7 @@ button:hover {
     background-color: green;
     width: 100px;
     height: 10px;
+    transition: .4s;
 }
 
 .stamina-bar {
@@ -496,6 +497,7 @@ button:hover {
     background-color: rgb(241, 198, 7);
     width: 100px;
     height: 10px;
+    transition: .4s;
 }
 
 .bar-border {
