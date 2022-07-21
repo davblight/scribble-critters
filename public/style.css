@@ -432,7 +432,7 @@ button:hover {
 }
 
 .unavailableMon {
-    background-color:rgb(154, 36, 36);
+    background-color: rgb(154, 36, 36);
     height: 100px;
     width: 200px;
     font-size: 30px;
@@ -440,7 +440,7 @@ button:hover {
 }
 
 .unavailableMove {
-    background-color:rgb(154, 36, 36);
+    background-color: rgb(154, 36, 36);
     display: block;
     padding-top: 5px;
     height: 100px;
@@ -482,4 +482,25 @@ button:hover {
     background: none;
     padding-left: 2vw;
     text-shadow: 1px 1px 1px rgb(78, 78, 78);
+}
+
+.hp-bar {
+    display: block;
+    background-color: green;
+    width: 100px;
+    height: 10px;
+}
+
+.stamina-bar {
+    display: block;
+    background-color: rgb(241, 198, 7);
+    width: 100px;
+    height: 10px;
+}
+
+.bar-border {
+    display: block;
+    width: 100px;
+    height: 10px;
+    border: thin solid black;
 }

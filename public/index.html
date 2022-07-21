@@ -47,8 +47,8 @@
                 <!-- START PLAY HTML -->
                 <div class="subpage" id="subpage-play" v-if="subpage == 'play'">
                     <div id="play">
-                           <button v-on:click="playViewAI">VS AI</button> <br>
-                           <button v-on:click="playViewHuman">VS HUMAN</button> <br>
+                        <button v-on:click="playViewAI">VS AI</button> <br>
+                        <button v-on:click="playViewHuman">VS HUMAN</button> <br>
                     </div>
                     <div class="playView" v-if="playView == 'AI'">
                         <h1>VS AI</h1> <br>
@@ -63,14 +63,14 @@
                         <button v-on:click="postAIBattle">PLAY</button>
                     </div>
                     <div class="playView" v-if="playView == 'human'">
-                        <h1>VS HUMAN</h1>  <br>
+                        <h1>VS HUMAN</h1> <br>
                         YOUR TEAM: <select name="Player Team" class="playerTeam" v-model="playerTeam">
                             <option></option>
                             <option v-for="team in userTeams" :value="team._id">{{ team.name }}</option>
                         </select>
                         <button>PLAY</button>
                     </div>
-                    
+
 
                 </div>
                 <!-- END PLAY HTML -->
@@ -108,14 +108,16 @@
                     <div id="tb-botbar">
                         <!-- These buttons will appear as mons are saved, allowing the user to go back and edit existing mons before saving team -->
                         <div id="tbSavedMonButtons">
-                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon, index)" v-for="(mon, index) in tbWorkingTeam">{{ mon.name }}</button>
+                            <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon, index)"
+                                v-for="(mon, index) in tbWorkingTeam">{{ mon.name }}</button>
                         </div>
                         <!-- Display all possible mons to add to team -->
                         <div v-if="tbView == 'mons'" class="list">
                             <button class="tbMon" v-for="mon in allMons" v-on:click="tbSetMon(mon)">
                                 {{ mon.name }} : {{ mon.type }}
                                 <span class="tbStats">
-                                    HP: {{ mon.stats.hp }} STA: {{ mon.stats.stamina }} ATK: {{ mon.stats.attack }} DEF:
+                                    HP: {{ mon.stats.hp }} STA: {{ mon.stats.stamina }} ATK: {{ mon.stats.attack }}
+                                    DEF:
                                     {{ mon.stats.defense }} SPD: {{ mon.stats.speed }}
                                 </span>
                             </button>
@@ -161,13 +163,29 @@
                     <div id="battle-stats">
                         <div>
                             {{ activeMon.name }} <br>
-                            HP: {{ activeMon.currentHP }}<br>
-                            Stamina: {{ activeMon.currentStamina }}<br>
+                            HP: {{ activeMon.currentHP }} / {{ activeMon.maxHP }}<br>
+                            <div class="bar-border">
+                                <div class="hp-bar" :style="{ width: activeMon.percentHP }">
+                                </div>
+                            </div>
+                            Stamina: {{ activeMon.currentStamina }} / {{ activeMon.stats.stamina }}<br>
+                            <div class="bar-border">
+                                <div class="stamina-bar" :style="{ width: activeMon.percentStamina }">
+                                </div>
+                            </div>
                         </div>
                         <div>
                             {{ AIMon.name }} <br>
-                            HP: {{ AIMon.currentHP }}<br>
-                            Stamina: {{ AIMon.currentStamina }}<br>
+                            HP: {{ AIMon.currentHP }} / {{ AIMon.maxHP }}<br>
+                            <div class="bar-border">
+                                <div class="hp-bar" :style="{ width: AIMon.percentHP }">
+                                </div>
+                            </div>
+                            Stamina: {{ AIMon.currentStamina }} / {{ AIMon.stats.stamina }}<br>
+                            <div class="bar-border">
+                                <div class="stamina-bar" :style="{ width: AIMon.percentStamina }">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'">
@@ -176,14 +194,15 @@
                 <div id="move-container">
                     <button :class="move.class" v-for="move in monMove" @click="takeAction('fight', move.id)">
                         {{ move.name }} : <div class="moveDetails"> {{ move.type }} <br>
-                                                POW: {{ move.power }} <br>
-                                                STA: {{ move.staminaCost }}
-                                            </div>
+                            POW: {{ move.power }} <br>
+                            STA: {{ move.staminaCost }}
+                        </div>
                     </button>
                 </div>
                 <div id="mon-container">
                     <!-- Make this a v-for once we have an array containing all possible switches -->
-                    <button v-for="mon in battleMons" :class="mon.class" @click="takeAction('switch', mon._id)">{{ mon.name
+                    <button v-for="mon in battleMons" :class="mon.class" @click="takeAction('switch', mon._id)">{{
+                        mon.name
                         }}</button>
                 </div>
                 <div id="other-buttons">
