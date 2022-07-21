@@ -85,14 +85,15 @@ h2 {
 #sidebar {
     display: flex;
     flex-direction: column;
-    width: 20vw;
+    min-width: 20vw;
     height: 76vh;
     background-image: url("images/paper-background.jpg");
     background-size: 500%;
     padding-top: 15vh;
     align-items: baseline;
     box-shadow: 0px 0px 20px rgb(78, 78, 78);
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-left: 0px;
 }
 
 #sidebar>button {
@@ -122,7 +123,9 @@ button:hover {
     padding-top: 8vh;
     padding-right: 2vw;
     padding-left: 30px;
-    border-radius: 10px;
+    border-top-left-radius: 10px;
+    transition: ease-in-out .4s;
+    margin-left: 0px;
 }
 
 #subpage-compendium {
@@ -447,6 +450,9 @@ button:hover {
     width: 200px;
     font-size: 30px;
     font-family: 'Edu SA Beginner', cursive;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 .activeMon {
@@ -505,4 +511,51 @@ button:hover {
     width: 100px;
     height: 10px;
     border: thin solid black;
+}
+
+#play>button:hover {
+    color: rgb(94, 94, 94);
+}
+
+#playerMonStats {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    z-index: 1;
+    position: absolute;
+    opacity: 50%;
+    left: 300px;
+    top: 250px;
+    text-align: center;
+    padding-top: 5px;
+    border-radius: 5px;
+}
+
+#AIMonStats {
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    z-index: 1;
+    position: absolute;
+    left: 675px;
+    top: 250px;
+    text-align: center;
+    padding-top: 5px;
+    border-radius: 5px;
+}
+
+#return {
+    color: black;
+    font-size: 35px;
+    border: none;
+    background: none;
+    text-shadow: 1px 1px 1px rgb(78, 78, 78);
+    z-index: 1;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+}
+
+#return:hover {
+    color: rgb(94, 94, 94);
 }

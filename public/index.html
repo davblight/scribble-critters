@@ -45,7 +45,7 @@
                     <button v-on:click="showLogin">LOG OUT</button>
                 </div>
                 <!-- START PLAY HTML -->
-                <div class="subpage" id="subpage-play" v-if="subpage == 'play'">
+                <div class="subpage" id="subpage-play" v-if="subpage == 'play'" :style="subpageStyle">
                     <div id="play">
                         <button v-on:click="playViewAI">VS AI</button> <br>
                         <button v-on:click="playViewHuman">VS HUMAN</button> <br>
@@ -76,7 +76,7 @@
                 <!-- END PLAY HTML -->
                 <!-- START TEAMBUILDER HTML -->
                 <!-- Subpages refer to the selected tab on the sidebar. tbView refers to subpages within the Teambuilder subpage -->
-                <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'">
+                <div class="subpage" id="subpage-teambuilder" v-if="subpage == 'teambuilder'" :style="subpageStyle">
                     <!-- All existingTeams subpage and all other tb subpages are mutually exclusive -->
                     <div id="existingTeams" v-if="tbView == 'existingTeams'">
                         <div v-for="team in userTeams">
@@ -139,9 +139,9 @@
                     </div>
                 </div>
                 <!-- END TEAMBUILDER HTML -->
-                <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'">TEST CHAT</div>
+                <div class="subpage" id="subpage-chat" v-if="subpage == 'chat'" :style="subpageStyle">TEST CHAT</div>
                 <!-- START COMPENDIUM HTML -->
-                <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'">
+                <div class="subpage" id="subpage-compendium" v-if="subpage == 'compendium'" :style="subpageStyle">
                     <div>
                         <div id="compendium" v-for="mon in allMons">
                             <button v-on:click="showMonInfo(mon)">{{ mon.name }}</button>
@@ -151,13 +151,13 @@
 
                 </div>
                 <!-- END COMPENDIUM HTML -->
-                <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'">TEST SETTINGS</div>
+                <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'" :style="subpageStyle">TEST SETTINGS</div>
             </div>
         </div>
         <!-- START BATTLEPAGE HTML -->
         <div id="battle-page" v-if="page == 'battle'">
+            <button id="return" v-on:click="showHome">RETURN HOME</button>
             <div id="battle-container">
-                <button v-on:click="showHome">RETURN HOME</button>
                 <div id="sprite-box">
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
                     <div id="battle-stats">
@@ -188,8 +188,24 @@
                             </div>
                         </div>
                     </div>
-                    <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'">
-                    <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'">
+                    <img 
+                        id="player1-mon" 
+                        :src="'/images/'+activeMon.id+'.png'" 
+                        @mouseover="playerHover = true"
+                        @mouseleave="playerHover = false">
+                    <div id="playerMonStats" v-if="playerHover">{{ activeMon.name }} <br>
+                                                                Attack: {{ activeMon.currentAttack }} <br>
+                                                                Defense: {{ activeMon.currentDefense }} <br>
+                                                                Speed: {{ activeMon.currentSpeed }}</div>
+                    <img 
+                        id="AI-mon" 
+                        :src="'/images/'+AIMon.id+'.png'"
+                        @mouseover="AIHover = true"
+                        @mouseleave="AIHover = false">
+                    <div id="AIMonStats" v-if="AIHover">{{ AIMon.name }} <br>
+                                                                Attack: {{ AIMon.currentAttack }} <br>
+                                                                Defense: {{ AIMon.currentDefense }} <br>
+                                                                Speed: {{ AIMon.currentSpeed }}</div>
                 </div>
                 <div id="move-container">
                     <button :class="move.class" v-for="move in monMove" @click="takeAction('fight', move.id)">
