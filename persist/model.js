@@ -74,6 +74,7 @@ const battleSchema = mongoose.Schema(
         AI: { type: teama, required: true },
         turns: { type: [turnSchema], default: [] },
         finished: { type: Boolean, required: true, default: false },
+        winner: { type: String, default: "" },
     },
     {
         timestamps: true,

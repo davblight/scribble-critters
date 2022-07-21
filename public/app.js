@@ -65,6 +65,7 @@ var app = new Vue({
         playerTeam: "",
         AITeam: "",
         battleId: "",
+        battle: {},
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -373,7 +374,7 @@ var app = new Vue({
         },
         setBattleData: function (battle) {
             battle.player.mons.forEach(mon => {
-                if (battle.player.activeMon._id.toString() == mon._id.toString()) {
+                if (battle.player.activeMon._id.toString() == mon._id.toString() && battle.player.activeMon.status != "dead") {
                     mon.class = "activeMon";
                 } else if (mon.status == "dead") {
                     mon.class = "unavailableMon";
@@ -382,18 +383,19 @@ var app = new Vue({
                 }
             });
             battle.player.activeMon.learnedMoves.forEach(move => {
-                if (!move.monHasStamina) {
+                if (!move.monHasStamina || battle.player.activeMon.status == "dead") {
                     move.class = "unavailableMove";
                 } else {
                     move.class = "move";
                 }
             });
             this.battleMons = battle.player.mons;
-            this.monMove = battle.player.activeMon.learnedMoves
-            this.activeMon = battle.player.activeMon
-            this.AIMon = battle.AI.activeMon
-            this.battleTurns = battle.turns
-            this.battleId = battle._id
+            this.monMove = battle.player.activeMon.learnedMoves;
+            this.activeMon = battle.player.activeMon;
+            this.AIMon = battle.AI.activeMon;
+            this.battleTurns = battle.turns;
+            this.battleId = battle._id;
+            this.battle = battle;
         },
         getBattle: async function (battle_id) {
             let response = await fetch(`${URL}/battles/AI/${battle_id}`, {
@@ -411,24 +413,26 @@ var app = new Vue({
             }
         },
         takeAction: function (action, subject) {
-            if (action == "fight") {
-                this.monMove.forEach(move => {
-                    if (move.id == subject) {
-                        if (move.monHasStamina) {
-                            this.putBattle(action, subject);
+            if (!this.battle.finished) {
+                if (action == "fight") {
+                    this.monMove.forEach(move => {
+                        if (move.id == subject) {
+                            if (move.monHasStamina) {
+                                this.putBattle(action, subject);
+                            }
                         }
-                    }
-                })
-            } else if (action == "switch") {
-                this.battleMons.forEach(mon => {
-                    if (mon._id == subject) {
-                        if (mon.status != "dead" && mon._id != this.activeMon._id) {
-                            this.putBattle(action, subject);
+                    })
+                } else if (action == "switch") {
+                    this.battleMons.forEach(mon => {
+                        if (mon._id == subject) {
+                            if (mon.status != "dead" && mon._id != this.activeMon._id) {
+                                this.putBattle(action, subject);
+                            }
                         }
-                    }
-                })
-            } else {
-                this.putBattle(action, subject);
+                    })
+                } else {
+                    this.putBattle(action, subject);
+                }
             }
         },
         putBattle: async function (putAction, putSubject) {
