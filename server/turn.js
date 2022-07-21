@@ -205,7 +205,7 @@ function resolveTurn(battle, playerAction, playerMove) {
             battle.AI.activeMon = switchMons[randMon];
         } else {
             battle.finished = true;
-            battle.winner = "player";
+            battle.winner = battle.player.user.name;
         }
     }
     //if mon is still alive and resting
@@ -366,7 +366,7 @@ const takeTurn = function (battle, action, subject) {
     //if all player mons are dead
     if (!aliveMon) {
         battle.finished = true;
-        battle.winner = "AI";
+        battle.winner = "ScribbleBot";
     }
     return battle;
 }
