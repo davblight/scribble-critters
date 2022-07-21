@@ -474,3 +474,12 @@ button:hover {
 .moveDetails {
     font-size: 15px;
 }
+
+#play>button {
+    color: black;
+    font-size: 35px;
+    border: none;
+    background: none;
+    padding-left: 2vw;
+    text-shadow: 1px 1px 1px rgb(78, 78, 78);
+}

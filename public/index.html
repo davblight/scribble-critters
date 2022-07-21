@@ -148,14 +148,14 @@
                     <mon v-bind:mon="selectedMon" v-if="showMon"></mon>
 
                 </div>
+                <!-- END COMPENDIUM HTML -->
                 <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'">TEST SETTINGS</div>
             </div>
-
         </div>
-        <!-- END COMPENDIUM HTML -->
         <!-- START BATTLEPAGE HTML -->
         <div id="battle-page" v-if="page == 'battle'">
             <div id="battle-container">
+                <button v-on:click="showHome">RETURN HOME</button>
                 <div id="sprite-box">
                     <!-- This sprite box will be populated with images representing both mons, their HP, and their Stamina -->
                     <div id="battle-stats">
