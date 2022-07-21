@@ -237,6 +237,10 @@
                     </div> <!-- Make this a v-for once we have an array containing all actions -->
                 </div>
             </div>
+            <div id="game-over" v-show="battle.finished">
+            </div>
+            <h1 id="game-over-text" v-show="battle.finished">{{ battle.winner }} has won the game!</h1>
+            <button id="game-over-button" @click="showHome" v-if="battle.finished">RETURN HOME</button>
         </div>
         <!-- END BATTLEPAGE HTML -->
 
