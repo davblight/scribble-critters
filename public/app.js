@@ -46,6 +46,7 @@ var app = new Vue({
     data: {
         page: "login",
         subpage: "",
+        subpageStyle: {},
         usernameInput: "",
         passwordInput: "",
         loggedInUser: "",
@@ -65,6 +66,10 @@ var app = new Vue({
         playerTeam: "",
         AITeam: "",
         battleId: "",
+        playerHover: false,
+        AIHover: false,
+        playerHoverX: 0,
+        playerHoverY: 0,
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -92,28 +97,47 @@ var app = new Vue({
             this.page = "battle";
         },
         showPlay: function () {
-            this.subpage = "play";
+            this.subpageTransition('play')
             this.getTeams();
             this.getAITeams();
         },
         // Shows Teambuilder and cleans it up in case you're clicking on Teambuilder from Teambuilder itself
         showTeambuilder: function () {
-            this.subpage = "teambuilder";
+            this.subpageTransition('teambuilder')
             this.tbView = 'existingTeams'
             this.tbResetFields();
             this.tbWorkingTeam = [];
             this.getTeams();
         },
         showChat: function () {
-            this.subpage = "chat";
+            this.subpageTransition('chat')
         },
         // Shows compendium and gets mons to populate said compendium
         showCompendium: function () {
-            this.subpage = "compendium";
+            this.subpageTransition('compendium');
             this.getMons();
         },
         showSettings: function () {
-            this.subpage = "settings";
+            this.subpageTransition('settings');
+        },
+        // Sets up transition so that subpages slide in
+        subpageTransition: function (page) {
+            this.subpageStyle = {
+                "margin-left": "100%",
+            };
+            if (this.subpage != "") {
+                setTimeout(() => {
+                    this.subpage = page
+                }, 350)
+                setTimeout(() => {
+                    this.subpageStyle = {};
+                }, 700)
+            } else {
+                this.subpage = page
+                setTimeout(() => {
+                    this.subpageStyle = {};
+                }, 10)
+            }
         },
         showMonInfo: function (mon) {
             this.showMon = true;
