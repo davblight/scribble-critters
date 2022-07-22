@@ -55,6 +55,7 @@ var app = new Vue({
         allMoves: {},
         selectedMon: {},
         showMon: false,
+        tbShowButtons: "default",
         battleMons: [],
         monMove: [],
         activeMon: "",
@@ -159,6 +160,11 @@ var app = new Vue({
             this.tbLearnedMoves = ["", "", ""];
             this.tbLearnableMoves = [];
             this.tbMoveCounter = 0;
+            if (this.tbWorkingTeam.length == 3) {
+                this.tbShowButtons = "default";
+            } else {
+                this.tbShowButtons = "default";
+            }
         },
         // Shows all mons available to be added to team
         tbShowMons: function () {
@@ -195,7 +201,11 @@ var app = new Vue({
                 learnedMoves: [...this.tbLearnedMoves]
             }
             if (this.tbIsNewTeam == true) {
-                if (this.tbWorkingTeam.length < 3) {
+                if (this.tbShowButtons == "edit") {
+                    this.tbWorkingTeam[this.tbIndex] = newMon
+                    this.tbResetFields();
+                }
+                else if (this.tbWorkingTeam.length < 3) {
                     if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
                         this.tbWorkingTeam.push(newMon)
                         //Clean up the teambuilder for the next mon to be input
@@ -282,6 +292,13 @@ var app = new Vue({
             this.tbLearnedMoves = mon.learnedMoves;
             this.tbNameInput = mon.name;
             this.tbIndex = index;
+            this.tbShowButtons = "show";
+        },
+        tbEditMon: function () {
+            this.tbShowButtons = "edit";
+        },
+        tbEditCancel: function () {
+            this.tbShowButtons = "show";
         },
         //Allows user to view an existing team by loading that team's data into the tbWorkingTeam variable
         tbViewTeam: function (team) {

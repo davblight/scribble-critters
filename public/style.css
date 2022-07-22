@@ -2,6 +2,7 @@
     font-family: 'Nanum Pen Script', cursive;
     margin: 0;
     padding: 0;
+    font-size: 24px;
 }
 
 [v-cloak] {
@@ -163,7 +164,6 @@ button:hover {
     width: 200px;
     background-color: rgb(151, 150, 150);
     font-size: 30px;
-    font-family: 'Edu SA Beginner', cursive;
     text-align: center;
     justify-content: center;
     align-items: center;
@@ -292,7 +292,7 @@ button:hover {
     padding-bottom: 15px;
     box-shadow: 0px 0px 20px rgb(78, 78, 78);
     border-radius: 10px;
-    background-color: rgb(248, 248, 248)
+    background-color: rgb(248, 248, 248);
 }
 
 #tb-topbar>div {
@@ -350,7 +350,7 @@ button:hover {
 }
 
 #tbRightmost {
-    width: 100px;
+    width: 150px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -478,7 +478,7 @@ button:hover {
 }
 
 .moveDetails {
-    font-size: 15px;
+    font-size: 24px;
 }
 
 #play>button {

@@ -98,9 +98,17 @@
                                 v-model="move">
                         </div>
                         <div id="tbRightmost">
-                            <button id="tbSaveMon" v-on:click="tbSaveMon()">Save Mon</button>
+                            <button v-if="tbShowButtons == 'default'" id="tbSaveMon" v-on:click="tbSaveMon()">Save
+                                Mon</button>
+                            <button v-if="tbShowButtons == 'edit'" id="tbSaveMon" v-on:click="tbSaveMon()">Save
+                                Changes</button>
                             <p id="tbErrorMessage">{{ tbErrorMessage }}</p>
-                            <button id="tbSubmitTeam" v-on:click="tbShowSubmit">Submit Team</button>
+                            <button v-show="tbShowButtons == 'show'" id="tbEditMon" @click="tbEditMon()">Edit
+                                Mon</button>
+                            <button v-show="tbShowButtons == 'edit'" id="tbEditCancel"
+                                @click="tbEditCancel()">Cancel</button>
+                            <button v-show="tbShowButtons == 'save'" id="tbSubmitTeam" v-on:click="tbShowSubmit">Submit
+                                Team</button>
                         </div>
                     </div>
 
@@ -151,7 +159,8 @@
 
                 </div>
                 <!-- END COMPENDIUM HTML -->
-                <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'" :style="subpageStyle">TEST SETTINGS</div>
+                <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'" :style="subpageStyle">TEST
+                    SETTINGS</div>
             </div>
         </div>
         <!-- START BATTLEPAGE HTML -->
@@ -188,24 +197,18 @@
                             </div>
                         </div>
                     </div>
-                    <img 
-                        id="player1-mon" 
-                        :src="'/images/'+activeMon.id+'.png'" 
-                        @mouseover="playerHover = true"
+                    <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'" @mouseover="playerHover = true"
                         @mouseleave="playerHover = false">
                     <div id="playerMonStats" v-if="playerHover">{{ activeMon.name }} <br>
-                                                                Attack: {{ activeMon.currentAttack }} <br>
-                                                                Defense: {{ activeMon.currentDefense }} <br>
-                                                                Speed: {{ activeMon.currentSpeed }}</div>
-                    <img 
-                        id="AI-mon" 
-                        :src="'/images/'+AIMon.id+'.png'"
-                        @mouseover="AIHover = true"
+                        Attack: {{ activeMon.currentAttack }} <br>
+                        Defense: {{ activeMon.currentDefense }} <br>
+                        Speed: {{ activeMon.currentSpeed }}</div>
+                    <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'" @mouseover="AIHover = true"
                         @mouseleave="AIHover = false">
                     <div id="AIMonStats" v-if="AIHover">{{ AIMon.name }} <br>
-                                                                Attack: {{ AIMon.currentAttack }} <br>
-                                                                Defense: {{ AIMon.currentDefense }} <br>
-                                                                Speed: {{ AIMon.currentSpeed }}</div>
+                        Attack: {{ AIMon.currentAttack }} <br>
+                        Defense: {{ AIMon.currentDefense }} <br>
+                        Speed: {{ AIMon.currentSpeed }}</div>
                 </div>
                 <div id="move-container">
                     <button :class="move.class" v-for="move in monMove" @click="takeAction('fight', move.id)">
