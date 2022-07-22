@@ -155,7 +155,7 @@
                             <button v-on:click="showMonInfo(mon)">{{ mon.name }}</button>
                         </div>
                     </div>
-                    <mon v-bind:mon="selectedMon" v-if="showMon"></mon>
+                    <mon v-bind:mon="selectedMon" v-if="showMon" :all-moves="allMoves"></mon>
 
                 </div>
                 <!-- END COMPENDIUM HTML -->
@@ -197,14 +197,14 @@
                             </div>
                         </div>
                     </div>
-                    <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'" @mouseover="playerHover = true"
-                        @mouseleave="playerHover = false">
+                    <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'" @mouseover="playerHoverOver($event)"
+                        @mouseleave="playerHover = false" :style="battleHoverStyle">
                     <div id="playerMonStats" v-if="playerHover">{{ activeMon.name }} <br>
                         Attack: {{ activeMon.currentAttack }} <br>
                         Defense: {{ activeMon.currentDefense }} <br>
                         Speed: {{ activeMon.currentSpeed }}</div>
-                    <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'" @mouseover="AIHover = true"
-                        @mouseleave="AIHover = false">
+                    <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'" @mouseover="AIHoverOver($event)"
+                        @mouseleave="AIHover = false" :style="battleHoverStyle">
                     <div id="AIMonStats" v-if="AIHover">{{ AIMon.name }} <br>
                         Attack: {{ AIMon.currentAttack }} <br>
                         Defense: {{ AIMon.currentDefense }} <br>

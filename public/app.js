@@ -1,6 +1,44 @@
 const URL = "http://localhost:8080"
 
 
+Vue.component('move', {
+    template: `
+    <div>
+        <p @mouseover="mouseOverMove($event)" @mouseout="mouseOff">{{ move }}</p>
+        <div class=mouseOverMoves :style=hoverStyle>
+            Type: {{ allMoves[move].type }}<br>
+            Power: {{ allMoves[move].power }}<br>
+            Stamina: {{ allMoves[move].staminaCost }}<br>
+        </div>
+    </div>`,
+    props: [
+        "move",
+        "all-moves"
+    ],
+    data: function () {
+        return {
+            hoverStyle: {
+                display: "none",
+            },
+        }
+    },
+    methods: {
+        mouseOverMove: function (event) {
+            this.hoverStyle = {
+                left: event.clientX,
+                top: event.clientY,
+                display: "block",
+            };
+            this.showMove = true;
+        },
+        mouseOff: function () {
+            this.hoverStyle = {
+                display: "none"
+            }
+        }
+    }
+})
+
 //Mon component for the display of mons in the Compendium
 Vue.component('mon', {
     template: `
@@ -21,23 +59,30 @@ Vue.component('mon', {
                     </div>
                 </div> <br>
                 MOVES:
-                <div class='monMoves' v-for='move in mon.learnableMoves'>
-                    {{ move }}
+                <div class='monMoves' v-for='move in mon.learnableMoves' >
+                    <move :all-moves="allMoves" :move="move"></move>
                 </div>
             </div>
         </div>`,
     props: [
-        "mon"
+        "mon",
+        "all-moves"
     ],
     data: function () {
         return {
             showMon: false,
+            showMove: false,
+            hoverStyle: {
+                display: "none",
+                left: 0,
+                top: 0,
+            },
         }
     },
     methods: {
         showMonInfo: function () {
-            this.showMon = !this.showMon
-        }
+            this.showMon = !this.showMon;
+        },
     }
 })
 
@@ -72,6 +117,7 @@ var app = new Vue({
         AIHover: false,
         playerHoverX: 0,
         playerHoverY: 0,
+        battleHoverStyle: {},
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -118,6 +164,7 @@ var app = new Vue({
         showCompendium: function () {
             this.subpageTransition('compendium');
             this.getMons();
+            this.getMoves();
         },
         showSettings: function () {
             this.subpageTransition('settings');
@@ -150,6 +197,24 @@ var app = new Vue({
         },
         playViewHuman: function () {
             this.playView = "human";
+        },
+        playerHoverOver: function (event) {
+            this.playerHover = true;
+            let x = event.clientX;
+            let y = event.clientY;
+            this.battleHoverStyle = {
+                left: x,
+                top: y,
+            }
+        },
+        AIHoverOver: function (event) {
+            this.AIHover = true;
+            let x = event.clientX;
+            let y = event.clientY;
+            this.battleHoverStyle = {
+                left: x,
+                top: y,
+            }
         },
         // All tb functions should only be used in the scope of the teambuilder
         // Resets fields to clean up teambuilder
