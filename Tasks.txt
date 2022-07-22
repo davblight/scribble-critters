@@ -16,7 +16,7 @@ Rules:
 
 Tasks:
 
-1. Set up UI
+--DONE 1. Set up UI
     -Require a login by barring the rest of the site behind a login screen
         -POST to users -- have a sessionStore that automatically gets the logged-in user if applicable
     -Hierarchy of menus: persistent sidebar > all else
@@ -38,10 +38,10 @@ Tasks:
         -PUT method to alter the existing data at /teams/team_id
         -Check to see if the user's id matches the team's user_id
         -Check that there are no repeat mons or illegal moves on said mons
-    -Delete existing team
+    --DONE-Delete existing team
         -DELETE method at the /teams/team_id endpoint
         -Check to see if the user's id matches the team's user_id
-    -Teambuilder UI
+    --DONE-Teambuilder UI
         -Blank slate with "Add Mon" button
             -When clicked, add mon displays all available mons
                 -When mon is clicked, show fields that can contain possible moves as well as a name, sprite, and stat table
@@ -50,11 +50,11 @@ Tasks:
                     -"Add" also adds the mon to a temporary array that stores the added mons until the POST method is run
             -Procedurally display mons as they are added. Clicking on an added mon allows the user to edit the fields
         -"Save Team" button that runs the POST method under Create new team and returns the user to the screen where they see all their teams
-5. Battle system
+--DONE 5. Battle system
     --DONE -Establish a battle session
         -For now, only against an AI
         -Select the team they want to use
-    -POST to /battle/id/action, passing the user team and AI team as objects and getting the battle_id
+    --DONE-POST to /battle/id/action, passing the user team and AI team as objects and getting the battle_id
          {
             action: "", (fight / switch / rest / forfeit)
              subject: "", (moveId / switchMonId / "")

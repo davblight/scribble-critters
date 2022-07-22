@@ -56,6 +56,7 @@ var app = new Vue({
         selectedMon: {},
         showMon: false,
         tbShowButtons: "default",
+        tbShowSave: false,
         battleMons: [],
         monMove: [],
         activeMon: "",
@@ -160,31 +161,36 @@ var app = new Vue({
             this.tbLearnedMoves = ["", "", ""];
             this.tbLearnableMoves = [];
             this.tbMoveCounter = 0;
-            if (this.tbWorkingTeam.length == 3) {
-                this.tbShowButtons = "default";
-            } else {
-                this.tbShowButtons = "default";
-            }
+            this.tbShowButtons = "default"
         },
         // Shows all mons available to be added to team
         tbShowMons: function () {
             this.tbView = "mons";
-            this.tbResetFields();
+            if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
+                this.tbResetFields();
+            }
             this.getMons();
         },
         tbShowSubmit: function () {
             this.tbView = "tbPost"
         },
+        tbNewMon: function () {
+            this.tbView = "mons";
+            this.tbResetFields();
+            this.tbShowButtons = "default";
+        },
         // Sets the active mon and populates the move fields with the moves already assigned to said mon.
         tbSetMon: async function (mon) {
-            this.tbLearnedMoves = ["", "", ""];
-            this.tbMon = mon;
-            this.tbNameInput = mon.name
-            await this.getMoves();
-            mon.learnableMoves.forEach((move) => {
-                this.tbLearnableMoves.push(this.allMoves[move])
-            })
-            this.tbView = "moves";
+            if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
+                this.tbLearnedMoves = ["", "", ""];
+                this.tbMon = mon;
+                this.tbNameInput = mon.name
+                await this.getMoves();
+                mon.learnableMoves.forEach((move) => {
+                    this.tbLearnableMoves.push(this.allMoves[move])
+                })
+                this.tbView = "moves";
+            }
         },
         // Adds the selected moves to the mon's learnedMoves field
         tbPushMove: function (move) {
@@ -193,6 +199,15 @@ var app = new Vue({
                 this.tbMoveCounter += 1;
             }
         },
+        // Removes the selected move from the mon's learnedMoves field
+        tbDeleteMove: function (index) {
+
+            if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
+                this.tbLearnedMoves.splice(index, 1);
+                this.tbMoveCounter -= 1;
+            }
+            this.tbView = "moves";
+        },
         // Saves the mon when the button is clicked so that they can eventually be present when a team is posted
         tbSaveMon: function () {
             let newMon = {
@@ -200,27 +215,29 @@ var app = new Vue({
                 id: this.tbMon.id,
                 learnedMoves: [...this.tbLearnedMoves]
             }
-            if (this.tbIsNewTeam == true) {
-                if (this.tbShowButtons == "edit") {
-                    this.tbWorkingTeam[this.tbIndex] = newMon
-                    this.tbResetFields();
-                }
-                else if (this.tbWorkingTeam.length < 3) {
-                    if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
-                        this.tbWorkingTeam.push(newMon)
-                        //Clean up the teambuilder for the next mon to be input
-                        this.tbResetFields();
-                        this.tbView = "mons";
-                    } else {
-                        this.tbErrorMessage = "Please fill out all fields.";
-                    }
+            if (this.tbShowButtons == "edit") {
+                this.tbWorkingTeam[this.tbIndex] = newMon
+                this.tbView = "";
+                this.tbShowButtons = "show";
+            }
+            else if (this.tbWorkingTeam.length < 3) {
+                if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
+                    this.tbWorkingTeam.push(newMon)
+                    //Clean up the teambuilder for the next mon to be input
+                    this.tbView = "";
+                    this.tbShowButtons = "show";
                 } else {
-                    this.tbErrorMessage = "Only 3 Mons allowed.";
+                    this.tbErrorMessage = "Please fill out all fields.";
                 }
             } else {
-                this.tbWorkingTeam[this.tbIndex] = newMon
-                this.tbResetFields();
+                this.tbErrorMessage = "Only 3 Mons allowed.";
             }
+            if (this.tbWorkingTeam.length == 3) {
+                this.tbShowSave = true;
+            } else {
+                this.tbShowSave = false;
+            }
+
         },
         // Checks if this is a new team or existing team, then performs the appropriate PUT or POST method
         tbSubmit: function () {
@@ -251,6 +268,8 @@ var app = new Vue({
 
                 if (response.status == 201) {
                     console.log("team successfully posted");
+                    await this.getTeams();
+                    this.tbView = "existingTeams";
                 } else {
                     console.log("error posting team", response.status, response)
                 }
@@ -279,6 +298,10 @@ var app = new Vue({
 
                 if (response.status == 201) {
                     console.log("team successfully posted");
+                    await this.getTeams();
+                    this.tbView = "existingTeams";
+                    this.tbIsNewTeam = false;
+
                 } else {
                     console.log("error posting team", response.status, response)
                 }
@@ -287,18 +310,26 @@ var app = new Vue({
             }
         },
         // Displays a saved mon. Intended for use on existing mons from existing teams
-        tbDisplaySavedMon: function (mon, index) {
-            this.tbMon = mon;
-            this.tbLearnedMoves = mon.learnedMoves;
-            this.tbNameInput = mon.name;
-            this.tbIndex = index;
-            this.tbShowButtons = "show";
+        tbDisplaySavedMon: async function (mon, index) {
+            if (this.tbShowButtons != "edit") {
+                this.tbResetFields();
+                this.tbMon = mon;
+                this.tbLearnedMoves = [...mon.learnedMoves];
+                this.tbNameInput = mon.name;
+                this.tbIndex = index;
+                this.tbShowButtons = "show";
+                editMon = this.allMons[mon.id];
+                editMon.learnableMoves.forEach((move) => {
+                    this.tbLearnableMoves.push(this.allMoves[move])
+                });
+            }
         },
         tbEditMon: function () {
             this.tbShowButtons = "edit";
         },
         tbEditCancel: function () {
             this.tbShowButtons = "show";
+            this.tbDisplaySavedMon(this.tbMon, this.tbIndex)
         },
         //Allows user to view an existing team by loading that team's data into the tbWorkingTeam variable
         tbViewTeam: function (team) {
@@ -573,11 +604,19 @@ var app = new Vue({
 
             if (response.status == 201) {
                 console.log("Battle successfully created");
-                this.getBattle(body._id)
+                await this.getBattle(body._id)
                 this.showBattle();
             } else {
                 console.log("error posting battle", response.status, response)
             }
+        }
+    },
+    computed: {
+        tbShowAdd: function () {
+            if (this.tbShowButtons == "show" && this.tbWorkingTeam.length != 3) {
+                return true;
+            }
+            return false;
         }
     },
     created: function () {
