@@ -1,9 +1,8 @@
 const URL = "http://localhost:8080"
 
-
 Vue.component('move', {
     template: `
-    <div>
+    <div class="compendiumMoveContainer">
         <p @mouseover="mouseOverMove($event)" @mouseout="mouseOff">{{ move }}</p>
         <div class=mouseOverMoves :style=hoverStyle>
             Type: {{ allMoves[move].type }}<br>
@@ -200,8 +199,8 @@ var app = new Vue({
         },
         playerHoverOver: function (event) {
             this.playerHover = true;
-            let x = event.clientX;
-            let y = event.clientY;
+            let x = event.screenX;
+            let y = event.screenY;
             this.battleHoverStyle = {
                 left: x,
                 top: y,
@@ -209,8 +208,8 @@ var app = new Vue({
         },
         AIHoverOver: function (event) {
             this.AIHover = true;
-            let x = event.clientX;
-            let y = event.clientY;
+            let x = event.screenX;
+            let y = event.screenY;
             this.battleHoverStyle = {
                 left: x,
                 top: y,
@@ -638,10 +637,24 @@ var app = new Vue({
 
             if (response.status == 201) {
                 console.log("Battle successfully created");
-                this.getBattle(body._id)
+                await this.getBattle(body._id)
                 this.showBattle();
             } else {
                 console.log("error posting battle", response.status, response)
+            }
+        },
+        logOut: async function () {
+            let response = await fetch (`${URL}/logout`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+            if (response.status == 201) {
+                console.log("User successfully logged out");
+            } else {
+                console.log("error logging out user", response.status, response);
             }
         }
     },

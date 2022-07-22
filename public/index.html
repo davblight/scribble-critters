@@ -8,8 +8,7 @@
     <title>Scribblemon Showdown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Nanum+Pen+Script&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Gloria+Hallelujah&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -42,7 +41,7 @@
                     <button v-on:click="showChat">CHAT</button><br>
                     <button v-on:click="showCompendium">COMPENDIUM</button><br>
                     <button v-on:click="showSettings">SETTINGS</button><br>
-                    <button v-on:click="showLogin">LOG OUT</button>
+                    <button v-on:click="logOut">LOG OUT</button>
                 </div>
                 <!-- START PLAY HTML -->
                 <div class="subpage" id="subpage-play" v-if="subpage == 'play'" :style="subpageStyle">
@@ -198,14 +197,14 @@
                         </div>
                     </div>
                     <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'" @mouseover="playerHoverOver($event)"
-                        @mouseleave="playerHover = false" :style="battleHoverStyle">
-                    <div id="playerMonStats" v-if="playerHover">{{ activeMon.name }} <br>
+                        @mouseleave="playerHover = false">
+                    <div id="playerMonStats" v-if="playerHover" :style="battleHoverStyle">{{ activeMon.name }} <br>
                         Attack: {{ activeMon.currentAttack }} <br>
                         Defense: {{ activeMon.currentDefense }} <br>
                         Speed: {{ activeMon.currentSpeed }}</div>
                     <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'" @mouseover="AIHoverOver($event)"
-                        @mouseleave="AIHover = false" :style="battleHoverStyle">
-                    <div id="AIMonStats" v-if="AIHover">{{ AIMon.name }} <br>
+                        @mouseleave="AIHover = false">
+                    <div id="AIMonStats" v-if="AIHover" :style="battleHoverStyle">{{ AIMon.name }} <br>
                         Attack: {{ AIMon.currentAttack }} <br>
                         Defense: {{ AIMon.currentDefense }} <br>
                         Speed: {{ AIMon.currentSpeed }}</div>
@@ -230,7 +229,7 @@
                 </div>
             </div>
 
-            <div id="log-container">
+            <div id="log-container" >
                 <div class="turn" v-for="turn in battleTurns">
                     Turn: {{ turn.turnNumber }}<br>
                     <div class="log-entry" v-for="action in turn.turnText">

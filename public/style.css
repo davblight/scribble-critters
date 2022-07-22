@@ -32,7 +32,7 @@ body {
     width: 100px;
     font-size: 20px;
     box-shadow: 3px 3px 3px rgb(78, 78, 78);
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 #login-fields>input {
@@ -42,12 +42,12 @@ body {
     box-shadow: 3px 3px 3px rgb(78, 78, 78);
     border: none;
     border-radius: 5px;
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     padding-left: 5px;
 }
 
 #login-error {
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     color: rgb(154, 36, 36);
     font-size: 15px;
     text-shadow: none;
@@ -93,7 +93,7 @@ h2 {
     padding-top: 15vh;
     align-items: baseline;
     box-shadow: 0px 0px 20px rgb(78, 78, 78);
-    border-top-right-radius: 10px;
+    border-top-right-radius: 30px;
     margin-left: 0px;
 }
 
@@ -124,7 +124,7 @@ button:hover {
     padding-top: 8vh;
     padding-right: 2vw;
     padding-left: 30px;
-    border-top-left-radius: 10px;
+    border-top-left-radius: 30px;
     transition: ease-in-out .4s;
     margin-left: 0px;
 }
@@ -162,11 +162,14 @@ button:hover {
     padding-top: 5px;
     height: 100px;
     width: 200px;
-    background-color: rgb(151, 150, 150);
+    background-color: rgb(220, 220, 220);
     font-size: 30px;
     text-align: center;
     justify-content: center;
     align-items: center;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(78, 78, 78);
 }
 
 #mon-container {
@@ -176,18 +179,23 @@ button:hover {
 }
 
 .mon {
-    background-color: rgb(101, 101, 101);
+    background-color: rgb(248, 248, 248);
     height: 100px;
     width: 200px;
-    font-size: 30px;
-    font-family: 'Edu SA Beginner', cursive;
+    font-size: 25px;
+    font-family: 'Gloria Hallelujah', cursive;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(78, 78, 78);
 }
 
 #log-container {
-    background-color: rgb(185, 185, 185);
+    background-color: rgb(248, 248, 248);
     height: 750px;
     width: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(78, 78, 78);
 }
 
 #compendium {
@@ -199,6 +207,7 @@ button:hover {
 
 .monInfo {
     display: flex;
+    padding-bottom: 15px;
 }
 
 #compendium>button {
@@ -218,7 +227,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 490px;
+    height: 510px;
     width: 400px;
     border-radius: 10px;
     background-color: rgb(248, 248, 248);
@@ -242,7 +251,7 @@ button:hover {
 }
 
 .monType {
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     font-size: 20px;
 }
 
@@ -251,8 +260,12 @@ button:hover {
 }
 
 .monMoves {
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     font-size: 20px;
+}
+
+.monMoves:hover {
+    cursor: default;
 }
 
 #sprite-box {
@@ -263,6 +276,7 @@ button:hover {
 }
 
 #sprite-box>img {
+    padding-top: 100px;
     padding-left: 50px;
     height: 300px;
     width: 300px;
@@ -334,13 +348,13 @@ button:hover {
 }
 
 .tbStats {
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     font-size: 15px;
     padding-left: 30px;
 }
 
 .tbMoveStats {
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     font-size: 15px;
     padding-left: 30px;
 }
@@ -357,7 +371,7 @@ button:hover {
 }
 
 #tbErrorMessage {
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     color: rgb(154, 36, 36);
     font-size: 15px;
     text-shadow: none;
@@ -385,7 +399,7 @@ button:hover {
 
 #newTeam {
     font-size: 45px;
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
     padding-top: 30px;
 }
 
@@ -435,32 +449,40 @@ button:hover {
 }
 
 .unavailableMon {
-    background-color: rgb(154, 36, 36);
+    background-color: rgb(231, 161, 161);
     height: 100px;
     width: 200px;
     font-size: 30px;
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(78, 78, 78);
 }
 
 .unavailableMove {
-    background-color: rgb(154, 36, 36);
-    display: block;
+    background-color: rgb(231, 161, 161);
+    display: flex;
     padding-top: 5px;
     height: 100px;
     width: 200px;
     font-size: 30px;
-    font-family: 'Edu SA Beginner', cursive;
     text-align: center;
     justify-content: center;
     align-items: center;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(78, 78, 78);
 }
 
 .activeMon {
-    background-color: green;
+    background-color: rgb(140, 219, 140);
     height: 100px;
     width: 200px;
     font-size: 30px;
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(78, 78, 78);
 }
 
 .other-button {
@@ -468,7 +490,10 @@ button:hover {
     height: 50px;
     width: 100px;
     font-size: 15px;
-    font-family: 'Edu SA Beginner', cursive;
+    font-family: 'Gloria Hallelujah', cursive;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgb(78, 78, 78);
 }
 
 #other-buttons {
@@ -492,7 +517,7 @@ button:hover {
 
 .hp-bar {
     display: block;
-    background-color: green;
+    background-color: rgb(140, 219, 140);
     width: 100px;
     height: 10px;
     transition: .4s;
@@ -500,7 +525,7 @@ button:hover {
 
 .stamina-bar {
     display: block;
-    background-color: rgb(241, 198, 7);
+    background-color: rgb(239, 223, 148);
     width: 100px;
     height: 10px;
     transition: .4s;
@@ -518,10 +543,12 @@ button:hover {
 }
 
 #playerMonStats {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 125px;
     background-color: white;
     z-index: 1;
+    top: 400px;
+    left: 400px;
     position: absolute;
     text-align: center;
     padding-top: 5px;
@@ -529,10 +556,12 @@ button:hover {
 }
 
 #AIMonStats {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 125px;
     background-color: white;
     z-index: 1;
+    top: 400px;
+    left: 400px;
     position: absolute;
     text-align: center;
     padding-top: 5px;
@@ -607,3 +636,15 @@ button:hover {
     border-radius: 5px;
     box-shadow: 0px 0px 3px rgb(78, 78, 78);
 }   
+
+.log-entry {
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 10px;
+    padding-left: 5px;
+}
+
+.turn {
+    font-size: 25px;
+    padding-left: 5px;
+}
+
