@@ -90,11 +90,11 @@
                         <div>
                             <input type="text" placeholder="Nickname" v-model="tbNameInput">
                             <img id="tb-sprite" :src="'/images/'+tbMon.id+'.png'">
-                            <input type="text" placeholder="Scribblemon" v-on:click="tbShowMons" v-model="tbMon.id">
+                            <div id="tb-mon-id" v-on:click="tbShowMons"> {{ tbMon.id }} </div>
                         </div>
                         <div id="tb-inputs-container">
-                            <input class="tb-input" type="text" placeholder="Move" v-for="move in tbLearnedMoves"
-                                v-model="move">
+                            <div class="tb-input" v-for="(move, index) in tbLearnedMoves" @click="tbDeleteMove(index)">
+                                {{ move }} </div>
                         </div>
                         <div id="tbRightmost">
                             <button v-if="tbShowButtons == 'default'" id="tbSaveMon" v-on:click="tbSaveMon()">Save
@@ -106,7 +106,7 @@
                                 Mon</button>
                             <button v-show="tbShowButtons == 'edit'" id="tbEditCancel"
                                 @click="tbEditCancel()">Cancel</button>
-                            <button v-show="tbShowButtons == 'save'" id="tbSubmitTeam" v-on:click="tbShowSubmit">Submit
+                            <button v-show="tbShowSave" id="tbSubmitTeam" v-on:click="tbShowSubmit">Submit
                                 Team</button>
                         </div>
                     </div>
@@ -117,6 +117,7 @@
                         <div id="tbSavedMonButtons">
                             <button class="tbSavedMon" v-on:click="tbDisplaySavedMon(mon, index)"
                                 v-for="(mon, index) in tbWorkingTeam">{{ mon.name }}</button>
+                            <button v-if="tbShowAdd" class="tbSavedMon" @click="tbNewMon">+</button>
                         </div>
                         <!-- Display all possible mons to add to team -->
                         <div v-if="tbView == 'mons'" class="list">
