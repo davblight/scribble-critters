@@ -200,13 +200,13 @@
                         </div>
                     </div>
                     <img id="player1-mon" :src="'/images/'+activeMon.id+'.png'" @mouseover="playerHoverOver($event)"
-                        @mouseleave="playerHover = false">
+                        @mouseleave="playerHover = false" :style="playerAnimation">
                     <div id="playerMonStats" v-if="playerHover" :style="battleHoverStyle">{{ activeMon.name }} <br>
                         Attack: {{ activeMon.currentAttack }} <br>
                         Defense: {{ activeMon.currentDefense }} <br>
                         Speed: {{ activeMon.currentSpeed }}</div>
                     <img id="AI-mon" :src="'/images/'+AIMon.id+'.png'" @mouseover="AIHoverOver($event)"
-                        @mouseleave="AIHover = false">
+                        @mouseleave="AIHover = false" :style="AIAnimation">
                     <div id="AIMonStats" v-if="AIHover" :style="battleHoverStyle">{{ AIMon.name }} <br>
                         Attack: {{ AIMon.currentAttack }} <br>
                         Defense: {{ AIMon.currentDefense }} <br>

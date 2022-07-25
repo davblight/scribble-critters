@@ -118,6 +118,8 @@ var app = new Vue({
         playerHoverX: 0,
         playerHoverY: 0,
         battleHoverStyle: {},
+        playerAnimation: {},
+        AIAnimation: {},
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -591,7 +593,10 @@ var app = new Vue({
             });
             if (response.status == 200) {
                 let data = await response.json();
-                this.setBattleData(data);
+                this.animate(data.turns)
+                setTimeout(() => {
+                    this.setBattleData(data)
+                }, 1000);
             } else if (response.status == 404) {
                 console.log("battle not found");
             } else {
@@ -687,7 +692,72 @@ var app = new Vue({
             } else {
                 console.log("error logging out user", response.status, response);
             }
-        }
+        },
+        // Animates the mon sprites based on actions taken by AI or user
+        animate: function (turn) {
+            let currentTurn = turn[turn.length - 1]
+            currentTurn.forEach(move => {
+                if (move.action == 'fight') {
+                    if (move.user == 'player') {
+                        this.playerAnimation = {
+                            "margin-left": "200px",
+                        };
+                        setTimeout(() => {
+                            this.playerAnimation = {}
+                        }, 500);
+                    } else if (move.user == 'AI') {
+                        this.AIAnimation = {
+                            "margin-left": "150px",
+                        };
+                        setTimeout(() => {
+                            this.AIAnimation = {}
+                        }, 500);
+                    } else {
+                        console.log("Something went wrong -- fight");
+                    }
+                } else if (move.action == 'switch') {
+                    if (move.user == 'player') {
+                        this.playerAnimation = {
+                            "opacity": "0%",
+                        };
+                        setTimeout(() => {
+                            this.activeMon = move.mon;
+                            this.playerAnimation = {};
+                        }, 500);
+                    } else if (move.user == 'AI') {
+                        this.AIAnimation = {
+                            "opacity": "0%",
+                        };
+                        setTimeout (() => {
+                            this.AIMon = move.mon;
+                            this.AIMon = {};
+                        }, 500);
+                    } else {
+                        console.log("Something went wrong -- switch");
+                    }
+                } else if (move.action == 'rest') {
+                    if (move.user == 'player') {
+                        this.playerAnimation = {
+                            "height": "50%",
+                        };
+                        setTimeout(() => {
+                            this.playerAnimation = {};
+                        }, 500);
+                    } else if (move.user == 'AI') {
+                        this.AIAnimation = {
+                            "height": "50%",
+                        };
+                        setTimeout (() => {
+                            this.AIMon = {};
+                        }, 500);
+                    } else {
+                        console.log("Something went wrong -- rest");
+                    }
+                } else {
+                    console.log("Something went wrong -- No if statements entered")
+                }
+            })
+        },
     },
     computed: {
         tbShowAdd: function () {
