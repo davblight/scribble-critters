@@ -665,65 +665,67 @@ var app = new Vue({
         // Animates the mon sprites based on actions taken by AI or user
         animate: function (turn) {
             let currentTurn = turn[turn.length - 1]
-            if (currentTurn.action == 'fight') {
-                if (currentTurn.user == 'player') {
-                    this.playerAnimation = {
-                        "margin-left": "200px",
-                    };
-                    setTimeout(() => {
-                        this.playerAnimation = {}
-                    }, 500);
-                } else if (currentTurn.user == 'AI') {
-                    this.AIAnimation = {
-                        "margin-left": "150px",
-                    };
-                    setTimeout(() => {
-                        this.AIAnimation = {}
-                    }, 500);
+            currentTurn.forEach(move => {
+                if (move.action == 'fight') {
+                    if (move.user == 'player') {
+                        this.playerAnimation = {
+                            "margin-left": "200px",
+                        };
+                        setTimeout(() => {
+                            this.playerAnimation = {}
+                        }, 500);
+                    } else if (move.user == 'AI') {
+                        this.AIAnimation = {
+                            "margin-left": "150px",
+                        };
+                        setTimeout(() => {
+                            this.AIAnimation = {}
+                        }, 500);
+                    } else {
+                        console.log("Something went wrong -- fight");
+                    }
+                } else if (move.action == 'switch') {
+                    if (move.user == 'player') {
+                        this.playerAnimation = {
+                            "opacity": "0%",
+                        };
+                        setTimeout(() => {
+                            this.activeMon = move.mon;
+                            this.playerAnimation = {};
+                        }, 500);
+                    } else if (move.user == 'AI') {
+                        this.AIAnimation = {
+                            "opacity": "0%",
+                        };
+                        setTimeout (() => {
+                            this.AIMon = move.mon;
+                            this.AIMon = {};
+                        }, 500);
+                    } else {
+                        console.log("Something went wrong -- switch");
+                    }
+                } else if (move.action == 'rest') {
+                    if (move.user == 'player') {
+                        this.playerAnimation = {
+                            "height": "50%",
+                        };
+                        setTimeout(() => {
+                            this.playerAnimation = {};
+                        }, 500);
+                    } else if (move.user == 'AI') {
+                        this.AIAnimation = {
+                            "height": "50%",
+                        };
+                        setTimeout (() => {
+                            this.AIMon = {};
+                        }, 500);
+                    } else {
+                        console.log("Something went wrong -- rest");
+                    }
                 } else {
-                    console.log("Something went wrong -- fight");
+                    console.log("Something went wrong -- No if statements entered")
                 }
-            } else if (currentTurn.action == 'switch') {
-                if (currentTurn.user == 'player') {
-                    this.playerAnimation = {
-                        "opacity": "0%",
-                    };
-                    setTimeout(() => {
-                        this.activeMon = currentTurn.mon;
-                        this.playerAnimation = {};
-                    }, 500);
-                } else if (currentTurn.user == 'AI') {
-                    this.AIAnimation = {
-                        "opacity": "0%",
-                    };
-                    setTimeout (() => {
-                        this.AIMon = currentTurn.mon;
-                        this.AIMon = {};
-                    }, 500);
-                } else {
-                    console.log("Something went wrong -- switch");
-                }
-            } else if (currentTurn.action == 'rest') {
-                if (currentTurn.user == 'player') {
-                    this.playerAnimation = {
-                        "height": "50%",
-                    };
-                    setTimeout(() => {
-                        this.playerAnimation = {};
-                    }, 500);
-                } else if (currentTurn.user == 'AI') {
-                    this.AIAnimation = {
-                        "height": "50%",
-                    };
-                    setTimeout (() => {
-                        this.AIMon = {};
-                    }, 500);
-                } else {
-                    console.log("Something went wrong -- rest");
-                }
-            } else {
-                console.log("Something went wrong -- No if statements entered")
-            }
+            })
         },
     },
     created: function () {
