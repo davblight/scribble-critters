@@ -596,6 +596,9 @@ var app = new Vue({
                 this.animate(data.turns)
                 setTimeout(() => {
                     this.setBattleData(data)
+                    setTimeout(() => {
+                        this.scrollToElement();
+                    }, 10);
                 }, 1100);
             } else if (response.status == 404) {
                 console.log("battle not found");
@@ -760,6 +763,13 @@ var app = new Vue({
                     console.log("Something went wrong -- No if statements entered")
                 }
             })
+        },
+        scrollToElement() {
+            const el = this.$refs.scrollToMe;
+            if (el) {
+              // Use el.scrollIntoView() to instantly scroll to the element
+              el.scrollTop = el.scrollHeight;
+            }
         },
     },
     computed: {
