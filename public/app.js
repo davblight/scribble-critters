@@ -596,7 +596,7 @@ var app = new Vue({
                 this.animate(data.turns)
                 setTimeout(() => {
                     this.setBattleData(data)
-                }, 1000);
+                }, 1100);
             } else if (response.status == 404) {
                 console.log("battle not found");
             } else {
@@ -696,18 +696,18 @@ var app = new Vue({
         // Animates the mon sprites based on actions taken by AI or user
         animate: function (turn) {
             let currentTurn = turn[turn.length - 1]
-            currentTurn.forEach(move => {
+            currentTurn.turnText.forEach(move => {
                 if (move.action == 'fight') {
                     if (move.user == 'player') {
                         this.playerAnimation = {
-                            "margin-left": "200px",
+                            "margin-left": "100px",
                         };
                         setTimeout(() => {
                             this.playerAnimation = {}
                         }, 500);
                     } else if (move.user == 'AI') {
                         this.AIAnimation = {
-                            "margin-left": "150px",
+                            "margin-left": "250px",
                         };
                         setTimeout(() => {
                             this.AIAnimation = {}
