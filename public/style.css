@@ -280,6 +280,8 @@ button:hover {
     padding-left: 50px;
     height: 300px;
     width: 300px;
+    transition: .5s ease-in-out;
+    position: absolute;
 }
 
 #sprite-box #battle-stats {
@@ -297,6 +299,10 @@ button:hover {
 
 #player1-mon {
     transform: scaleX(-1);
+}
+
+#AI-mon {
+    margin-left: 350px;
 }
 
 #tb-topbar {
