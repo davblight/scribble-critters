@@ -8,7 +8,9 @@
     <title>Scribblemon Showdown</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Gloria+Hallelujah&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&family=Gloria+Hallelujah&family=Nanum+Pen+Script&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -230,13 +232,13 @@
                 </div>
             </div>
 
-            <div id="log-container" >
+            <div id="log-container">
                 <div class="turn" v-for="turn in battleTurns">
                     Turn: {{ turn.turnNumber }}<br>
                     <div class="log-entry" v-for="action in turn.turnText">
-                        {{ action.action }} <br>
-                        {{ action.effect }} <br>
-                        {{ action.result }} <br>
+                        {{ action.actionText }} <br>
+                        {{ action.effectText }} <br>
+                        {{ action.resultText }} <br>
                     </div> <!-- Make this a v-for once we have an array containing all actions -->
                 </div>
             </div>

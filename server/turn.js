@@ -27,8 +27,11 @@ function rest(battle, teamName) {
     }
 
     battle.turns[battle.turns.length - 1].turnText.push({
-        action: actionText,
-        effect: effectText,
+        actionText: actionText,
+        effectText: effectText,
+        action: "rest",
+        mon: {},
+        user: teamName,
     });
 
     return battle;
@@ -75,9 +78,12 @@ function fight(battle, attacker, defender, move) {
     }
 
     battle.turns[battle.turns.length - 1].turnText.push({
-        action: actionText,
-        effect: effectText,
-        result: resultText,
+        actionText: actionText,
+        effectText: effectText,
+        resultText: resultText,
+        action: "fight",
+        mon: battle[defender].activeMon,
+        user: attacker,
     });
 
     return battle;
@@ -105,8 +111,11 @@ function resolveTurn(battle, playerAction, playerMove) {
             let actionText = `ScribbleBot sent ${battle.AI.activeMon.name} back to the drawing board!`
             let effectText = `ScribbleBot scribbled ${switchMons[randMon].name} onto the paper!`
             battle.turns[battle.turns.length - 1].turnText.push({
-                action: actionText,
-                effect: effectText,
+                actionText: actionText,
+                effectText: effectText,
+                action: "switch",
+                mon: switchMons[randMon],
+                user: "AI",
             });
             battle.AI.activeMon = switchMons[randMon];
             AIAction = "switch";
@@ -200,7 +209,10 @@ function resolveTurn(battle, playerAction, playerMove) {
             let randMon = Math.floor(Math.random() * switchMons.length);
             let effectText = `ScribbleBot scribbled ${switchMons[randMon].name} onto the paper!`
             battle.turns[battle.turns.length - 1].turnText.push({
-                effect: effectText,
+                effectText: effectText,
+                action: "switch",
+                user: "AI",
+                mon: swtichMons[randMon],
             });
             battle.AI.activeMon = switchMons[randMon];
         } else {
@@ -270,7 +282,10 @@ const takeTurn = function (battle, action, subject) {
                     //set turn text
                     let actionText = `${battle.player.user.name} scribbled ${mon.name} onto the paper`
                     battle.turns[battle.turns.length - 1].turnText.push({
-                        action: actionText,
+                        actionText: actionText,
+                        action: "switch",
+                        user: "player",
+                        mon: mon,
                     });
                     //set active mon and return new battle
                     battle.player.activeMon = mon;
@@ -335,8 +350,11 @@ const takeTurn = function (battle, action, subject) {
                     let actionText = `${battle.player.user.name} sent ${battle.player.activeMon.name} back to the drawing board!`
                     let effectText = `${battle.player.user.name} scribbled ${mon.name} onto the paper`
                     battle.turns[battle.turns.length - 1].turnText.push({
-                        action: actionText,
-                        effect: effectText,
+                        actionText: actionText,
+                        effectText: effectText,
+                        action: "switch",
+                        user: "player",
+                        mon: {},
                     });
                     //set active mon and return new battle
                     battle.player.activeMon = mon;
