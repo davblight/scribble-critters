@@ -30,7 +30,8 @@ function rest(battle, teamName) {
         actionText: actionText,
         effectText: effectText,
         action: "rest",
-        mon: {},
+        mon1: battle[teamName].activeMon,
+        mon2: {},
         user: teamName,
     });
 
@@ -82,7 +83,8 @@ function fight(battle, attacker, defender, move) {
         effectText: effectText,
         resultText: resultText,
         action: "fight",
-        mon: battle[defender].activeMon,
+        mon1: battle[attacker].activeMon,
+        mon2: battle[defender].activeMon,
         user: attacker,
     });
 
@@ -114,7 +116,7 @@ function resolveTurn(battle, playerAction, playerMove) {
                 actionText: actionText,
                 effectText: effectText,
                 action: "switch",
-                mon: switchMons[randMon],
+                mon1: switchMons[randMon],
                 user: "AI",
             });
             battle.AI.activeMon = switchMons[randMon];
@@ -212,7 +214,7 @@ function resolveTurn(battle, playerAction, playerMove) {
                 effectText: effectText,
                 action: "switch",
                 user: "AI",
-                mon: switchMons[randMon],
+                mon1: switchMons[randMon],
             });
             battle.AI.activeMon = switchMons[randMon];
         } else {
@@ -285,7 +287,7 @@ const takeTurn = function (battle, action, subject) {
                         actionText: actionText,
                         action: "switch",
                         user: "player",
-                        mon: mon,
+                        mon1: mon,
                     });
                     //set active mon and return new battle
                     battle.player.activeMon = mon;
@@ -354,7 +356,7 @@ const takeTurn = function (battle, action, subject) {
                         effectText: effectText,
                         action: "switch",
                         user: "player",
-                        mon: {},
+                        mon1: mon,
                     });
                     //set active mon and return new battle
                     battle.player.activeMon = mon;

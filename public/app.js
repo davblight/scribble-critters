@@ -113,6 +113,7 @@ var app = new Vue({
         AITeam: "",
         battleId: "",
         battle: {},
+        canTakeAction: true,
         playerHover: false,
         AIHover: false,
         playerHoverX: 0,
@@ -126,7 +127,6 @@ var app = new Vue({
         tbView: "",
         tbLearnableMoves: [],
         tbLearnedMoves: [],
-        tbMoveCounter: 0,
         tbWorkingTeam: [],
         tbNameInput: "",
         tbErrorMessage: "",
@@ -226,7 +226,6 @@ var app = new Vue({
             this.tbMon = "";
             this.tbLearnedMoves = [];
             this.tbLearnableMoves = [];
-            this.tbMoveCounter = 0;
             this.tbShowButtons = "default"
         },
         // Shows all mons available to be added to team
@@ -260,7 +259,7 @@ var app = new Vue({
         },
         // Adds the selected moves to the mon's learnedMoves field
         tbPushMove: function (move) {
-            if (this.tbMoveCounter < 3 && !this.tbLearnedMoves.includes(move.id)) {
+            if (this.tbLearnedMoves.length < 3 && !this.tbLearnedMoves.includes(move.id)) {
                 this.tbLearnedMoves.push(move.id);
             }
         },
@@ -510,6 +509,12 @@ var app = new Vue({
                 console.log("something went wrong while getting moves", response.status, response)
             }
         },
+        setMonStats: function (mon) {
+            mon.maxHP = mon.stats.hp * 12;
+            mon.percentHP = (mon.currentHP / mon.maxHP * 100) + "px";
+            mon.percentStamina = (mon.currentStamina / mon.stats.stamina * 100) + "px";
+            return mon;
+        },
         setBattleData: function (battle) {
             battle.player.mons.forEach(mon => {
                 if (battle.player.activeMon._id.toString() == mon._id.toString() && battle.player.activeMon.status != "dead") {
@@ -530,13 +535,9 @@ var app = new Vue({
             this.battleMons = battle.player.mons;
             this.monMove = battle.player.activeMon.learnedMoves;
             this.activeMon = battle.player.activeMon;
-            this.activeMon.maxHP = this.activeMon.stats.hp * 12;
-            this.activeMon.percentHP = (this.activeMon.currentHP / this.activeMon.maxHP * 100) + "px";
-            this.activeMon.percentStamina = (this.activeMon.currentStamina / this.activeMon.stats.stamina * 100) + "px";
+            this.activeMon = this.setMonStats(this.activeMon);
             this.AIMon = battle.AI.activeMon;
-            this.AIMon.maxHP = this.AIMon.stats.hp * 12;
-            this.AIMon.percentHP = (this.AIMon.currentHP / this.AIMon.maxHP * 100) + "px";
-            this.AIMon.percentStamina = (this.AIMon.currentStamina / this.AIMon.stats.stamina * 100) + "px";
+            this.AIMon = this.setMonStats(this.AIMon);
             this.battleTurns = battle.turns;
             this.battleId = battle._id;
             this.battle = battle;
@@ -557,7 +558,7 @@ var app = new Vue({
             }
         },
         takeAction: function (action, subject) {
-            if (!this.battle.finished) {
+            if (!this.battle.finished && this.canTakeAction) {
                 if (action == "fight") {
                     this.monMove.forEach(move => {
                         if (move.id == subject) {
@@ -580,6 +581,7 @@ var app = new Vue({
             }
         },
         putBattle: async function (putAction, putSubject) {
+            this.canTakeAction = false;
             let response = await fetch(`${URL}/battles/AI/${this.battleId}`, {
                 method: "PUT",
                 credentials: "include",
@@ -596,6 +598,7 @@ var app = new Vue({
                 this.animate(data.turns)
                 setTimeout(() => {
                     this.setBattleData(data)
+                    this.canTakeAction = true;
                 }, 1100);
             } else if (response.status == 404) {
                 console.log("battle not found");
@@ -696,68 +699,96 @@ var app = new Vue({
         // Animates the mon sprites based on actions taken by AI or user
         animate: function (turn) {
             let currentTurn = turn[turn.length - 1]
+            let animationWait = 10;
             currentTurn.turnText.forEach(move => {
                 if (move.action == 'fight') {
                     if (move.user == 'player') {
-                        this.playerAnimation = {
-                            "margin-left": "100px",
-                        };
+                        setTimeout(() => {
+                            this.playerAnimation = {
+                                "margin-left": "100px",
+                            };
+                        }, animationWait);
                         setTimeout(() => {
                             this.playerAnimation = {}
-                        }, 500);
+                            this.activeMon = move.mon1;
+                            this.activeMon = this.setMonStats(this.activeMon);
+                            this.AIMon = move.mon2;
+                            this.AIMon = this.setMonStats(this.AIMon);
+                        }, animationWait + 300);
                     } else if (move.user == 'AI') {
-                        this.AIAnimation = {
-                            "margin-left": "250px",
-                        };
+                        setTimeout(() => {
+                            this.AIAnimation = {
+                                "margin-left": "250px",
+                            };
+                        }, animationWait);
                         setTimeout(() => {
                             this.AIAnimation = {}
-                        }, 500);
+                            this.AIMon = move.mon1;
+                            this.AIMon = this.setMonStats(this.AIMon);
+                            this.activeMon = move.mon2;
+                            this.activeMon = this.setMonStats(this.activeMon);
+                        }, animationWait + 300);
                     } else {
                         console.log("Something went wrong -- fight");
                     }
                 } else if (move.action == 'switch') {
                     if (move.user == 'player') {
-                        this.playerAnimation = {
-                            "opacity": "0%",
-                        };
                         setTimeout(() => {
-                            this.activeMon = move.mon;
+                            this.playerAnimation = {
+                                "opacity": "0%",
+                            };
+                        }, animationWait);
+                        setTimeout(() => {
+                            this.activeMon = move.mon1;
+                            this.activeMon = this.setMonStats(this.activeMon);
                             this.playerAnimation = {};
-                        }, 500);
+                        }, animationWait + 300);
                     } else if (move.user == 'AI') {
-                        this.AIAnimation = {
-                            "opacity": "0%",
-                        };
-                        setTimeout (() => {
-                            this.AIMon = move.mon;
-                            this.AIMon = {};
-                        }, 500);
+                        setTimeout(() => {
+                            this.AIAnimation = {
+                                "opacity": "0%",
+                            };
+                        }, animationWait);
+                        setTimeout(() => {
+                            this.AIMon = move.mon1;
+                            this.AIMon = this.setMonStats(this.AIMon);
+                            this.AIAnimation = {};
+                        }, animationWait + 300);
                     } else {
                         console.log("Something went wrong -- switch");
                     }
                 } else if (move.action == 'rest') {
                     if (move.user == 'player') {
-                        this.playerAnimation = {
-                            "padding-top": "150px",
-                            "height": "200px",
-                        };
+                        setTimeout(() => {
+                            this.playerAnimation = {
+                                "padding-top": "150px",
+                                "height": "200px",
+                            };
+                        }, animationWait);
                         setTimeout(() => {
                             this.playerAnimation = {};
-                        }, 500);
+                            this.activeMon = move.mon1;
+                            this.activeMon = this.setMonStats(this.activeMon);
+                        }, animationWait + 300);
                     } else if (move.user == 'AI') {
-                        this.AIAnimation = {
-                            "padding-top": "150px",
-                            "height": "200px",
-                        };
-                        setTimeout (() => {
+                        setTimeout(() => {
+                            this.AIAnimation = {
+                                "padding-top": "150px",
+                                "height": "200px",
+                            };
+                        }, animationWait);
+                        setTimeout(() => {
                             this.AIAnimation = {};
-                        }, 500);
+                            this.AIMon = move.mon1;
+                            this.AIMon = this.setMonStats(this.AIMon);
+                        }, animationWait + 300);
                     } else {
                         console.log("Something went wrong -- rest");
                     }
                 } else {
                     console.log("Something went wrong -- No if statements entered")
                 }
+                animationWait += 350;
             })
         },
     },

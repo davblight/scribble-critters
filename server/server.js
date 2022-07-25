@@ -778,7 +778,8 @@ app.put("/battles/AI/:id", async (req, res) => {
             resultText: resultText,
             action: "forfeit",
             user: "player",
-            mon: {},
+            mon1: {},
+            mon2: {},
         })
         res.status(200).json(newBattle);
         return;

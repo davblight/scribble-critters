@@ -64,7 +64,8 @@ const turnSchema = mongoose.Schema({
             resultText: { type: String, default: "" },
             action: { type: String, required: true },
             user: { type: String, required: true },
-            mon: { type: monSchema, required: true },
+            mon1: { type: monSchema, required: true },
+            mon2: { type: monSchema, default: {} },
         }],
         required: true
     },
