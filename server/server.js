@@ -753,6 +753,7 @@ app.put("/battles/AI/:id", async (req, res) => {
     //check if forfeit
     if (req.body.action == "forfeit") {
         battle.finished = true;
+        battle.winner = "ScribbleBot"
         try {
             newBattle = await Battle.findByIdAndUpdate(req.params.id, battle, { new: true });
             if (!newBattle) {
@@ -778,8 +779,8 @@ app.put("/battles/AI/:id", async (req, res) => {
             resultText: resultText,
             action: "forfeit",
             user: "player",
-            mon1: {},
-            mon2: {},
+            mon1: newBattle.player.activeMon,
+            mon2: newBattle.AI.activeMon,
         })
         res.status(200).json(newBattle);
         return;

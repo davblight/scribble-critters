@@ -121,6 +121,7 @@ var app = new Vue({
         battleHoverStyle: {},
         playerAnimation: {},
         AIAnimation: {},
+        gameOverStyle: {},
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -137,7 +138,9 @@ var app = new Vue({
     },
     methods: {
         showHome: function () {
+            this.subpage = "";
             this.page = "home";
+            this.playView = "";
         },
         showLogin: function () {
             this.page = "login";
@@ -145,8 +148,12 @@ var app = new Vue({
         },
         showBattle: function () {
             this.page = "battle";
+            this.gameOverStyle = {};
         },
         showPlay: function () {
+            this.playView = "";
+            this.playerTeam = "";
+            this.AITeam = "";
             this.subpageTransition('play')
             this.getTeams();
             this.getAITeams();
@@ -559,7 +566,7 @@ var app = new Vue({
         },
         takeAction: function (action, subject) {
             if (!this.battle.finished && this.canTakeAction) {
-                if (action == "fight") {
+                if (action == "fight" && this.activeMon.status != "dead") {
                     this.monMove.forEach(move => {
                         if (move.id == subject) {
                             if (move.monHasStamina) {
@@ -575,7 +582,7 @@ var app = new Vue({
                             }
                         }
                     })
-                } else {
+                } else if (this.activeMon.status != "dead" || action == "forfeit") {
                     this.putBattle(action, subject);
                 }
             }
@@ -595,7 +602,7 @@ var app = new Vue({
             });
             if (response.status == 200) {
                 let data = await response.json();
-                this.animate(data.turns)
+                this.animate(data)
                 setTimeout(() => {
                     this.setBattleData(data)
                     this.canTakeAction = true;
@@ -700,11 +707,20 @@ var app = new Vue({
                 console.log("error logging out user", response.status, response);
             }
         },
+        hideGameOver: function () {
+            if (this.battle.finished) {
+                this.gameOverStyle = {
+                    "display": "none",
+                }
+            }
+        },
         // Animates the mon sprites based on actions taken by AI or user
-        animate: function (turn) {
-            let currentTurn = turn[turn.length - 1]
+        animate: function (battle) {
+            let currentTurn = battle.turns[battle.turns.length - 1]
             let animationWait = 10;
-            if (this.activeMon.currentHP != 0) {
+            if (currentTurn.turnText[currentTurn.turnText.length - 1].action == "forfeit") {
+                this.setBattleData(battle);
+            } else if (this.activeMon.currentHP != 0) {
 
                 currentTurn.turnText.forEach(move => {
                     if (move.action == 'fight') {
@@ -810,8 +826,8 @@ var app = new Vue({
         scrollToElement() {
             const el = this.$refs.scrollToMe;
             if (el) {
-              // Use el.scrollIntoView() to instantly scroll to the element
-              el.scrollTop = el.scrollHeight;
+                // Use el.scrollIntoView() to instantly scroll to the element
+                el.scrollTop = el.scrollHeight;
             }
         },
     },

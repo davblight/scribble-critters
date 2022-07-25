@@ -220,6 +220,7 @@ function resolveTurn(battle, playerAction, playerMove) {
         } else {
             battle.finished = true;
             battle.winner = battle.player.user.name;
+
         }
     }
     //if mon is still alive and resting
@@ -299,6 +300,25 @@ const takeTurn = function (battle, action, subject) {
                 throw "cannot switch into imaginary mon"
             }
 
+        } else if (req.body.action == "forfeit") {
+            battle.finished = true;
+            battle.winner = "ScribbleBot"
+            battle.turns.push({
+                turnNumber: "",
+                turnText: [],
+            });
+            battle.turns[battle.turns.length - 1].turnNumber = battle.turns.length;
+            actionText = `${battle.player.user.name} has forfeited the Battle!`
+            resultText = `ScribbleBot Wins!`
+            battle.turns[battle.turns.length - 1].turnText.push({
+                actionText: actionText,
+                resultText: resultText,
+                action: "forfeit",
+                user: "player",
+                mon1: battle.player.activeMon,
+                mon2: battle.AI.activeMon,
+            });
+            return battle;
         } else {
             //if player is not switching with a dead active mon
             throw "must switch to a live mon before you can do any actions"
