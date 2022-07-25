@@ -123,7 +123,7 @@ var app = new Vue({
         tbMoves: [],
         tbView: "",
         tbLearnableMoves: [],
-        tbLearnedMoves: ["", "", ""],
+        tbLearnedMoves: [],
         tbMoveCounter: 0,
         tbWorkingTeam: [],
         tbNameInput: "",
@@ -151,10 +151,10 @@ var app = new Vue({
         },
         // Shows Teambuilder and cleans it up in case you're clicking on Teambuilder from Teambuilder itself
         showTeambuilder: function () {
+            this.tbWorkingTeam = [];
             this.subpageTransition('teambuilder')
             this.tbView = 'existingTeams'
             this.tbResetFields();
-            this.tbWorkingTeam = [];
             this.getTeams();
         },
         showChat: function () {
@@ -222,7 +222,7 @@ var app = new Vue({
             this.tbErrorMessage = "";
             this.tbNameInput = "";
             this.tbMon = "";
-            this.tbLearnedMoves = ["", "", ""];
+            this.tbLearnedMoves = [];
             this.tbLearnableMoves = [];
             this.tbMoveCounter = 0;
             this.tbShowButtons = "default"
@@ -246,7 +246,7 @@ var app = new Vue({
         // Sets the active mon and populates the move fields with the moves already assigned to said mon.
         tbSetMon: async function (mon) {
             if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
-                this.tbLearnedMoves = ["", "", ""];
+                this.tbLearnedMoves = [];
                 this.tbMon = mon;
                 this.tbNameInput = mon.name
                 await this.getMoves();
@@ -259,8 +259,7 @@ var app = new Vue({
         // Adds the selected moves to the mon's learnedMoves field
         tbPushMove: function (move) {
             if (this.tbMoveCounter < 3 && !this.tbLearnedMoves.includes(move.id)) {
-                this.tbLearnedMoves.splice(this.tbMoveCounter, 1, move.id);
-                this.tbMoveCounter += 1;
+                this.tbLearnedMoves.push(move.id);
             }
         },
         // Removes the selected move from the mon's learnedMoves field
@@ -268,7 +267,6 @@ var app = new Vue({
 
             if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
                 this.tbLearnedMoves.splice(index, 1);
-                this.tbMoveCounter -= 1;
             }
             this.tbView = "moves";
         },
@@ -310,6 +308,7 @@ var app = new Vue({
             } else {
                 this.tbPostTeam();
             }
+            this.showTeambuilder();
         },
         // Posts a new team -- called by tbSubmit
         tbPostTeam: async function () {
@@ -390,6 +389,7 @@ var app = new Vue({
         },
         tbEditMon: function () {
             this.tbShowButtons = "edit";
+            this.tbView = "";
         },
         tbEditCancel: function () {
             this.tbShowButtons = "show";
@@ -675,7 +675,7 @@ var app = new Vue({
             }
         },
         logOut: async function () {
-            let response = await fetch (`${URL}/logout`, {
+            let response = await fetch(`${URL}/logout`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

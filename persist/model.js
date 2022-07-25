@@ -59,9 +59,12 @@ const turnSchema = mongoose.Schema({
     turnNumber: { type: Number, required: true },
     turnText: {
         type: [{
+            actionText: { type: String, required: true },
+            effectText: { type: String, default: "" },
+            resultText: { type: String, default: "" },
             action: { type: String, required: true },
-            effect: { type: String, default: "" },
-            result: { type: String, default: "" },
+            user: { type: String, required: true },
+            mon: { type: monSchema, required: true },
         }],
         required: true
     },
