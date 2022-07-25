@@ -212,7 +212,7 @@ function resolveTurn(battle, playerAction, playerMove) {
                 effectText: effectText,
                 action: "switch",
                 user: "AI",
-                mon: swtichMons[randMon],
+                mon: switchMons[randMon],
             });
             battle.AI.activeMon = switchMons[randMon];
         } else {

@@ -766,6 +766,20 @@ app.put("/battles/AI/:id", async (req, res) => {
             });
             return;
         }
+        newBattle.turns.push({
+            turnNumber: "",
+            turnText: [],
+        });
+        newBattle.turns[newBattle.turns.length - 1].turnNumber = newBattle.turns.length;
+        actionText = `${newBattle.player.user.name} has forfeited the Battle!`
+        resultText = `ScribbleBot Wins!`
+        newBattle.turns[newBattle.turns.length - 1].turnText.push({
+            actionText: actionText,
+            resultText: resultText,
+            action: "forfeit",
+            user: "player",
+            mon: {},
+        })
         res.status(200).json(newBattle);
         return;
     }
