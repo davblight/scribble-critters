@@ -662,6 +662,7 @@ var app = new Vue({
                 console.log("error logging out user", response.status, response);
             }
         },
+        // Animates the mon sprites based on actions taken by AI or user
         animate: function (turn) {
             let currentTurn = turn[turn.length - 1]
             if (currentTurn.action == 'fight') {
@@ -680,7 +681,7 @@ var app = new Vue({
                         this.AIAnimation = {}
                     }, 500);
                 } else {
-                    console.log("Something went wrong");
+                    console.log("Something went wrong -- fight");
                 }
             } else if (currentTurn.action == 'switch') {
                 if (currentTurn.user == 'player') {
@@ -700,10 +701,9 @@ var app = new Vue({
                         this.AIMon = {};
                     }, 500);
                 } else {
-                    console.log("Something went wrong");
+                    console.log("Something went wrong -- switch");
                 }
-            }
-            else if (currentTurn.action == 'rest') {
+            } else if (currentTurn.action == 'rest') {
                 if (currentTurn.user == 'player') {
                     this.playerAnimation = {
                         "height": "50%",
@@ -719,8 +719,10 @@ var app = new Vue({
                         this.AIMon = {};
                     }, 500);
                 } else {
-                    console.log("Something went wrong");
+                    console.log("Something went wrong -- rest");
                 }
+            } else {
+                console.log("Something went wrong -- No if statements entered")
             }
         },
     },
