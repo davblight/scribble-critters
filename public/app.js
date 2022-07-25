@@ -599,6 +599,9 @@ var app = new Vue({
                 setTimeout(() => {
                     this.setBattleData(data)
                     this.canTakeAction = true;
+                    setTimeout(() => {
+                        this.scrollToElement();
+                    }, 10);
                 }, 1100);
             } else if (response.status == 404) {
                 console.log("battle not found");
@@ -683,15 +686,16 @@ var app = new Vue({
             }
         },
         logOut: async function () {
-            let response = await fetch(`${URL}/logout`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            let response = await fetch(`${URL}/session`, {
+                method: "DELETE",
                 credentials: "include"
             });
-            if (response.status == 201) {
+            if (response.status == 204) {
                 console.log("User successfully logged out");
+                this.page = 'login';
+                this.usernameInput = "";
+                this.passwordInput = "";
+                this.loginErrorMessage = "";
             } else {
                 console.log("error logging out user", response.status, response);
             }
@@ -790,6 +794,13 @@ var app = new Vue({
                 }
                 animationWait += 350;
             })
+        },
+        scrollToElement() {
+            const el = this.$refs.scrollToMe;
+            if (el) {
+              // Use el.scrollIntoView() to instantly scroll to the element
+              el.scrollTop = el.scrollHeight;
+            }
         },
     },
     computed: {

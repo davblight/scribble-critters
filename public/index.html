@@ -232,7 +232,7 @@
                 </div>
             </div>
 
-            <div id="log-container">
+            <div id="log-container" ref="scrollToMe">
                 <div class="turn" v-for="turn in battleTurns">
                     Turn: {{ turn.turnNumber }}<br>
                     <div class="log-entry" v-for="action in turn.turnText">
