@@ -32,7 +32,6 @@ body {
     width: 100px;
     font-size: 20px;
     box-shadow: 3px 3px 3px rgb(78, 78, 78);
-    font-family: 'Gloria Hallelujah', cursive;
 }
 
 #login-fields>input {
@@ -340,11 +339,21 @@ button:hover {
     margin-top: 15px;
 }
 
-#tb-inputs-container>div {
-    margin-bottom: 20px;
+.tb-input {
+    margin-bottom: 10px;
     width: 100px;
     text-align: center;
     cursor: pointer;
+    font-family: 'Gloria Hallelujah', cursive;
+    text-shadow: none;
+    font-size: 20px;
+}
+
+#tb-mon-id {
+    cursor: pointer;
+    font-family: 'Gloria Hallelujah', cursive;
+    text-shadow: none;
+    font-size: 20px;
 }
 
 #tb-botbar>.list {
