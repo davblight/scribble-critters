@@ -738,17 +738,19 @@ var app = new Vue({
                 } else if (move.action == 'rest') {
                     if (move.user == 'player') {
                         this.playerAnimation = {
-                            "height": "50%",
+                            "padding-top": "150px",
+                            "height": "200px",
                         };
                         setTimeout(() => {
                             this.playerAnimation = {};
                         }, 500);
                     } else if (move.user == 'AI') {
                         this.AIAnimation = {
-                            "height": "50%",
+                            "padding-top": "150px",
+                            "height": "200px",
                         };
                         setTimeout (() => {
-                            this.AIMon = {};
+                            this.AIAnimation = {};
                         }, 500);
                     } else {
                         console.log("Something went wrong -- rest");
