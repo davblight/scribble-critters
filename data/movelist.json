@@ -73,7 +73,7 @@
     },
     "slap": {
         "name": "SLAP",
-        "power": "1",
+        "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
         "effect": "",

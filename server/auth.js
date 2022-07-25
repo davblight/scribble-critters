@@ -66,7 +66,13 @@ const setUpAuth = function (app) {
                 role: req.user.role,
             }
         });
+    });
+    //delete session ie log out
+    app.delete("/session", (req, res) => {
+        req.logout((item) => {});
+        res.sendStatus(204);
     })
 };
+
 
 module.exports = setUpAuth;

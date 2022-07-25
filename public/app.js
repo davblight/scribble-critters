@@ -680,15 +680,16 @@ var app = new Vue({
             }
         },
         logOut: async function () {
-            let response = await fetch(`${URL}/logout`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+            let response = await fetch(`${URL}/session`, {
+                method: "DELETE",
                 credentials: "include"
             });
-            if (response.status == 201) {
+            if (response.status == 204) {
                 console.log("User successfully logged out");
+                this.page = 'login';
+                this.usernameInput = "";
+                this.passwordInput = "";
+                this.loginErrorMessage = "";
             } else {
                 console.log("error logging out user", response.status, response);
             }
@@ -730,7 +731,7 @@ var app = new Vue({
                         };
                         setTimeout (() => {
                             this.AIMon = move.mon;
-                            this.AIMon = {};
+                            this.AIAnimation = {};
                         }, 500);
                     } else {
                         console.log("Something went wrong -- switch");
