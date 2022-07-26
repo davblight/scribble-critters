@@ -8,6 +8,7 @@ Vue.component('move', {
             Type: {{ allMoves[move].type }}<br>
             Power: {{ allMoves[move].power }}<br>
             Stamina: {{ allMoves[move].staminaCost }}<br>
+            Effect: {{ allMoves[move].effect }}
         </div>
     </div>`,
     props: [

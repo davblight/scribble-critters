@@ -4,7 +4,7 @@
         "power": "3",
         "staminaCost": "2",
         "type": "FIRE",
-        "effect": "",
+        "effect": "none",
         "id": "spark",
         "monHasStamina": "true"
     },
@@ -13,7 +13,7 @@
         "power": "5",
         "staminaCost": "3",
         "type": "FIRE",
-        "effect": "",
+        "effect": "none",
         "id": "fire_breath",
         "monHasStamina": "true"
     },
@@ -22,7 +22,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "claw",
         "monHasStamina": "true"
     },
@@ -40,7 +40,7 @@
         "power": "3",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "bonk",
         "monHasStamina": "true"
     },
@@ -58,7 +58,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "belch",
         "monHasStamina": "true"
     },
@@ -67,7 +67,7 @@
         "power": "4",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "throw",
         "monHasStamina": "true"
     },
@@ -76,7 +76,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "slap",
         "monHasStamina": "true"
     },
@@ -85,7 +85,7 @@
         "power": "3",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "punch",
         "monHasStamina": "true"
     },
@@ -94,7 +94,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "wrestle",
         "monHasStamina": "true"
     },
@@ -112,7 +112,7 @@
         "power": "1",
         "staminaCost": "0",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "flop",
         "monHasStamina": "true"
     },
@@ -130,7 +130,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "WATER",
-        "effect": "",
+        "effect": "none",
         "id": "splash",
         "monHasStamina": "true"
     },
@@ -139,7 +139,7 @@
         "power": "3",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "chomp",
         "monHasStamina": "true"
     },
@@ -148,7 +148,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "stomp",
         "monHasStamina": "true"
     },
@@ -166,7 +166,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "peck",
         "monHasStamina": "true"
     },
@@ -175,7 +175,7 @@
         "power": "3",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "stab",
         "monHasStamina": "true"
     },
@@ -184,7 +184,7 @@
         "power": "4",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "clap",
         "monHasStamina": "true"
     },
@@ -202,7 +202,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "GRASS",
-        "effect": "",
+        "effect": "none",
         "id": "spore",
         "monHasStamina": "true"
     },
@@ -211,7 +211,7 @@
         "power": "4",
         "staminaCost": "3",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "wallop",
         "monHasStamina": "true"
     },
@@ -229,7 +229,7 @@
         "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "",
+        "effect": "none",
         "id": "whip",
         "monHasStamina": "true"
     },
@@ -238,7 +238,7 @@
         "power": "3",
         "staminaCost": "2",
         "type": "GRASS",
-        "effect": "",
+        "effect": "none",
         "id": "needle",
         "monHasStamina": "true"
     },
@@ -247,7 +247,7 @@
         "power": "1",
         "staminaCost": "0",
         "type": "GRASS",
-        "effect": "",
+        "effect": "none",
         "id": "prickle",
         "monHasStamina": "true"
     }

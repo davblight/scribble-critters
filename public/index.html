@@ -69,7 +69,8 @@
                             <option></option>
                             <option v-for="team in userTeams" :value="team._id">{{ team.name }}</option>
                         </select>
-                        <button>PLAY</button>
+                        <button>HOST</button>
+                        <button>JOIN</button>
                     </div>
 
 
@@ -216,7 +217,8 @@
                     <button :class="move.class" v-for="move in monMove" @click="takeAction('fight', move.id)">
                         {{ move.name }} : <div class="moveDetails"> {{ move.type }} <br>
                             POW: {{ move.power }} <br>
-                            STA: {{ move.staminaCost }}
+                            STA: {{ move.staminaCost }} <br>
+                            EFF: {{ move.effect }}
                         </div>
                     </button>
                 </div>
