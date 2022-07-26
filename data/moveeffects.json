@@ -1,0 +1,22 @@
+{
+    "regen": {
+        "name": "Regen",
+        "id": "regen",
+        "stat": ["currentStamina", "currentHP"]
+    },
+    "def_boost": {
+        "name": "Defense Boost",
+        "id": "def_boost",
+        "stat": ["currentDefense"]
+    },
+    "spd_boost": {
+        "name": "Speed Boost",
+        "id": "spd_boost",
+        "stat": ["currentSpeed"]
+    },
+    "atk_boost": {
+        "name":"Attack Boost",
+        "id": "atk_boost",
+        "stat": ["currentAttack"]
+    }
+}

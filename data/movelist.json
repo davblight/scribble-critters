@@ -31,7 +31,7 @@
         "power": "0",
         "staminaCost": "0",
         "type": "NORMAL",
-        "effect": "self_hibernate",
+        "effect": "regen",
         "id": "hibernate",
         "monHasStamina": "true"
     },
@@ -49,16 +49,16 @@
         "power": "0",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "self_turtle",
+        "effect": "def_boost",
         "id": "hide",
         "monHasStamina": "true"
     },
     "belch": {
         "name": "BELCH",
-        "power": "1",
+        "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "poison",
+        "effect": "",
         "id": "belch",
         "monHasStamina": "true"
     },
@@ -91,19 +91,19 @@
     },
     "wrestle": {
         "name": "WRESTLE",
-        "power": "0",
+        "power": "2",
         "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "wrestle",
+        "effect": "",
         "id": "wrestle",
         "monHasStamina": "true"
     },
     "nap": {
         "name": "NAP",
         "power": "0",
-        "staminaCost": "1",
+        "staminaCost": "0",
         "type": "NORMAL",
-        "effect": "self_nap",
+        "effect": "regen",
         "id": "nap",
         "monHasStamina": "true"
     },
@@ -112,7 +112,7 @@
         "power": "1",
         "staminaCost": "0",
         "type": "NORMAL",
-        "effect": "self_flop",
+        "effect": "",
         "id": "flop",
         "monHasStamina": "true"
     },
@@ -121,14 +121,14 @@
         "power": "0",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "self_mitosis",
+        "effect": "atk_boost",
         "id": "mitosis",
         "monHasStamina": "true"
     },
     "splash": {
         "name": "SPLASH",
         "power": "2",
-        "staminaCost": "2",
+        "staminaCost": "1",
         "type": "WATER",
         "effect": "",
         "id": "splash",
@@ -157,7 +157,7 @@
         "power": "0",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "self.caw",
+        "effect": "atk_boost",
         "id": "caw",
         "monHasStamina": "true"
     },
@@ -181,19 +181,19 @@
     },
     "clap": {
         "name": "CLAP",
-        "power": "0",
+        "power": "4",
         "staminaCost": "2",
         "type": "NORMAL",
-        "effect": "self_clap",
+        "effect": "",
         "id": "clap",
         "monHasStamina": "true"
     },
     "flap": {
         "name": "FLAP",
         "power": "0",
-        "staminaCost": "2",
+        "staminaCost": "1",
         "type": "NORMAL",
-        "effect": "self_flap",
+        "effect": "spd_boost",
         "id": "flap",
         "monHasStamina": "true"
     },
@@ -220,7 +220,7 @@
         "power": "0",
         "staminaCost": "2",
         "type": "GRASS",
-        "effect": "self_grow",
+        "effect": "atk_boost",
         "id": "grow",
         "monHasStamina": "true"
     },
