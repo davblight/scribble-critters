@@ -229,8 +229,8 @@ app.post("/teams", async (req, res) => {
         mons.push(monObj);
     }
     let isAI = false;
-    if (req.user.role == "admin" && req.body.isAI) {
-        isAI = req.body.isAI;
+    if (req.user.username == "ScribbleBot") {
+        isAI = true;
     }
     //create new team
     try {

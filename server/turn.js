@@ -94,7 +94,7 @@ function fight(battle, attacker, defender, move) {
                     battle[attacker].activeMon[stat] = parseInt(attackMon.stats.hp) * 12;
                 }
             } else if (stat == "currentStamina") {
-                if (newStat <= attackMon.stats.stamina) {
+                if (parseInt(battle[attacker].activeMon[stat]) + 1 <= attackMon.stats.stamina) {
                     battle[attacker].activeMon[stat] = parseInt(battle[attacker].activeMon[stat]) + 1;
                 } else {
                     battle[attacker].activeMon[stat] = parseInt(attackMon.stats.stamina);
@@ -145,20 +145,24 @@ function resolveTurn(battle, playerAction, playerMove) {
             }
         });
         //check if their are available mons to switch to
-        if (switchMons) {
+        if (switchMons.length > 0) {
             //randomly choose which mon to switch too
-            let randMon = Math.floor(Math.random() * switchMons.length);
-            let actionText = `ScribbleBot sent ${battle.AI.activeMon.name} back to the drawing board!`
-            let effectText = `ScribbleBot scribbled ${switchMons[randMon].name} onto the paper!`
-            battle.turns[battle.turns.length - 1].turnText.push({
-                actionText: actionText,
-                effectText: effectText,
-                action: "switch",
-                mon1: switchMons[randMon],
-                user: "AI",
-            });
-            battle.AI.activeMon = switchMons[randMon];
-            AIAction = "switch";
+            try {
+                let randMon = Math.floor(Math.random() * switchMons.length);
+                let actionText = `ScribbleBot sent ${battle.AI.activeMon.name} back to the drawing board!`
+                let effectText = `ScribbleBot scribbled ${switchMons[randMon].name} onto the paper!`
+                battle.turns[battle.turns.length - 1].turnText.push({
+                    actionText: actionText,
+                    effectText: effectText,
+                    action: "switch",
+                    mon1: switchMons[randMon],
+                    user: "AI",
+                });
+                battle.AI.activeMon = switchMons[randMon];
+                AIAction = "switch";
+            } catch (err) {
+                throw { error: err, switchMons: switchMons, randMon: randMon }
+            }
         } else {
             randSwitch = 1;
         }
