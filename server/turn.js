@@ -3,11 +3,14 @@ const fs = require("fs");
 function updateMon(battle, teamName) {
     for (let i in battle[teamName].mons) {
         if (battle[teamName].mons[i]._id.toString() == battle[teamName].activeMon._id.toString()) {
-            battle[teamName].mons[i] = battle[teamName].activeMon;
+            battle[teamName].mons[i].currentHP = battle[teamName].activeMon.currentHP;
+            battle[teamName].mons[i].currentStamina = battle[teamName].activeMon.currentStamina;
+            battle[teamName].mons[i].status = battle[teamName].activeMon.status;
         }
     };
     return battle;
 }
+
 
 function rest(battle, teamName) {
     let user;
@@ -70,19 +73,54 @@ function fight(battle, attacker, defender, move) {
     battle[defender].activeMon.currentHP = remainingHP;
     battle[attacker].activeMon.currentStamina = (parseInt(stamina) - parseInt(move.staminaCost));
 
+    //check if move has buff effect
+    if (move.effect != "") {
+        let effects;
+        try {
+            let jsonString = fs.readFileSync(`${__dirname}/../data/moveeffects.json`);
+            effects = JSON.parse(jsonString);
+            if (!effects) {
+                throw "could not read effects data";
+            }
+        } catch (err) {
+            return err;
+        }
+        effects[move.effect].stats.forEach(stat => {
+            let newStat = parseInt(battle[attacker].activeMon[stat]) * 1.5;
+            if (stat == "currentHP") {
+                if (newStat <= attackMon.stats.hp * 12) {
+                    battle[attacker].activeMon[stat] = parseInt(newStat);
+                } else {
+                    battle[attacker].activeMon[stat] = parseInt(attackMon.stats.hp) * 12;
+                }
+            } else if (stat == "currentStamina") {
+                if (newStat <= attackMon.stats.stamina) {
+                    battle[attacker].activeMon[stat] = parseInt(battle[attacker].activeMon[stat]) + 1;
+                } else {
+                    battle[attacker].activeMon[stat] = parseInt(attackMon.stats.stamina);
+                }
+            } else {
+                battle[attacker].activeMon[stat] = newStat;
+            }
+        });
+    }
+
     let actionText = `${attackMon.name} used ${move.name}!`
     let effectText = "";
+    let action;
     if (damage > 0) {
         effectText = `${defendMon.name} took ${damage} points of damage!`
+        action = "fight"
     } else {
         effectText = `${attackMon.name} gained the ${move.effect} effect!`
+        action = "rest"
     }
 
     battle.turns[battle.turns.length - 1].turnText.push({
         actionText: actionText,
         effectText: effectText,
         resultText: resultText,
-        action: "fight",
+        action: action,
         mon1: battle[attacker].activeMon,
         mon2: battle[defender].activeMon,
         user: attacker,
