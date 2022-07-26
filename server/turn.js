@@ -74,7 +74,7 @@ function fight(battle, attacker, defender, move) {
     battle[attacker].activeMon.currentStamina = (parseInt(stamina) - parseInt(move.staminaCost));
 
     //check if move has buff effect
-    if (move.effect != "") {
+    if (move.effect != "none") {
         let effects;
         try {
             let jsonString = fs.readFileSync(`${__dirname}/../data/moveeffects.json`);
