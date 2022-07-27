@@ -160,7 +160,7 @@ button:hover {
     display: flex;
     padding-top: 5px;
     height: 100px;
-    width: 200px;
+    width: 225px;
     background-color: rgb(220, 220, 220);
     font-size: 30px;
     text-align: center;
@@ -180,7 +180,7 @@ button:hover {
 .mon {
     background-color: rgb(248, 248, 248);
     height: 100px;
-    width: 200px;
+    width: 225px;
     font-size: 25px;
     font-family: 'Gloria Hallelujah', cursive;
     border: none;
@@ -482,7 +482,7 @@ button:hover {
 .unavailableMon {
     background-color: rgb(231, 161, 161);
     height: 100px;
-    width: 200px;
+    width: 225px;
     font-size: 25px;
     font-family: 'Gloria Hallelujah', cursive;
     border: none;
@@ -495,7 +495,7 @@ button:hover {
     display: flex;
     padding-top: 5px;
     height: 100px;
-    width: 200px;
+    width: 225px;
     font-size: 30px;
     text-align: center;
     justify-content: center;
@@ -508,7 +508,7 @@ button:hover {
 .activeMon {
     background-color: rgb(140, 219, 140);
     height: 100px;
-    width: 200px;
+    width: 225px;
     font-size: 25px;
     font-family: 'Gloria Hallelujah', cursive;
     border: none;
@@ -534,7 +534,7 @@ button:hover {
 }
 
 .moveDetails {
-    font-size: 15px;
+    font-size: 20px;
 }
 
 #play>button {

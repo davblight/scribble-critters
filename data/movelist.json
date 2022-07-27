@@ -170,6 +170,15 @@
         "id": "peck",
         "monHasStamina": "true"
     },
+    "horn": {
+        "name": "HORN",
+        "power": "3",
+        "staminaCost": "2",
+        "type": "WATER",
+        "effect": "none",
+        "id": "horn",
+        "monHasStamina": "true"
+    },
     "stab": {
         "name": "STAB",
         "power": "3",
@@ -191,7 +200,7 @@
     "flap": {
         "name": "FLAP",
         "power": "0",
-        "staminaCost": "1",
+        "staminaCost": "2",
         "type": "NORMAL",
         "effect": "spd_boost",
         "id": "flap",

@@ -1,7 +1,7 @@
 {
     "gregory": {
         "name": "GREGORY",
-        "type": "Normal",
+        "type": "NORMAL",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -26,7 +26,7 @@
     },
     "bin_dweller": {
         "name": "BIN DWELLER",
-        "type": "Normal",
+        "type": "NORMAL",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -51,7 +51,7 @@
     },
     "germy": {
         "name": "GERMY",
-        "type": "Normal",
+        "type": "NORMAL",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -76,7 +76,7 @@
     },
     "pyraptor": {
         "name": "PYRAPTOR",
-        "type": "Fire",
+        "type": "FIRE",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -101,7 +101,7 @@
     },
     "hippyro": {
         "name": "HIPPYRO",
-        "type": "Fire",
+        "type": "FIRE",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -126,7 +126,7 @@
     },
     "pyrooster": {
         "name": "PYROOSTER",
-        "type": "Fire",
+        "type": "FIRE",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -151,7 +151,7 @@
     },
     "narwhalrus": {
         "name": "NARWHALRUS",
-        "type": "Water",
+        "type": "WATER",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -167,7 +167,7 @@
         },
         "learnedMoves": "",
         "learnableMoves": [
-            "stab",
+            "horn",
             "slap",
             "belch",
             "nap"
@@ -176,7 +176,7 @@
     },
     "narshark": {
         "name": "NARSHARK",
-        "type": "Water",
+        "type": "WATER",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -192,7 +192,7 @@
         },
         "learnedMoves": "",
         "learnableMoves": [
-            "stab",
+            "horn",
             "slap",
             "peck",
             "hibernate"
@@ -201,7 +201,7 @@
     },
     "narsparce": {
         "name": "NARSPARCE",
-        "type": "Water",
+        "type": "WATER",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -226,7 +226,7 @@
     },
     "walter": {
         "name": "WALTER",
-        "type": "Grass",
+        "type": "GRASS",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -251,7 +251,7 @@
     },
     "gerald": {
         "name": "GERALD",
-        "type": "Grass",
+        "type": "GRASS",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",
@@ -276,7 +276,7 @@
     },
     "martha": {
         "name": "MARTHA",
-        "type": "Grass",
+        "type": "GRASS",
         "currentHP": "",
         "currentStamina": "",
         "currentAttack": "",

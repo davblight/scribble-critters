@@ -51,7 +51,7 @@ function fight(battle, attacker, defender, move) {
         stab = 1.5
     }
     let type = 1;
-    let advantage = ["fire", "grass", "water", "fire"];
+    let advantage = ["FIRE", "GRASS", "WATER", "FIRE"];
     for (let i = 0; i < 3; i++) {
         if (attackMon.type == advantage[i] && defendMon.type == advantage[i + 1]) {
             type = 2;
@@ -86,21 +86,21 @@ function fight(battle, attacker, defender, move) {
             return err;
         }
         effects[move.effect].stats.forEach(stat => {
-            let newStat = parseInt(battle[attacker].activeMon[stat]) * 1.5;
+            let newHP = parseInt(battle[attacker].activeMon[stat]) + Math.floor(parseInt(attackMon.stats.hp) * 0.25);
             if (stat == "currentHP") {
-                if (newStat <= attackMon.stats.hp * 12) {
-                    battle[attacker].activeMon[stat] = parseInt(newStat);
+                if (newHP <= attackMon.stats.hp * 12) {
+                    battle[attacker].activeMon[stat] = newHP
                 } else {
                     battle[attacker].activeMon[stat] = parseInt(attackMon.stats.hp) * 12;
                 }
             } else if (stat == "currentStamina") {
                 if (parseInt(battle[attacker].activeMon[stat]) + 1 <= attackMon.stats.stamina) {
-                    battle[attacker].activeMon[stat] = parseInt(battle[attacker].activeMon[stat]) + 1;
+                    battle[attacker].activeMon[stat] = parseInt(battle[attacker].activeMon[stat]);
                 } else {
                     battle[attacker].activeMon[stat] = parseInt(attackMon.stats.stamina);
                 }
             } else {
-                battle[attacker].activeMon[stat] = newStat;
+                battle[attacker].activeMon[stat] = parseInt(battle[attacker].activeMon[stat]) * 1.5;
             }
         });
     }

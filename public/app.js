@@ -101,7 +101,6 @@ var app = new Vue({
         selectedMon: {},
         showMon: false,
         tbShowButtons: "default",
-        tbShowSave: false,
         battleMons: [],
         monMove: [],
         activeMon: "",
@@ -234,15 +233,14 @@ var app = new Vue({
             this.tbMon = "";
             this.tbLearnedMoves = [];
             this.tbLearnableMoves = [];
-            this.tbShowButtons = "default"
         },
         // Shows all mons available to be added to team
         tbShowMons: function () {
-            this.tbView = "mons";
             if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
+                this.tbView = "mons";
                 this.tbResetFields();
+                this.getMons();
             }
-            this.getMons();
         },
         tbShowSubmit: function () {
             this.tbView = "tbPost"
@@ -276,8 +274,8 @@ var app = new Vue({
 
             if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
                 this.tbLearnedMoves.splice(index, 1);
+                this.tbView = "moves";
             }
-            this.tbView = "moves";
         },
         // Saves the mon when the button is clicked so that they can eventually be present when a team is posted
         tbSaveMon: function () {
@@ -287,27 +285,29 @@ var app = new Vue({
                 learnedMoves: [...this.tbLearnedMoves]
             }
             if (this.tbShowButtons == "edit") {
-                this.tbWorkingTeam[this.tbIndex] = newMon
-                this.tbView = "";
-                this.tbShowButtons = "show";
+                if (this.tbNameInput != "" && this.tbLearnedMoves.length == 3) {
+                    this.tbWorkingTeam[this.tbIndex] = newMon
+                    this.tbView = "";
+                    this.tbShowButtons = "show";
+                    this.tbErrorMessage = "";
+                } else {
+                    this.tbErrorMessage = "Please fill out all fields.";
+                }
             }
             else if (this.tbWorkingTeam.length < 3) {
-                if (this.tbNameInput != "" && !this.tbLearnedMoves.includes("")) {
+                if (this.tbNameInput != "" && this.tbLearnedMoves.length == 3) {
                     this.tbWorkingTeam.push(newMon)
                     //Clean up the teambuilder for the next mon to be input
                     this.tbView = "";
                     this.tbShowButtons = "show";
+                    this.tbErrorMessage = ""
                 } else {
                     this.tbErrorMessage = "Please fill out all fields.";
                 }
             } else {
                 this.tbErrorMessage = "Only 3 Mons allowed.";
             }
-            if (this.tbWorkingTeam.length == 3) {
-                this.tbShowSave = true;
-            } else {
-                this.tbShowSave = false;
-            }
+
 
         },
         // Checks if this is a new team or existing team, then performs the appropriate PUT or POST method
@@ -321,7 +321,7 @@ var app = new Vue({
         },
         // Posts a new team -- called by tbSubmit
         tbPostTeam: async function () {
-            if (!this.tbWorkingTeam.includes("") && this.tbTeamNameInput != "") {
+            if (this.tbWorkingTeam.length == 3 && this.tbTeamNameInput != "") {
                 let newTeam = {
                     name: this.tbTeamNameInput,
                     mons: this.tbWorkingTeam
@@ -346,12 +346,12 @@ var app = new Vue({
                     console.log("error posting team", response.status, response)
                 }
             } else {
-                this.tbErrorMessage = "Please draw a full team of 3."
+                this.tbErrorMessage = "Please enter a team name."
             }
         },
         // Edits existing team -- called by tbSubmit
         tbPutTeam: async function () {
-            if (!this.tbWorkingTeam.includes("") && this.tbTeamNameInput != "") {
+            if (this.tbWorkingTeam.length == 3 && this.tbTeamNameInput != "") {
                 let newTeam = {
                     name: this.tbTeamNameInput,
                     mons: this.tbWorkingTeam
@@ -378,7 +378,7 @@ var app = new Vue({
                     console.log("error posting team", response.status, response)
                 }
             } else {
-                this.tbErrorMessage = "Please draw a full team of 3."
+                this.tbErrorMessage = "Please enter a team name."
             }
         },
         // Displays a saved mon. Intended for use on existing mons from existing teams
@@ -402,7 +402,9 @@ var app = new Vue({
         },
         tbEditCancel: function () {
             this.tbShowButtons = "show";
-            this.tbDisplaySavedMon(this.tbMon, this.tbIndex)
+            this.tbView = "";
+            index = this.tbWorkingTeam.length - 1;
+            this.tbDisplaySavedMon(this.tbWorkingTeam[index], index);
         },
         //Allows user to view an existing team by loading that team's data into the tbWorkingTeam variable
         tbViewTeam: function (team) {
@@ -615,6 +617,7 @@ var app = new Vue({
                 console.log("battle not found");
             } else {
                 console.log("something went wrong while putting the battle", response.status, response)
+                this.canTakeAction = true;
             }
         },
         postTeam: async function () {
@@ -700,6 +703,8 @@ var app = new Vue({
             });
             if (response.status == 204) {
                 console.log("User successfully logged out");
+                this.subpage = ""
+                this.tbResetFields();
                 this.page = 'login';
                 this.usernameInput = "";
                 this.passwordInput = "";
@@ -838,6 +843,13 @@ var app = new Vue({
                 return true;
             }
             return false;
+        },
+        tbShowSave: function () {
+            if (this.tbWorkingTeam.length == 3 && this.tbShowButtons != "edit") {
+                return true;
+            } else {
+                return false;
+            }
         }
     },
     created: function () {
