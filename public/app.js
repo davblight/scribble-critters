@@ -163,8 +163,10 @@ var app = new Vue({
             this.tbWorkingTeam = [];
             this.subpageTransition('teambuilder')
             this.tbView = 'existingTeams'
+            this.tbShowButtons = "default";
             this.tbResetFields();
             this.getTeams();
+            this.tbIsNewTeam = true;
         },
         showChat: function () {
             this.subpageTransition('chat')
@@ -317,7 +319,6 @@ var app = new Vue({
             } else {
                 this.tbPostTeam();
             }
-            this.showTeambuilder();
         },
         // Posts a new team -- called by tbSubmit
         tbPostTeam: async function () {
@@ -345,6 +346,8 @@ var app = new Vue({
                 } else {
                     console.log("error posting team", response.status, response)
                 }
+                this.tbTeamNameInput = "";
+                this.showTeambuilder();
             } else {
                 this.tbErrorMessage = "Please enter a team name."
             }
@@ -372,11 +375,12 @@ var app = new Vue({
                     console.log("team successfully posted");
                     await this.getTeams();
                     this.tbView = "existingTeams";
-                    this.tbIsNewTeam = false;
+                    this.tbIsNewTeam = true;
 
                 } else {
                     console.log("error posting team", response.status, response)
                 }
+                this.showTeambuilder();
             } else {
                 this.tbErrorMessage = "Please enter a team name."
             }
@@ -409,7 +413,11 @@ var app = new Vue({
         //Allows user to view an existing team by loading that team's data into the tbWorkingTeam variable
         tbViewTeam: function (team) {
             this.tbWorkingTeam = team.mons;
-            this.tbView = "mons";
+            this.tbTeamNameInput = team.name;
+            this.tbView = "";
+            this.tbShowButtons = "show";
+            index = this.tbWorkingTeam.length - 1;
+            this.tbDisplaySavedMon(this.tbWorkingTeam[index], index);
             // If this function is called, you're editing an existing team, thus PUT should be called rather than POST
             this.tbIsNewTeam = false;
             // Sets the tbWorkingTeamID variable for use in the PUT function
