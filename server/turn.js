@@ -86,7 +86,7 @@ function fight(battle, attacker, defender, move) {
             return err;
         }
         effects[move.effect].stats.forEach(stat => {
-            let newHP = parseInt(battle[attacker].activeMon[stat]) + Math.floor(parseInt(attackMon.stats.hp) * 0.25);
+            let newHP = parseInt(battle[attacker].activeMon[stat]) + Math.floor(parseInt(attackMon.stats.hp) * 3);
             if (stat == "currentHP") {
                 if (newHP <= attackMon.stats.hp * 12) {
                     battle[attacker].activeMon[stat] = newHP
@@ -172,13 +172,15 @@ function resolveTurn(battle, playerAction, playerMove) {
     if (randSwitch <= 7) {
         //loop through moves to see what is available
         let availableMoves = [];
+        let moveFound = false
         battle.AI.activeMon.learnedMoves.forEach(move => {
             if (move.monHasStamina) {
+                moveFound = true
                 availableMoves.push(move);
             }
         });
         //if mon has no available moves then rest
-        if (!availableMoves) {
+        if (!moveFound) {
             AIAction = "rest";
         } else {
             //if mon has enough stamina select a random available move
