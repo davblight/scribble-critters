@@ -57,7 +57,10 @@ app.post("/users", async (req, res) => {
         wins: 0,
         losses: 0,
         monStats: monStats,
-        userID: user.id,
+        user: {
+            _id: user.id,
+            name: user.username
+        }
     }
     try {
         let createdStat = await Stat.create(userStat);
@@ -551,7 +554,7 @@ app.get("/user/teams", async (req, res) => {
 app.get("/user/stats", async (req, res) => {
     let userStats;
     try {
-        userStats = await Stat.findOne({ "userID": req.user.id });
+        userStats = await Stat.findOne({ "user._id": req.user.id });
         if (!userStats) {
             res.status(404).json({ message: `User stats not found` });
             return;

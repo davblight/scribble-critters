@@ -96,7 +96,12 @@ const statSchema = mongoose.Schema({
             monLosses: { type: Number, default: 0 },
         }]
     },
-    userID: { type: mongoose.Schema.Types.ObjectId, required: true },
+    user: {
+        type: {
+            _id: { type: mongoose.Schema.Types.ObjectId, required: true },
+            name: { type: String, required: true },
+        }
+    }
 })
 
 function arrayLimit(val) {

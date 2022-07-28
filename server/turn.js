@@ -4,9 +4,85 @@ const { Stat } = require("../persist/model");
 async function updateStats(battle) {
     let userStats;
     try {
-        userStats = await Stat.findById()
+        userStats = await Stat.findOne({ "user._id": battle.player.user._id })
+        if (!userStats) {
+            console.log("user stats not found");
+            return;
+        }
     } catch (err) {
-        console.log("error getting stats to update");
+        console.log("error getting player stats to update");
+        return;
+    }
+    let AIStats;
+    try {
+        AIStats = await Stat.findOne({ "user.name": "ScribbleBot" })
+        if (!AIStats) {
+            console.log("AI stats not found");
+            return;
+        }
+    } catch (err) {
+        console.log("error getting AI stats to update");
+        return;
+    }
+    let winner;
+    let loser;
+    let winnerStats;
+    let loserStats;
+    if (battle.winner == "ScribbleBot") {
+        winner = "AI";
+        loser = "player"
+        winnerStats = AIStats;
+        loserStats = userStats;
+    } else {
+        loser = "AI";
+        winner = "player"
+        loserStats = AIStats;
+        winnerStats = userStats;
+    }
+    winnerStats.wins += 1;
+    winnerStats.monStats.forEach(statMon => {
+        battle[winner].mons.forEach(mon => {
+            if (mon.id == statMon.monID) {
+                statMon.monWins += 1;
+            }
+        })
+    });
+    loserStats.losses += 1;
+    loserStats.monStats.forEach(statMon => {
+        battle[loser].mons.forEach(mon => {
+            if (mon.id == statMon.monID) {
+                statMon.monLosses += 1;
+            }
+        })
+    });
+    AIStats;
+    if (battle.winner == "ScribbleBot") {
+        userStats = loserStats;
+        AIStats = winnerStats;
+    } else {
+        AIStats = loserStats;
+        userStats = winnerStats;
+    }
+    let newUserStats;
+    try {
+        newUserStats = await Stat.findOneAndUpdate({ "user._id": battle.player.user._id }, userStats, { new: true })
+        if (!newUserStats) {
+            console.log("user stats not found to update");
+            return;
+        }
+    } catch (err) {
+        console.log("error updating player stats");
+        return;
+    }
+    let newAIStats;
+    try {
+        newAIStats = await Stat.findOneAndUpdate({ "user.name": "ScribbleBot" }, AIStats, { new: true })
+        if (!newAIStats) {
+            console.log("AI stats not found to update");
+            return;
+        }
+    } catch (err) {
+        console.log("error updating AI stats");
         return;
     }
 }
