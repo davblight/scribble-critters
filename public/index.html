@@ -86,6 +86,7 @@
                             <button class="deleteTeamButton" v-on:click="deleteTeam(team._id)">Delete Team</button>
                         </div>
                         <button class="existingTeamsButton" id="newTeam" v-on:click="tbShowMons">New Team</button>
+                        <p id="tbErrorMessage">{{ tbErrorMessage }}</p>
                     </div>
 
                     <!-- This topbar contains information pertaining to the working mon, displaying it in what I hope is a nice format -->
