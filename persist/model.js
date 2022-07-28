@@ -85,16 +85,31 @@ const battleSchema = mongoose.Schema(
     }
 );
 
+const statSchema = mongoose.Schema({
+    wins: { type: Number, default: 0 },
+    losses: { type: Number, default: 0 },
+    monStats: {
+        type: [{
+            mon: { type: String, required: true },
+            monWins: { type: Number, default: 0 },
+            monLosses: { type: Number, default: 0 },
+        }]
+    },
+    userID: { type: mongoose.Schema.Types.ObjectId, required: true },
+})
+
 function arrayLimit(val) {
     return val.length <= 3;
 }
 
 const User = mongoose.model("User", userSchema);
 const Team = mongoose.model("Team", teama);
-const Battle = mongoose.model("Battle", battleSchema)
+const Battle = mongoose.model("Battle", battleSchema);
+const Stat = mongoose.model("Stat", statSchema);
 
 module.exports = {
     User,
     Team,
     Battle,
+    Stat,
 }

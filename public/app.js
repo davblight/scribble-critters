@@ -249,10 +249,14 @@ var app = new Vue({
         },
         // Shows all mons available to be added to team
         tbShowMons: function () {
-            if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
-                this.tbView = "mons";
-                this.tbResetFields();
-                this.getMons();
+            if (this.userTeams.length != 3) {
+                if (this.tbShowButtons == "default" || this.tbShowButtons == "edit") {
+                    this.tbView = "mons";
+                    this.tbResetFields();
+                    this.getMons();
+                }
+            } else {
+                this.tbErrorMessage = "You may only have a maximum of three teams"
             }
         },
         tbShowSubmit: function () {

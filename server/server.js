@@ -1,5 +1,5 @@
 const express = require('express');
-const { User, Team, Battle } = require("../persist/model");
+const { User, Team, Battle, Stat } = require("../persist/model");
 const setUpAuth = require("./auth");
 const setUpSession = require("./session");
 const takeTurn = require("./turn");
@@ -16,13 +16,13 @@ setUpAuth(app);
 
 //post method to add new users to the database
 app.post("/users", async (req, res) => {
+    let user;
     try {
-        let user = await User.create({
+        user = await User.create({
             username: req.body.username,
             password: req.body.password,
             role: "user",
         });
-        res.status(201).json(user);
     } catch (err) {
         res.status(500).json({
             message: `post request failed to create user`,
@@ -30,6 +30,42 @@ app.post("/users", async (req, res) => {
         });
         return;
     }
+    let mons;
+    try {
+        jsonString = fs.readFileSync(`${__dirname}/../data/scribblemon.json`);
+        mons = JSON.parse(jsonString);
+        if (!mons) {
+            console.log("Error finding Mons");
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        return;
+    }
+    let monArray = Object.keys(mons);
+    let monStats = [];
+    monArray.forEach(mon => {
+        let stat = {
+            mon: mons[mon].name,
+            monWins: 0,
+            monLosses: 0,
+        }
+        monStats.push(stat);
+    });
+    let userStat = {
+        wins: 0,
+        losses: 0,
+        monStats: monStats,
+        userID: user.id,
+    }
+    try {
+        let createdStat = await Stat.create(userStat);
+    } catch (err) {
+        console.log({ message: "error creating user stats", error: err });
+        return
+    }
+
+    res.status(201).json(user);
 });
 
 //returns a list of all existing mons
@@ -510,6 +546,24 @@ app.get("/user/teams", async (req, res) => {
     })
     res.status(200).json(teams);
 });
+
+app.get("/user/stats", async (req, res) => {
+    let userStats;
+    try {
+        userStats = await Stat.find({ "userID": req.user.id });
+        if (!userStats) {
+            res.status(404).json({ message: `User stats not found` });
+            return;
+        }
+    } catch (err) {
+        res.status(500).json({
+            message: `get request failed to get user stats`,
+            error: err,
+        });
+        return;
+    }
+    res.status(200).json(userStats);
+})
 
 //Get a team by id
 app.get("/team/:id", async (req, res) => {
