@@ -551,7 +551,7 @@ app.get("/user/teams", async (req, res) => {
 app.get("/user/stats", async (req, res) => {
     let userStats;
     try {
-        userStats = await Stat.find({ "userID": req.user.id });
+        userStats = await Stat.findOne({ "userID": req.user.id });
         if (!userStats) {
             res.status(404).json({ message: `User stats not found` });
             return;

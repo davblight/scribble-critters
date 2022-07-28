@@ -49,7 +49,7 @@
                 <div class="subpage" id="subpage-play" v-if="subpage == 'play'" :style="subpageStyle">
                     <div id="play">
                         <button v-on:click="playViewAI">VS AI</button> <br>
-                        <button v-on:click="playViewHuman">VS HUMAN</button> <br>
+                        <!-- <button v-on:click="playViewHuman">VS HUMAN</button> <br> -->
                     </div>
                     <div class="playView" v-if="playView == 'AI'">
                         <h1>VS AI</h1> <br>
@@ -174,11 +174,19 @@
                 <!-- END COMPENDIUM HTML -->
                 <!-- START STATISTICS HTML -->
                 <div class="subpage" id="subpage-stats" v-if="subpage == 'stats'" :style="subpageStyle">
-                    Wins: {{ userStats.wins }}<br>
-                    Losses: {{ userStats.losses }}<br>
-                    Percentage: {{ userStats.wins/(userStats.wins + userStats.losses) }}<br> <br>
-                    Mons: <div v-for="mon in userStats.monStats">
-                        {{ mon.mon }}
+                    <div id="win-loss-container">
+                        Wins: {{ userStats.wins }}<br>
+                        Losses: {{ userStats.losses }}<br>
+                    </div>
+                    <div id="bigger-container">
+                        Mons:
+                        <div id="stats-mon-container">
+                            <div class="monStatistics" v-for="mon in userStats.monStats">
+                                {{ mon.monName }} :
+                                <p class="monWinLoss">Wins: {{ mon.monWins }}
+                                Losses: {{mon.monLosses }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

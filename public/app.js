@@ -366,8 +366,12 @@ var app = new Vue({
                     console.log("error posting team", response.status, response)
                 }
                 this.tbTeamNameInput = "";
+                this.tbResetFields();
+                this.tbView = 'existingTeams'
+                this.tbShowButtons = "default";
+                this.tbIsNewTeam = true;
+                this.getTeams();
                 this.tbWorkingTeam = [];
-                this.showTeambuilder();
             } else {
                 this.tbErrorMessage = "Please enter a team name."
             }
@@ -401,7 +405,12 @@ var app = new Vue({
                     console.log("error posting team", response.status, response)
                 }
                 this.tbWorkingTeam = [];
-                this.showTeambuilder();
+                this.tbResetFields();
+                this.tbView = 'existingTeams'
+                this.tbShowButtons = "default";
+                this.tbIsNewTeam = true;
+                this.getTeams();
+                this.tbWorkingTeam = [];
             } else {
                 this.tbErrorMessage = "Please enter a team name."
             }

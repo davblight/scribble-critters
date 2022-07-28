@@ -703,3 +703,46 @@ button:hover {
 .warningButtons {
     padding: 5px;
 }
+
+.monStatistics {
+    margin-left: 40px;
+    font-size: 25px;
+    text-shadow: none;
+    grid-column: span 1;
+}
+
+.monWinLoss {
+    margin-left: 20px;
+    text-shadow: none;
+    font-family: 'Gloria Hallelujah', cursive;
+    font-size: 12px;
+}
+
+#stats-mon-container {
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    grid-template-rows: auto;
+}
+
+#win-loss-container {
+    background-color: rgb(251, 251, 251);
+    font-size: 45px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgb(78, 78, 78);
+    width: 500px;
+    margin-left: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+#bigger-container {
+    background-color: rgb(251, 251, 251);
+    font-size: 45px;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px rgb(78, 78, 78);
+    margin-top: 50px;
+    width: 500px;
+    margin-left: 200px;
+}
