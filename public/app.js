@@ -124,6 +124,7 @@ var app = new Vue({
         gameOverStyle: {},
         showWarning: false,
         warningSubpage: "",
+        userStats: {},
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -190,6 +191,9 @@ var app = new Vue({
         },
         showStats: function () {
             this.tbShowWarning('stats');
+            if (this.showWarning == false) {
+                this.getStats();
+            }
         },
         // Sets up transition so that subpages slide in
         subpageTransition: function (page) {
@@ -362,6 +366,7 @@ var app = new Vue({
                     console.log("error posting team", response.status, response)
                 }
                 this.tbTeamNameInput = "";
+                this.tbWorkingTeam = [];
                 this.showTeambuilder();
             } else {
                 this.tbErrorMessage = "Please enter a team name."
@@ -395,6 +400,7 @@ var app = new Vue({
                 } else {
                     console.log("error posting team", response.status, response)
                 }
+                this.tbWorkingTeam = [];
                 this.showTeambuilder();
             } else {
                 this.tbErrorMessage = "Please enter a team name."
@@ -884,7 +890,18 @@ var app = new Vue({
                     this.tbWorkingTeam = [];
                 }, 350);
             }
-        }
+        },
+        getStats: async function () {
+            let response = await fetch(`${URL}/user/stats`, {
+                credentials: "include"
+            });
+            if (response.status == 200) {
+                this.userStats = await response.json();
+                console.log("fetched user stats");
+            } else {
+                console.log("something went wrong getting stats", response.status, response)
+            }
+        },
     },
     computed: {
         tbShowAdd: function () {
