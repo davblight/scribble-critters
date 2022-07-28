@@ -46,7 +46,8 @@ app.post("/users", async (req, res) => {
     let monStats = [];
     monArray.forEach(mon => {
         let stat = {
-            mon: mons[mon].name,
+            monName: mons[mon].name,
+            monID: mons[mon].id,
             monWins: 0,
             monLosses: 0,
         }
