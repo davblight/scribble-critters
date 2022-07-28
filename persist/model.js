@@ -90,7 +90,8 @@ const statSchema = mongoose.Schema({
     losses: { type: Number, default: 0 },
     monStats: {
         type: [{
-            mon: { type: String, required: true },
+            monName: { type: String, required: true },
+            monID: { type: String, required: true },
             monWins: { type: Number, default: 0 },
             monLosses: { type: Number, default: 0 },
         }]

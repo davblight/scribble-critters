@@ -1,4 +1,15 @@
 const fs = require("fs");
+const { Stat } = require("../persist/model");
+
+async function updateStats(battle) {
+    let userStats;
+    try {
+        userStats = await Stat.findById()
+    } catch (err) {
+        console.log("error getting stats to update");
+        return;
+    }
+}
 
 function updateMon(battle, teamName) {
     for (let i in battle[teamName].mons) {
@@ -10,7 +21,6 @@ function updateMon(battle, teamName) {
     };
     return battle;
 }
-
 
 function rest(battle, teamName) {
     let user;
@@ -264,7 +274,7 @@ function resolveTurn(battle, playerAction, playerMove) {
         } else {
             battle.finished = true;
             battle.winner = battle.player.user.name;
-
+            updateStats(battle);
         }
     }
     //if mon is still alive and resting
@@ -347,6 +357,7 @@ const takeTurn = function (battle, action, subject) {
         } else if (req.body.action == "forfeit") {
             battle.finished = true;
             battle.winner = "ScribbleBot"
+            updateStats(battle);
             battle.turns.push({
                 turnNumber: "",
                 turnText: [],
@@ -451,6 +462,7 @@ const takeTurn = function (battle, action, subject) {
     if (!aliveMon) {
         battle.finished = true;
         battle.winner = "ScribbleBot";
+        updateStats(battle);
     }
     return battle;
 }
