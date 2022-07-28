@@ -40,7 +40,7 @@
                 <div id="sidebar">
                     <button v-on:click="showPlay">PLAY</button><br>
                     <button v-on:click="showTeambuilder">TEAMBUILDER</button><br>
-                    <button v-on:click="showChat">CHAT</button><br>
+                    <!-- <button v-on:click="showChat">CHAT</button><br> -->
                     <button v-on:click="showCompendium">COMPENDIUM</button><br>
                     <button v-on:click="showStats">STATS</button><br>
                     <button v-on:click="logOut">LOG OUT</button>
@@ -148,7 +148,8 @@
                             <button class="tbMove" v-for="move in tbLearnableMoves" v-on:click="tbPushMove(move)">
                                 {{ move.name }} : {{ move.type }}
                                 <span class="tbMoveStats">
-                                    Power: {{ move.power }} Stamina Cost: {{ move.staminaCost }} Effect: {{ move.effect }}
+                                    Power: {{ move.power }} Stamina Cost: {{ move.staminaCost }} Effect: {{ move.effect
+                                    }}
                                 </span>
                             </button>
                         </div>
@@ -184,7 +185,7 @@
                             <div class="monStatistics" v-for="mon in userStats.monStats">
                                 {{ mon.monName }} :
                                 <p class="monWinLoss">Wins: {{ mon.monWins }}
-                                Losses: {{mon.monLosses }}</p>
+                                    Losses: {{mon.monLosses }}</p>
                             </div>
                         </div>
                     </div>
