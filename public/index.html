@@ -42,7 +42,7 @@
                     <button v-on:click="showTeambuilder">TEAMBUILDER</button><br>
                     <button v-on:click="showChat">CHAT</button><br>
                     <button v-on:click="showCompendium">COMPENDIUM</button><br>
-                    <button v-on:click="showSettings">SETTINGS</button><br>
+                    <button v-on:click="showStats">STATS</button><br>
                     <button v-on:click="logOut">LOG OUT</button>
                 </div>
                 <!-- START PLAY HTML -->
@@ -86,6 +86,15 @@
                             <button class="deleteTeamButton" v-on:click="deleteTeam(team._id)">Delete Team</button>
                         </div>
                         <button class="existingTeamsButton" id="newTeam" v-on:click="tbShowMons">New Team</button>
+                    </div>
+
+                    <!-- This displays if the user tries to exit the teambuilder while they have a working team -->
+                    <div id="tbExitWarning" v-if="showWarning">
+                        <p>You haven't saved your team. Are you sure you'd like to continue?</p><br>
+                        <div>
+                            <button class="warningButtons" @click="showWarningContinue">CONTINUE</button>
+                            <button class="warningButtons" @click="showWarningCancel">CANCEL</button>
+                        </div>
                     </div>
 
                     <!-- This topbar contains information pertaining to the working mon, displaying it in what I hope is a nice format -->
@@ -138,7 +147,7 @@
                             <button class="tbMove" v-for="move in tbLearnableMoves" v-on:click="tbPushMove(move)">
                                 {{ move.name }} : {{ move.type }}
                                 <span class="tbMoveStats">
-                                    Power: {{ move.power }} Stamina Cost: {{ move.staminaCost }}
+                                    Power: {{ move.power }} Stamina Cost: {{ move.staminaCost }} Effect: {{ move.effect }}
                                 </span>
                             </button>
                         </div>
@@ -162,8 +171,8 @@
 
                 </div>
                 <!-- END COMPENDIUM HTML -->
-                <div class="subpage" id="subpage-settings" v-if="subpage == 'settings'" :style="subpageStyle">TEST
-                    SETTINGS</div>
+                <div class="subpage" id="subpage-stats" v-if="subpage == 'stats'" :style="subpageStyle">TEST
+                    STATS</div>
             </div>
         </div>
         <!-- START BATTLEPAGE HTML -->
@@ -225,8 +234,9 @@
                 <div id="mon-container">
                     <!-- Make this a v-for once we have an array containing all possible switches -->
                     <button v-for="mon in battleMons" :class="mon.class" @click="takeAction('switch', mon._id)">{{
-                        mon.name
-                        }}</button>
+                        mon.name }}
+                        <div>{{ mon.currentHP }} / {{ mon.stats.hp * 12 }}</div>
+                    </button>
                 </div>
                 <div id="other-buttons">
                     <button class="other-button" @click="takeAction('rest', '')">Rest</button>

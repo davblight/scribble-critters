@@ -122,6 +122,8 @@ var app = new Vue({
         playerAnimation: {},
         AIAnimation: {},
         gameOverStyle: {},
+        showWarning: false,
+        warningSubpage: "",
         //All tb variables should only be used in the scope of the teambuilder
         tbMon: "",
         tbMoves: [],
@@ -149,36 +151,45 @@ var app = new Vue({
         showBattle: function () {
             this.page = "battle";
             this.gameOverStyle = {};
+            this.playerAnimation = {};
+            this.AIAnimation = {};
         },
         showPlay: function () {
             this.playView = "";
             this.playerTeam = "";
             this.AITeam = "";
-            this.subpageTransition('play')
-            this.getTeams();
-            this.getAITeams();
+            this.tbShowWarning('play');
+            if (this.showWarning == false) {
+                this.getTeams();
+                this.getAITeams();
+            }
         },
         // Shows Teambuilder and cleans it up in case you're clicking on Teambuilder from Teambuilder itself
         showTeambuilder: function () {
-            this.tbWorkingTeam = [];
-            this.subpageTransition('teambuilder')
-            this.tbView = 'existingTeams'
-            this.tbShowButtons = "default";
-            this.tbResetFields();
-            this.getTeams();
-            this.tbIsNewTeam = true;
+            this.tbShowWarning('teambuilder')
+            if (this.showWarning == false) {
+                this.tbResetFields();
+                this.tbView = 'existingTeams'
+                this.tbShowButtons = "default";
+                this.tbIsNewTeam = true;
+                this.getTeams();
+                this.tbWorkingTeam = [];
+            }
         },
         showChat: function () {
-            this.subpageTransition('chat')
+            this.tbShowWarning('chat')
         },
         // Shows compendium and gets mons to populate said compendium
         showCompendium: function () {
-            this.subpageTransition('compendium');
-            this.getMons();
-            this.getMoves();
+            this.tbShowWarning('compendium');
+            if (this.showWarning == false) {
+                this.getMons();
+                this.getMoves();
+                this.showMon = false;
+            }
         },
-        showSettings: function () {
-            this.subpageTransition('settings');
+        showStats: function () {
+            this.tbShowWarning('stats');
         },
         // Sets up transition so that subpages slide in
         subpageTransition: function (page) {
@@ -837,13 +848,39 @@ var app = new Vue({
                 this.playerAnimation = {};
             }
         },
-        scrollToElement() {
+        scrollToElement: function () {
             const el = this.$refs.scrollToMe;
             if (el) {
                 // Use el.scrollIntoView() to instantly scroll to the element
                 el.scrollTop = el.scrollHeight;
             }
         },
+        tbShowWarning: function (page) {
+            if (this.tbWorkingTeam.length > 0) {
+                this.showWarning = true;
+                this.warningSubpage = page;
+            } else {
+                this.subpageTransition(page);
+            }
+        },
+        showWarningCancel: function () {
+            this.showWarning = false;
+        },
+        showWarningContinue: function () {
+            this.tbWorkingTeam = [];
+            this.showWarning = false;
+            this.subpageTransition(this.warningSubpage);
+            if (this.warningSubpage == 'teambuilder') {
+                setTimeout(() => {
+                    this.tbResetFields();
+                    this.tbView = 'existingTeams'
+                    this.tbShowButtons = "default";
+                    this.tbIsNewTeam = true;
+                    this.getTeams();
+                    this.tbWorkingTeam = [];
+                }, 350);
+            }
+        }
     },
     computed: {
         tbShowAdd: function () {
