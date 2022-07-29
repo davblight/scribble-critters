@@ -1,6 +1,6 @@
 const app = require("./server/server");
 const { connect, onConnect } = require("./persist/connect");
-const { autoDelete } = require("./server/autoDelete");
+const { autoDelete } = require("./server/autodelete");
 
 // put in env vars
 require('dotenv').config();
