@@ -7,7 +7,7 @@ require('dotenv').config();
 // const buf = Buffer.from(env)
 // const config = dotenv.parse(buf)
 //set up port number
-const port = process.env.SCRIBBLE_PORT || 4000;
+const port = process.env.PORT;
 
 onConnect(() => {
     app.listen(port, () => {
