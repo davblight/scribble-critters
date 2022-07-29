@@ -591,7 +591,7 @@ var app = new Vue({
             this.battle = battle;
         },
         getBattle: async function (battle_id) {
-            let response = await fetch(`${URL}/battles/AI/${battle_id}`, {
+            let response = await fetch(`${URL}/battles/ai/${battle_id}`, {
                 credentials: "include"
             });
             if (response.status == 200) {
@@ -630,7 +630,7 @@ var app = new Vue({
         },
         putBattle: async function (putAction, putSubject) {
             this.canTakeAction = false;
-            let response = await fetch(`${URL}/battles/AI/${this.battleId}`, {
+            let response = await fetch(`${URL}/battles/ai/${this.battleId}`, {
                 method: "PUT",
                 credentials: "include",
                 body: JSON.stringify({
@@ -688,7 +688,7 @@ var app = new Vue({
             }
         },
         getAITeams: async function () {
-            let response = await fetch(`${URL}/AI/teams`, {
+            let response = await fetch(`${URL}/ai/teams`, {
                 credentials: "include"
             });
             if (response.status == 200) {
@@ -714,7 +714,7 @@ var app = new Vue({
                 playerTeamId: this.playerTeam,
                 AITeamId: this.AITeam,
             };
-            let response = await fetch(`${URL}/battles/AI`, {
+            let response = await fetch(`${URL}/battles/ai`, {
                 method: "POST",
                 body: JSON.stringify(newBattle),
                 headers: {

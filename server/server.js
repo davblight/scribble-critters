@@ -490,7 +490,7 @@ app.delete("/team/:id", async (req, res) => {
 });
 
 //Get a list of all AI teams
-app.get("/AI/teams", async (req, res) => {
+app.get("/ai/teams", async (req, res) => {
     let AITeams;
     try {
         AITeams = await Team.find({ "isAI": true }, ["-user"]);
@@ -608,7 +608,7 @@ app.get("/teams", async (req, res) => {
 //     playerTeamId: "",
 //     AITeamId: ""
 // }
-app.post("/battles/AI", async (req, res) => {
+app.post("/battles/ai", async (req, res) => {
     //check auth
     if (!req.user) {
         res.status(401).json({
@@ -680,7 +680,7 @@ app.post("/battles/AI", async (req, res) => {
     }
 });
 
-app.get("/battles/AI/:id", async (req, res) => {
+app.get("/battles/ai/:id", async (req, res) => {
     //check auth
     if (!req.user) {
         res.status(401).json({
@@ -771,7 +771,7 @@ app.get("/user/battles", async (req, res) => {
 //     subject: "", (moveId / switchMonId / "")
 
 // }
-app.put("/battles/AI/:id", async (req, res) => {
+app.put("/battles/ai/:id", async (req, res) => {
     //check auth
     if (!req.user) {
         res.status(401).json({
